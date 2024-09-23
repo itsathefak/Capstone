@@ -12,3 +12,38 @@ body {
   height: 100%;
   width: 100%;
 }
+
+/* Footer CSS Starts From Here */
+
+.footer-containerAK {
+  background-color: #2E2E2E;
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.footer-textAK {
+  color: white;
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer-containerAK {
+    padding: 15px;
+  }
+
+  .footer-textAK {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-containerAK {
+    padding: 10px;
+  }
+
+  .footer-textAK {
+    font-size: 10px;
+  }
+}
