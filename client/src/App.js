@@ -1,5 +1,7 @@
 // import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "./index.css";
+import CreateService from "./components/ServiceProvider/CreateServiceForm";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <CreateService />
     </div>
   );
 }
