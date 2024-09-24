@@ -36,3 +36,96 @@
     transform: rotate(360deg);
   }
 }
+
+/* Common Buttons */
+
+.com-primary-btn {
+  color: #FFFFFF;
+  background-color: #0058FF;
+  border: 1px solid #0058FF;
+  border-radius: 4px;
+  padding: 7px 9px;
+}
+
+.com-primary-btn:hover, .com-primary-btn:active {
+  background-color: #034cd6;
+  border: 1px solid #034cd6;
+  cursor: pointer;
+}
+
+.com-secondary-btn {
+  color: #000000;
+  background-color: #F5F6FA;
+  border: 1px solid #F5F6FA;
+  border-radius: 4px;
+  padding: 7px 9px;
+}
+
+.com-secondary-btn:hover, .com-secondary-btn:active {
+  background-color: #e2e2e2;
+  border: 1px solid #e2e2e2;
+  cursor: pointer;
+}
+
+
+/* Common Table and Row */
+
+.com-table {
+  /* margin: 0 0.5rem; */
+  width: 100%;
+  font-size: 15px;
+}
+
+.com-table th {
+  padding: 10px;
+  background-color: #F5F6FA;
+  text-align: left;
+}
+
+.com-table td {
+  text-align: left;
+  padding: 10px;
+}
+
+.com-action-btn-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 10px;
+}
+
+.com-table-pagination {
+  text-align: center !important;
+  padding: 10px 0;
+}
+
+.com-table-page-btn {
+  margin: 0 5px;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.com-table-page-btn.active {
+  font-weight: bold;
+}
+
+
+
+/* Appointment Requests & Upcoming Requests */
+
+.appreq-main-container, .upapp-main-container {
+  margin: 10px;
+}
+
+.appreq-header, .upapp-header {
+  text-align: left;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.appreq-col-name, .appreq-col-email, .appreq-col-date, .appreq-col-timeslot, .appreq-col-action {
+  padding: 0 0 0 10px;
+  width: 20%;
+}

@@ -4,14 +4,17 @@ const Schema = mongoose.Schema;
 let bookingSchema = new Schema({
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     providerId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     serviceId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service',
         required: true
     },
     date: {

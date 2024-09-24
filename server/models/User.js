@@ -38,7 +38,8 @@ let userSchema = new Schema({
         required: true
     },
     bookings: [{
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Booking'
     }]
 });
 
