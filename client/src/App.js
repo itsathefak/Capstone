@@ -5,13 +5,14 @@ import CreateService from "./components/ServiceProvider/CreateServiceForm";
 import AppointmentRequests from "./components/ServiceProvider/AppointmentRequests";
 import UpcomingAppointments from "./components/ServiceProvider/UpcomingAppointments";
 import Footer from "./components/Common/Footer";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <div className="App">
-      {/* <CreateService /> */}
-      <AppointmentRequests/>
-      {/* <UpcomingAppointments /> */}
+      <AppointmentRequests />
+      <UpcomingAppointments />
+      <Login />
       <CreateService />
       <Footer />
     </div>
