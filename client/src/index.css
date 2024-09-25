@@ -220,3 +220,120 @@ body {
     font-size: 10px;
   }
 }
+
+/* Login page css starts */
+.login-page-containerAK {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #F4F7FC;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.login-heading-containerAK {
+  color: #2E2E2E;
+}
+
+.appointme-titleAK {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.appointme-descriptionAK {
+  font-size: 16px;
+  max-width: 500px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+
+
+.login-formAK {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 350px;
+}
+
+.input-containerAK {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.input-iconAK {
+  margin-right: 10px;
+  color: #0058FF;
+}
+
+.login-inputAK {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  font-size: 14px;
+  background: transparent;
+}
+
+.login-buttonAK {
+  width: 100%;
+  background-color: #0058FF;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 23px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.login-buttonAK:hover {
+  background-color: #0046cc;
+}
+
+.arrow-iconAK {
+  margin-left: 8px;
+}
+
+
+
+@media (max-width: 1024px) {
+
+  .login-heading-containerAK {
+    display: block;
+  }
+
+  .login-page-containerAK {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+
+  .login-heading-containerAK {
+    display: none;
+  }
+
+  .login-page-containerAK {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+}
