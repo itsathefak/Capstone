@@ -221,7 +221,7 @@ body {
   }
 }
 
-/* Login page css starts */
+/* Login and Register Components CSS Starts */
 .login-page-containerAK {
   display: flex;
   align-items: center;
@@ -251,8 +251,6 @@ body {
   line-height: 1.5;
   text-align: left;
 }
-
-
 
 .login-formAK {
   background-color: white;
@@ -306,10 +304,8 @@ body {
   margin-left: 8px;
 }
 
-
-
+/* Responsive Design for login and Register */
 @media (max-width: 1024px) {
-
   .login-heading-containerAK {
     display: block;
   }
@@ -319,12 +315,9 @@ body {
     align-items: center;
     justify-content: center;
   }
-
 }
 
 @media (max-width: 768px) {
-
-
   .login-heading-containerAK {
     display: none;
   }
@@ -334,6 +327,4 @@ body {
     align-items: center;
     justify-content: center;
   }
-
-
 }

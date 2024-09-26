@@ -6,6 +6,7 @@ import AppointmentRequests from "./components/ServiceProvider/AppointmentRequest
 import UpcomingAppointments from "./components/ServiceProvider/UpcomingAppointments";
 import Footer from "./components/Common/Footer";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <AppointmentRequests />
       <UpcomingAppointments />
       <Login />
+      <Register />
       <CreateService />
       <Footer />
     </div>
