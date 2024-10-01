@@ -3,6 +3,7 @@ const connectDB = require("./config/db");
 const servicesRoutes = require("./routes/serviceRoutes");
 const cors = require("cors");
 require("dotenv").config();
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 const app = express();
 
@@ -25,8 +26,11 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something went wrong!");
 });
 
+// Routes
 // Use services route
 app.use("/services", servicesRoutes);
+// Use appointments route
+app.use("/appointments", appointmentRoutes);
 
 // Define the port
 const PORT = process.env.PORT || 5000;

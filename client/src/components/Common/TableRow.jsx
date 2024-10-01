@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import TableRow from "./TableRow";
 
-function Table({request, type}) {
+function TableRow({rowData, type, onAccept, onReject}) {
 
   return (
       <tr scope="row">
-        <td>{request.name}</td>
-        <td>{request.email}</td>
-        <td>{request.date}</td>
-        <td>{request.timeslot}</td>
+        <td>{rowData.name}</td>
+        <td>{rowData.email}</td>
+        <td>{rowData.date}</td>
+        <td>{rowData.timeslot}</td>
         {type !== "upcoming appointment" && (
         <td>
           <div className="com-action-btn-container">
-            <button className="com-primary-btn">Accept</button>
-            <button className="com-secondary-btn">Reject</button>
+            <button className="com-primary-btn" onClick={() => onAccept(rowData._id)}>Accept</button>
+            <button className="com-secondary-btn" onClick={() => onReject(rowData._id)}>Reject</button>
           </div>
         </td>
         )}
@@ -21,4 +20,4 @@ function Table({request, type}) {
   );
 }
 
-export default Table;
+export default TableRow;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TableRow from "./TableRow";
 
-function Table({type}) {
-  let requests = [
+function Table({ type, data, onAccept, onReject }) {
+  let sampleData = [
     {
       name: "John Doe",
       email: "john.doe@gmail.com",
@@ -29,18 +29,23 @@ function Table({type}) {
       },
   ];
 
-  const tableRows = requests.map((req) => 
-    <TableRow request={req} type={type}/>
-    );
+  const tableRows = sampleData.map((row) => (
+    <TableRow
+      rowData={row}
+      type={type}
+      onAccept={onAccept}
+      onReject={onReject}
+    />
+  ));
 
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
-  const indexOfLastRow = currentPage * rowsPerPage;
-  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = requests.slice(indexOfFirstRow, indexOfLastRow);
+  // const indexOfLastRow = currentPage * rowsPerPage;
+  // const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  // const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
-  const totalPages = Math.ceil(requests.length / rowsPerPage);
+  const totalPages = Math.ceil(sampleData.length / rowsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -89,7 +94,7 @@ function Table({type}) {
 
       // show ... if current page is greater than 3
       if (currentPage > 3) {
-        pages.push(<span >...</span>);
+        pages.push(<span>...</span>);
       }
 
       // current page and next page
@@ -153,9 +158,9 @@ function Table({type}) {
                   Timeslot
                 </th>
                 {type !== "upcoming appointment" && (
-                    <th scope="col" className="appreq-col-action">
+                  <th scope="col" className="appreq-col-action">
                     Action
-                    </th>
+                  </th>
                 )}
               </tr>
             </thead>

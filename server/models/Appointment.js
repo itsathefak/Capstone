@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let bookingSchema = new Schema({
+let appointmentSchema = new Schema({
   customerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -32,7 +32,7 @@ let bookingSchema = new Schema({
   status: {
     type: String,
     required: true,
-    enum: ["Pending", "Confirmed", "Rejected"],
+    enum: ["Pending", "Confirmed", "Rejected", "Completed"],
     default: "Pending",
   },
   price: {
@@ -44,5 +44,5 @@ let bookingSchema = new Schema({
   },
 });
 
-let Booking = mongoose.model("Booking", bookingSchema);
-module.exports = Booking;
+let Appointment = mongoose.model("Appointment", appointmentSchema);
+module.exports = Appointment;

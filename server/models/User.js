@@ -41,7 +41,7 @@ let userSchema = new Schema({
   bookings: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Booking", // Reference to the Booking model
+      ref: "Appointment", // Reference to the Booking model
     },
   ],
 });
