@@ -1,43 +1,50 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let serviceSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    provider: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    availability: {
-        date: {
-            type: Date,
-            required: true
-        },
-        startTime: {
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  provider: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: false,
+  },
+  availability: [
+    {
+      date: {
+        type: Date,
+        required: true,
+      },
+      slots: [
+        {
+          startTime: {
             type: String,
-            required: true
-        },
-        endTime: {
+            required: true,
+          },
+          endTime: {
             type: String,
-            required: true
+            required: true,
+          },
+          status: {
+            type: String,
+            enum: ["Available", "Booked", "Unavailable"],
+            default: "Available",
+          },
         },
-        status: {
-            type: Boolean,
-            required: true
-        }
-    }
+      ],
+    },
+  ],
 });
 
-let Service = new mongoose.model('Service', serviceSchema);
-module.exports = Service
+let Service = mongoose.model("Service", serviceSchema);
+module.exports = Service;

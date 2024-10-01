@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createService } from "../../api/services";
 
 const CreateService = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,6 +12,7 @@ const CreateService = () => {
   const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
   // Validation for time slots
   const validateTimeSlot = (date, start, end) => {
@@ -57,7 +59,7 @@ const CreateService = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation for required fields
@@ -70,8 +72,9 @@ const CreateService = () => {
     if (!date) validationErrors.date = "Date is required.";
     if (timeSlots.length === 0)
       validationErrors.timeSlot = "Please add at least one time slot.";
-    if (price === "") validationErrors.price = "Price is required.";
-    if (price < 0) validationErrors.price = "Price cannot be negative.";
+    const priceValue = parseFloat(price);
+    if (priceValue === "") validationErrors.price = "Price is required.";
+    if (priceValue < 0) validationErrors.price = "Price cannot be negative.";
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -85,21 +88,31 @@ const CreateService = () => {
       description,
       date,
       timeSlots,
-      price,
+      price: priceValue,
     };
-    console.log("Service Data:", serviceData);
 
-    // Clear form after successful submission
-    setFirstName("");
-    setLastName("");
-    setServiceName("");
-    setDescription("");
-    setDate("");
-    setTimeSlots([]);
-    setStartTime("");
-    setEndTime("");
-    setPrice("");
-    setErrors({});
+    console.log("Submitting service data:", serviceData);
+
+    try {
+      await createService(serviceData);
+      setSuccessMessage("Service created successfully!");
+      console.log("Service Data:", serviceData);
+
+      // Clear form after successful submission
+      setFirstName("");
+      setLastName("");
+      setServiceName("");
+      setDescription("");
+      setDate("");
+      setTimeSlots([]);
+      setStartTime("");
+      setEndTime("");
+      setPrice("");
+      setErrors({});
+    } catch (error) {
+      console.error("Error creating service:", error);
+      setErrors({ submit: "Failed to create service. Please try again." });
+    }
   };
 
   return (
@@ -261,6 +274,15 @@ const CreateService = () => {
         <button className="CreateServiceForm-button" type="submit">
           Create Service
         </button>
+
+        {successMessage && (
+          <div className="CreateServiceForm-successMessage">
+            {successMessage}
+          </div>
+        )}
+        {errors.submit && (
+          <div className="CreateServiceForm-errorMessage">{errors.submit}</div>
+        )}
       </form>
     </div>
   );

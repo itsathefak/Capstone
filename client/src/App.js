@@ -11,11 +11,12 @@ import Register from "./pages/Register";
 function App() {
   return (
     <div className="App">
+      <CreateService />
       <AppointmentRequests />
       <UpcomingAppointments />
       <Login />
       <Register />
-      <CreateService />
+
       <Footer />
     </div>
   );
