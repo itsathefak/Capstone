@@ -4,12 +4,12 @@ import { getAppointmentRequests, acceptAppointment, rejectAppointment } from "..
 
 function AppointmentRequests() {
   const [appointmentRequests, setAppointmentRequests] = useState([]);
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
   useEffect(() => {
     const getRequests = async () => {
       try {
-        const data = await getAppointmentRequests(token);
+        const data = await getAppointmentRequests();
         setAppointmentRequests(data);
       } catch (error) {
         console.error("Error reading appointment requests:", error);
@@ -17,11 +17,11 @@ function AppointmentRequests() {
     };
 
     getRequests();
-  }, [token]);
+  },[]);
 
   const handleAccept = async (appointmentId) => {
     try {
-        await acceptAppointment(appointmentId, token);
+        await acceptAppointment(appointmentId);
 
         setAppointmentRequests((prevRequests) =>
           prevRequests.filter((req) => req._id !== appointmentId)
@@ -34,7 +34,7 @@ function AppointmentRequests() {
 
   const handleReject = async (appointmentId) => {
     try {
-        await rejectAppointment(appointmentId, token);
+        await rejectAppointment(appointmentId);
 
         setAppointmentRequests((prevRequests) =>
           prevRequests.filter((req) => req._id !== appointmentId)

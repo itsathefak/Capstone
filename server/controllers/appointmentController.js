@@ -1,9 +1,10 @@
 const Appointment = require("../models/Appointment");
+const User = require("../models/User");
 
 exports.getAppointmentRequests = async (req, res) => {
   try {
     const appointmentRequests = await Appointment.find({
-      providerId: req._id,
+      providerId: "66f1dcefb52c37be859d0056",
       status: "Pending",
     })
       .populate("customerId", "firstName lastName email")
@@ -32,7 +33,8 @@ exports.getUpcomingAppointments = async (req, res) => {
     const currentTime = new Date();
 
     const upcomingAppointments = await Appointment.find({
-      providerId: req._id,
+      providerId: "66f1dcefb52c37be859d0056",
+      status: "Confirmed",
       date: { $gt: currentTime },
     })
       .populate("customerId", "firstName lastName email")
@@ -62,7 +64,7 @@ exports.acceptAppointment = async (req, res) => {
 
     const appointment = await Appointment.findByIdAndUpdate(
       appointmentId,
-      { status: "Accepted" },
+      { status: "Confirmed" },
       { new: true }
     );
 

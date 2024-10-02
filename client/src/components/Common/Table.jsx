@@ -29,7 +29,7 @@ function Table({ type, data, onAccept, onReject }) {
       },
   ];
 
-  const tableRows = sampleData.map((row) => (
+  const tableRows = data.map((row) => (
     <TableRow
       rowData={row}
       type={type}
@@ -45,7 +45,7 @@ function Table({ type, data, onAccept, onReject }) {
   // const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   // const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
-  const totalPages = Math.ceil(sampleData.length / rowsPerPage);
+  const totalPages = Math.ceil(data.length / rowsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {

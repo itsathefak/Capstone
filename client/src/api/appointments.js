@@ -1,7 +1,7 @@
 import api from "./api";
 
 // appointment requests
-export const getAppointmentRequests = async (token) => {
+export const getAppointmentRequests = async () => {
   try {
     const response = await api.get(
       `/appointments/requests`
@@ -19,7 +19,7 @@ export const getAppointmentRequests = async (token) => {
 };
 
 // upcoming appointments
-export const getUpcomingAppointments = async (token) => {
+export const getUpcomingAppointments = async () => {
   try {
     const response = await api.get(
       `/appointments/upcoming`
@@ -36,7 +36,7 @@ export const getUpcomingAppointments = async (token) => {
   }
 };
 
-export const acceptAppointment = async (appointmentId, token) => {
+export const acceptAppointment = async (appointmentId) => {
   try {
     const response = await api.put(
       `/appointments/requests/accept`,
@@ -54,7 +54,7 @@ export const acceptAppointment = async (appointmentId, token) => {
   }
 };
 
-export const rejectAppointment = async (appointmentId, token) => {
+export const rejectAppointment = async (appointmentId) => {
   try {
     const response = await api.put(
       `/appointments/requests/reject`,
