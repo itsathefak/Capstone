@@ -61,7 +61,7 @@ const EditService = ({ serviceData, onUpdate }) => {
     const newSlot = { date, start: startTime, end: endTime };
     setTimeSlots([...timeSlots, newSlot]);
     setErrors({ ...errors, timeSlot: null });
-    setStartTime(""); // Clear time inputs after adding
+    setStartTime("");
     setEndTime("");
   };
 
@@ -100,11 +100,10 @@ const EditService = ({ serviceData, onUpdate }) => {
       description,
       date,
       timeSlots,
-      price: parseFloat(price), // Ensure price is a number
+      price: parseFloat(price),
     };
     console.log("Updated Service Data:", updatedServiceData);
 
-    // Call the update function passed as prop
     onUpdate(updatedServiceData);
 
     // Clear form after successful submission

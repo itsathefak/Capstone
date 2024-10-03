@@ -26,7 +26,7 @@ First things first, you’ll want to clone the repository to your local machine.
 
 - inside server/.env file add
 
-MONGO_URI = Your_MongoDB_Connection_String
+MONGO_URI = Your_MongoDB_Connection_String  
 PORT = 5000
 
 - inside client/.env file add
