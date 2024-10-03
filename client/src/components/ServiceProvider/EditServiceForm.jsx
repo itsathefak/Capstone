@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { updateService } from "../../api/services";
 
-const EditService = ({ service, onCancel }) => {
+const EditService = ({ serviceData, onUpdate }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [serviceName, setServiceName] = useState("");
@@ -14,18 +13,17 @@ const EditService = ({ service, onCancel }) => {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Populate form with existing service data
   useEffect(() => {
-    if (service) {
-      setFirstName(service.firstName);
-      setLastName(service.lastName);
-      setServiceName(service.serviceName);
-      setDescription(service.description);
-      setDate(service.date);
-      setTimeSlots(service.timeSlots || []);
-      setPrice(service.price);
+    if (serviceData) {
+      setFirstName(serviceData.firstName);
+      setLastName(serviceData.lastName);
+      setServiceName(serviceData.serviceName);
+      setDescription(serviceData.description);
+      setDate(serviceData.date);
+      setTimeSlots(serviceData.timeSlots);
+      setPrice(serviceData.price);
     }
-  }, [service]);
+  }, [serviceData]);
 
   // Validation for time slots
   const validateTimeSlot = (date, start, end) => {
@@ -62,8 +60,9 @@ const EditService = ({ service, onCancel }) => {
 
     const newSlot = { date, start: startTime, end: endTime };
     setTimeSlots([...timeSlots, newSlot]);
-
     setErrors({ ...errors, timeSlot: null });
+    setStartTime(""); // Clear time inputs after adding
+    setEndTime("");
   };
 
   const handleRemoveTimeSlot = (index) => {
@@ -72,7 +71,7 @@ const EditService = ({ service, onCancel }) => {
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     // Validation for required fields
@@ -87,93 +86,88 @@ const EditService = ({ service, onCancel }) => {
       validationErrors.timeSlot = "Please add at least one time slot.";
     if (price === "") validationErrors.price = "Price is required.";
     if (price < 0) validationErrors.price = "Price cannot be negative.";
+    if (isNaN(price)) validationErrors.price = "Price must be a number.";
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    const serviceData = {
+    const updatedServiceData = {
       firstName,
       lastName,
       serviceName,
       description,
       date,
       timeSlots,
-      price,
+      price: parseFloat(price), // Ensure price is a number
     };
+    console.log("Updated Service Data:", updatedServiceData);
 
-    try {
-      await updateService(service.id, serviceData); // Passing service ID for updating
-      setSuccessMessage("Service updated successfully!");
+    // Call the update function passed as prop
+    onUpdate(updatedServiceData);
 
-      // Clear form after successful submission
-      setFirstName("");
-      setLastName("");
-      setServiceName("");
-      setDescription("");
-      setDate("");
-      setTimeSlots([]);
-      setStartTime("");
-      setEndTime("");
-      setPrice("");
-      setErrors({});
-    } catch (error) {
-      console.error("Error updating service:", error);
-      setErrors({ submit: "Failed to update service. Please try again." });
-    }
+    // Clear form after successful submission
+    setFirstName("");
+    setLastName("");
+    setServiceName("");
+    setDescription("");
+    setDate("");
+    setTimeSlots([]);
+    setStartTime("");
+    setEndTime("");
+    setPrice("");
+    setErrors({});
+    setSuccessMessage("Service updated successfully!");
   };
 
   return (
     <div className="EditServiceForm-container">
       <form onSubmit={handleSubmit}>
         <h2>Edit Service Details</h2>
-        <div className="EditServiceForm-nameContainer">
-          <div className="EditServiceForm-formGroup">
-            <input
-              className={`EditServiceForm-input ${
-                errors.firstName ? "is-invalid" : ""
-              }`}
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-            {errors.firstName && (
-              <div className="EditServiceForm-errorMessage">
-                {errors.firstName}
-              </div>
-            )}
-          </div>
-          <div className="EditServiceForm-formGroup">
-            <input
-              className={`EditServiceForm-input ${
-                errors.lastName ? "is-invalid" : ""
-              }`}
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-            {errors.lastName && (
-              <div className="EditServiceForm-errorMessage">
-                {errors.lastName}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div>
+        <div className="EditServiceForm-formGroup">
           <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             className={`EditServiceForm-input ${
-              errors.serviceName ? "is-invalid" : ""
+              errors.firstName ? "is-invalid" : ""
             }`}
+            required
+          />
+          {errors.firstName && (
+            <div className="EditServiceForm-errorMessage">
+              {errors.firstName}
+            </div>
+          )}
+        </div>
+        <div className="EditServiceForm-formGroup">
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className={`EditServiceForm-input ${
+              errors.lastName ? "is-invalid" : ""
+            }`}
+            required
+          />
+          {errors.lastName && (
+            <div className="EditServiceForm-errorMessage">
+              {errors.lastName}
+            </div>
+          )}
+        </div>
+        <div className="EditServiceForm-formGroup">
+          <input
             type="text"
             placeholder="Service Name"
             value={serviceName}
             onChange={(e) => setServiceName(e.target.value)}
+            className={`EditServiceForm-input ${
+              errors.serviceName ? "is-invalid" : ""
+            }`}
             required
           />
           {errors.serviceName && (
@@ -182,15 +176,14 @@ const EditService = ({ service, onCancel }) => {
             </div>
           )}
         </div>
-
-        <div>
+        <div className="EditServiceForm-formGroup">
           <textarea
-            className={`EditServiceForm-textarea ${
-              errors.description ? "is-invalid" : ""
-            }`}
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className={`EditServiceForm-textarea ${
+              errors.description ? "is-invalid" : ""
+            }`}
             required
           />
           {errors.description && (
@@ -199,99 +192,86 @@ const EditService = ({ service, onCancel }) => {
             </div>
           )}
         </div>
-
-        <div>
+        <div className="EditServiceForm-formGroup">
           <input
-            className={`EditServiceForm-input ${
-              errors.date ? "is-invalid" : ""
-            }`}
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            className={`EditServiceForm-input ${
+              errors.date ? "is-invalid" : ""
+            }`}
             required
           />
           {errors.date && (
             <div className="EditServiceForm-errorMessage">{errors.date}</div>
           )}
         </div>
-
         <div className="EditServiceForm-timeSlotContainer">
           <input
-            className="EditServiceForm-input EditServiceForm-timeSlotInput"
             type="time"
             value={startTime}
             onChange={(e) => setStartTime(e.target.value)}
+            className="EditServiceForm-input"
             required={!!date}
           />
           <input
-            className="EditServiceForm-input EditServiceForm-timeSlotInput"
             type="time"
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
+            className="EditServiceForm-input"
             required={!!date}
           />
           <button
-            className="EditServiceForm-button"
             type="button"
             onClick={handleAddTimeSlot}
+            className="EditServiceForm-button"
             disabled={!date}
           >
             Add Time Slot
           </button>
+          {errors.timeSlot && (
+            <div className="EditServiceForm-errorMessage">
+              {errors.timeSlot}
+            </div>
+          )}
         </div>
-
-        {errors.timeSlot && (
-          <div className="EditServiceForm-errorMessage">{errors.timeSlot}</div>
-        )}
-
         {date && <h3>Time Slots for {date}</h3>}
         <ul className="EditServiceForm-timeSlotList">
           {timeSlots
             .filter((slot) => slot.date === date)
             .map((slot, index) => (
-              <li className="EditServiceForm-timeSlotItem" key={index}>
+              <li key={index} className="EditServiceForm-timeSlotItem">
                 {slot.start} - {slot.end}
                 <button
-                  className="EditServiceForm-removeTimeSlotButton"
                   type="button"
                   onClick={() => handleRemoveTimeSlot(index)}
+                  className="EditServiceForm-removeTimeSlotButton"
                 >
                   Remove
                 </button>
               </li>
             ))}
         </ul>
-
-        <div>
+        <div className="EditServiceForm-formGroup">
           <input
-            className={`EditServiceForm-input ${
-              errors.price ? "is-invalid" : ""
-            }`}
             type="number"
             placeholder="Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            className={`EditServiceForm-input ${
+              errors.price ? "is-invalid" : ""
+            }`}
             required
           />
           {errors.price && (
             <div className="EditServiceForm-errorMessage">{errors.price}</div>
           )}
         </div>
-
-        <button className="EditServiceForm-button" type="submit">
+        <button type="submit" className="EditServiceForm-button">
           Update Service
         </button>
-
-        <button
-          className="EditServiceForm-button"
-          type="button"
-          onClick={onCancel}
-        >
-          Cancel
-        </button>
-
         {successMessage && (
-          <div className="EditServiceForm-successMessage">{successMessage}</div>
+          <div style={{ color: "green" }}>{successMessage}</div>
         )}
       </form>
     </div>

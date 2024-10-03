@@ -153,6 +153,139 @@ body {
   color: #d9534f;
 }
 
+.EditServiceForm-container {
+  max-width: 100%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.EditServiceForm-container h2 {
+  text-align: left;
+  color: #333;
+  margin-bottom: 40px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.EditServiceForm-input,
+.EditServiceForm-textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.EditServiceForm-input:focus,
+.EditServiceForm-textarea:focus {
+  border-color: #0058ff;
+  outline: none;
+}
+
+.EditServiceForm-formGroup {
+  flex: 1;
+}
+
+.is-invalid {
+  border-color: #ff4d4d;
+  background-color: #ffe5e5;
+}
+
+.EditServiceForm-errorMessage {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.EditServiceForm-errorMessage::before {
+  content: '⚠️';
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.EditServiceForm-timeSlotContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.EditServiceForm-button {
+  padding: 12px;
+  height: 100%;
+  background-color: #0058ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.EditServiceForm-button:hover {
+  background-color: #0056b3;
+}
+
+.EditServiceForm-timeSlotList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.EditServiceForm-timeSlotItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.EditServiceForm-removeTimeSlotButton {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.EditServiceForm-removeTimeSlotButton:hover {
+  background-color: #cc0000;
+}
+
+.EditServiceForm-errorMessage {
+  color: #d9534f;
+  background-color: #f9e6e6;
+  border-left: 5px solid #d9534f;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.EditServiceForm-errorMessage i {
+  font-size: 18px;
+  margin-right: 10px;
+  color: #d9534f;
+}
+
+
+
+
 /* Responsive design for CreateServiceForm */
 @media (max-width: 768px) {
   .CreateServiceForm-container {

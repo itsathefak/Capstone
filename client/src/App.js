@@ -6,10 +6,12 @@ import UpcomingAppointments from "./components/ServiceProvider/UpcomingAppointme
 import Footer from "./components/Common/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import EditService from "./components/ServiceProvider/EditServiceForm";
 
 function App() {
   return (
     <div className="App">
+      <EditService />
       <CreateService />
       <Register />
 
