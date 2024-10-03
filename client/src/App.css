@@ -13,17 +13,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -128,4 +117,261 @@
 .appreq-col-name, .appreq-col-email, .appreq-col-date, .appreq-col-timeslot, .appreq-col-action {
   padding: 0 0 0 10px;
   width: 20%;
+}
+
+/* Header Stylings */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* Adjust the height of the header */
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-logo a {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo-text {
+  color: #2E2E2E;
+}
+
+.logo-highlight {
+  color: #0058FF; 
+}
+
+.header-search .search-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  position: relative; 
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-size: 16px;
+  color: #2E2E2E;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 1000;
+  width: 150px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu ul li {
+  margin-bottom: 10px;
+}
+
+.dropdown-menu ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.dropdown-menu ul li a:hover {
+  color: #0058FF;
+}
+
+@media (max-width: 768px) {
+  .header-search .search-input {
+    width: 80%;
+  }
+}
+
+/* Sidebar Styling */
+.sidebar {
+  position: fixed;
+  top: 60px; /* Adjust based on the height of the header */
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 60px); /* Full height minus the header */
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  padding: 20px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 33px;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 20px;
+}
+
+.sidebar-menu li a {
+  color: #2E2E2E;
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center; 
+}
+
+.sidebar-icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.sidebar-menu li a:hover, .sidebar-menu li a.active {
+  color: #0058FF;
+}
+
+.content {
+  padding-top: 80px; /* This should match or be slightly larger than the header height */
+  padding-left: 260px; /* To align with sidebar if you have a sidebar */
+  padding-right: 20px;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .content {
+    margin-left: 200px;
+  }
+}
+
+/* Profile Header */
+.profile-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.profile-info {
+  flex-grow: 1;
+}
+
+.edit-button, .save-button {
+  background-color: #0058ff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button:hover, .save-button:hover {
+  background-color: #034cd6;
+}
+
+/* Personal Information Section */
+.personal-info-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.personal-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.personal-info div {
+  width: 48%;
+}
+
+.personal-info label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.personal-info input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Skills Section */
+.skills-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.skills-section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.skills-section input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Save Button Section */
+.save-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+input[readonly], textarea[readonly] {
+  background-color: #f0f0f0; /* Gray background to indicate read-only */
+  cursor: not-allowed;
 }
