@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import "./App.css";
 import "./index.css";
 import CreateService from "./components/ServiceProvider/CreateServiceForm";
@@ -12,10 +11,11 @@ function App() {
   return (
     <div className="App">
       <CreateService />
+      <Register />
+
       <AppointmentRequests />
       <UpcomingAppointments />
       <Login />
-      <Register />
 
       <Footer />
     </div>

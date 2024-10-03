@@ -18,7 +18,7 @@ let userSchema = new Schema({
   },
   phoneNumber: {
     type: String,
-    required: true,
+    required: false,
   },
   userImage: {
     type: String,
@@ -31,7 +31,7 @@ let userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ["Service Provider", "Customer"],
+    enum: ["Service Provider", "User"],
     required: true,
   },
   password: {

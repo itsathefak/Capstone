@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const servicesRoutes = require("./routes/serviceRoutes");
+const registerUser = require("./routes/userRoutes");
 const cors = require("cors");
 require("dotenv").config();
 const appointmentRoutes = require("./routes/appointmentRoutes");
@@ -19,6 +20,9 @@ app.use(express.json()); // Parse JSON requests
 app.get("/", (req, res) => {
   res.send("Server is up and running!");
 });
+
+// Register Route
+app.use("/user", registerUser);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
