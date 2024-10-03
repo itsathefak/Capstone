@@ -5,6 +5,7 @@ import { getUpcomingAppointments } from "../../api/appointments";
 function UpcomingAppointments() {
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
 
+    // function called which performs get call and returns data to state variable
     useEffect(() => {
         const getUpcoming = async () => {
           try {
@@ -21,6 +22,7 @@ function UpcomingAppointments() {
     return (
         <div className="upapp-main-container">
             <h2 className="upapp-header">Upcoming Appointments</h2>
+            {/* Customize table component based on type and data */}
             <Table type="upcoming appointment" data={upcomingAppointments}/>
         </div>
     );

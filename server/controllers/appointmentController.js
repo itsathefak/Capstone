@@ -1,6 +1,7 @@
 const Appointment = require("../models/Appointment");
 const User = require("../models/User");
 
+// find appointments with status pending and populate details of customer
 exports.getAppointmentRequests = async (req, res) => {
   try {
     const appointmentRequests = await Appointment.find({
@@ -8,6 +9,7 @@ exports.getAppointmentRequests = async (req, res) => {
       status: "Pending",
     })
       .populate("customerId", "firstName lastName email")
+      .sort({ date: 1 })
       .exec();
 
     const data = appointmentRequests.map((appointment) => ({
@@ -28,6 +30,7 @@ exports.getAppointmentRequests = async (req, res) => {
   }
 };
 
+// find appointments with status confirmed, date in future and populate details of customer
 exports.getUpcomingAppointments = async (req, res) => {
   try {
     const currentTime = new Date();
@@ -38,6 +41,7 @@ exports.getUpcomingAppointments = async (req, res) => {
       date: { $gt: currentTime },
     })
       .populate("customerId", "firstName lastName email")
+      .sort({ date: 1 })
       .exec();
 
     const data = upcomingAppointments.map((appointment) => ({
@@ -58,6 +62,7 @@ exports.getUpcomingAppointments = async (req, res) => {
   }
 };
 
+// find and update appointments to status confirmed
 exports.acceptAppointment = async (req, res) => {
   try {
     const { appointmentId } = req.body;
@@ -82,6 +87,7 @@ exports.acceptAppointment = async (req, res) => {
   }
 };
 
+// find and update appointments to status rejected
 exports.rejectAppointment = async (req, res) => {
   try {
     const { appointmentId } = req.body;

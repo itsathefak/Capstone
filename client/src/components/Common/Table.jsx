@@ -29,6 +29,7 @@ function Table({ type, data, onAccept, onReject }) {
       },
   ];
 
+  // Instantiate the table row component for each record in the table
   const tableRows = data.map((row) => (
     <TableRow
       rowData={row}
@@ -38,27 +39,27 @@ function Table({ type, data, onAccept, onReject }) {
     />
   ));
 
+  // Pagination logic
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
-  // const indexOfLastRow = currentPage * rowsPerPage;
-  // const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  // const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
-
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
+  // function to move one page forward
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
+  // function to move one page behind
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
+  // function to move to the page number clicked
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -67,6 +68,7 @@ function Table({ type, data, onAccept, onReject }) {
   const renderPageNumbers = () => {
     const pages = [];
 
+    // if total pages are less than 3, show all page numbers
     if (totalPages <= 3) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(
@@ -81,7 +83,10 @@ function Table({ type, data, onAccept, onReject }) {
           </button>
         );
       }
-    } else {
+    } 
+    else 
+    {
+      // first page
       pages.push(
         <button
           key={1}
@@ -92,12 +97,12 @@ function Table({ type, data, onAccept, onReject }) {
         </button>
       );
 
-      // show ... if current page is greater than 3
+      // show ... if there are more than 2 pages between current page and first
       if (currentPage > 3) {
         pages.push(<span>...</span>);
       }
 
-      // current page and next page
+      // previous, current and next page
       for (
         let i = Math.max(2, currentPage - 1);
         i <= Math.min(totalPages - 1, currentPage + 1);
@@ -116,7 +121,7 @@ function Table({ type, data, onAccept, onReject }) {
         );
       }
 
-      // show ... if there are 2 more pages between current and last
+      // show ... if there are more than 2 pages between current and last
       if (currentPage < totalPages - 2) {
         pages.push(<span>...</span>);
       }
@@ -157,6 +162,7 @@ function Table({ type, data, onAccept, onReject }) {
                 <th scope="col" className="appreq-col-timeslot">
                   Timeslot
                 </th>
+                {/* hide/show actions column based on the type of table */}
                 {type !== "upcoming appointment" && (
                   <th scope="col" className="appreq-col-action">
                     Action
@@ -168,6 +174,7 @@ function Table({ type, data, onAccept, onReject }) {
             <tfoot>
               <tr>
                 <td colSpan="5" className="com-table-pagination">
+                  {/* previous btn disabled if current page is 1 */}
                   <button
                     onClick={handlePreviousPage}
                     disabled={currentPage === 1}
@@ -176,6 +183,7 @@ function Table({ type, data, onAccept, onReject }) {
                     &lt;
                   </button>
                   {renderPageNumbers()}
+                  {/* next btn disabled if current page is last */}
                   <button
                     onClick={handleNextPage}
                     disabled={currentPage === totalPages}

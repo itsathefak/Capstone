@@ -6,6 +6,7 @@ function AppointmentRequests() {
   const [appointmentRequests, setAppointmentRequests] = useState([]);
   // const token = localStorage.getItem("token");
 
+  // function called which performs get call and returns data to state variable
   useEffect(() => {
     const getRequests = async () => {
       try {
@@ -19,6 +20,7 @@ function AppointmentRequests() {
     getRequests();
   },[]);
 
+  // function called which performs api call to accept requests
   const handleAccept = async (appointmentId) => {
     try {
         await acceptAppointment(appointmentId);
@@ -32,6 +34,7 @@ function AppointmentRequests() {
       }
   };
 
+  // function called which performs api call to reject requests
   const handleReject = async (appointmentId) => {
     try {
         await rejectAppointment(appointmentId);
@@ -48,6 +51,9 @@ function AppointmentRequests() {
   return (
     <div className="appreq-main-container">
       <h2 className="appreq-header">Appointment Requests</h2>
+
+      {/* Customize table component based on type and data */}
+      {/* passing accept and reject handling functions as props */}
       <Table type="appointment requests" data={appointmentRequests} onAccept={handleAccept}
         onReject={handleReject}/>
     </div>

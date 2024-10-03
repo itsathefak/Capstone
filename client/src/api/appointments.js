@@ -1,6 +1,6 @@
 import api from "./api";
 
-// appointment requests
+// GET call for appointment requests
 export const getAppointmentRequests = async () => {
   try {
     const response = await api.get(
@@ -18,7 +18,7 @@ export const getAppointmentRequests = async () => {
   }
 };
 
-// upcoming appointments
+// GET call for upcoming appointments
 export const getUpcomingAppointments = async () => {
   try {
     const response = await api.get(
@@ -36,6 +36,7 @@ export const getUpcomingAppointments = async () => {
   }
 };
 
+// PUT call to accept a appointment request
 export const acceptAppointment = async (appointmentId) => {
   try {
     const response = await api.put(
@@ -54,6 +55,7 @@ export const acceptAppointment = async (appointmentId) => {
   }
 };
 
+// PUT call to reject a appointment request
 export const rejectAppointment = async (appointmentId) => {
   try {
     const response = await api.put(
