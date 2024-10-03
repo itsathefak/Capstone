@@ -32,3 +32,20 @@ PORT = 5000
 - inside client/.env file add
 
 REACT_APP_API_URL=http://localhost:5000
+
+## Running the Server and Client
+
+To start the server and client, navigate to each directory and run the respective command:
+
+1. **Start the Server:**
+   cd server  
+   node server.js
+
+   - You can also run:  
+     npm start
+
+2. **Start the Client:**  
+   cd client  
+   npm start
+
+Once both the server and client are running, you should be able to access your application in the browser!
