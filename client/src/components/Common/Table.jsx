@@ -22,11 +22,11 @@ function Table({ type, data, onAccept, onReject }) {
       timeslot: "11:00-12:00",
     },
     {
-        name: "John Doe",
-        email: "john.doe@gmail.com",
-        date: "03-25-2024",
-        timeslot: "11:00-12:00",
-      },
+      name: "John Doe",
+      email: "john.doe@gmail.com",
+      date: "03-25-2024",
+      timeslot: "11:00-12:00",
+    },
   ];
 
   // Instantiate the table row component for each record in the table
@@ -83,9 +83,7 @@ function Table({ type, data, onAccept, onReject }) {
           </button>
         );
       }
-    } 
-    else 
-    {
+    } else {
       // first page
       pages.push(
         <button
@@ -150,21 +148,55 @@ function Table({ type, data, onAccept, onReject }) {
           <table className="com-table">
             <thead className="">
               <tr>
-                <th scope="col" className="appreq-col-name">
-                  Name
-                </th>
-                <th scope="col" className="appreq-col-email">
-                  Email
-                </th>
-                <th scope="col" className="appreq-col-date">
+                {type === "appointment history" ? (
+                  <>
+                    <th scope="col" className="com-col com-col-name">
+                      Service Name
+                    </th>
+                    <th scope="col" className="com-col com-col-name">
+                      Provider Name
+                    </th>
+                    <th scope="col" className="com-col com-col-email">
+                      Provider Email
+                    </th>
+                  </>
+                ) : (
+                  <>
+                    <th
+                      scope="col"
+                      className={`com-col ${
+                        type === "appointment requests" ? "appreq-col-name" : "com-col-name"
+                      }`}
+                    >
+                      Name
+                    </th>
+                    <th scope="col" className={`com-col ${
+                        type === "appointment requests" ? "appreq-col-email" : "com-col-email"
+                      }`}>
+                      Email
+                    </th>
+                    <th scope="col" className={`com-col ${
+                        type === "appointment requests" ? "appreq-col-name" : "com-col-name"
+                      }`}>
+                      Service Name
+                    </th>
+                  </>
+                )}
+
+                <th scope="col" className={`com-col ${
+                        type === "appointment requests" ? "appreq-col-date" : "com-col-date"
+                      }`}>
                   Date
                 </th>
-                <th scope="col" className="appreq-col-timeslot">
+                <th scope="col" className={`com-col ${
+                        type === "appointment requests" ? "appreq-col-time" : "com-col-time"
+                      }`}>
                   Timeslot
                 </th>
+
                 {/* hide/show actions column based on the type of table */}
-                {type !== "upcoming appointment" && (
-                  <th scope="col" className="appreq-col-action">
+                {type === "appointment requests" && (
+                  <th scope="col" className="com-col appreq-col-action">
                     Action
                   </th>
                 )}

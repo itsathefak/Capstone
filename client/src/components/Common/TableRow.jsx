@@ -4,12 +4,23 @@ function TableRow({rowData, type, onAccept, onReject}) {
 
   return (
       <tr scope="row">
-        <td>{rowData.name}</td>
-        <td>{rowData.email}</td>
+        {type === "appointment history" ? (
+          <>
+            <td>{rowData.serviceName}</td>
+            <td>{rowData.providerName}</td>
+            <td>{rowData.providerEmail}</td>
+          </>
+        ) : (
+          <>
+        <td>{rowData.userName}</td>
+        <td>{rowData.userEmail}</td>
+        <td>{rowData.serviceName}</td>
+        </>
+        )}
         <td>{rowData.date}</td>
         <td>{rowData.timeslot}</td>
         {/* hide/show accept/reject btns based on the type of table */}
-        {type !== "upcoming appointment" && (
+        {type === "appointment requests" && (
         <td>
           <div className="com-action-btn-container">
             {/* callback functions passing id (appointment id) */}

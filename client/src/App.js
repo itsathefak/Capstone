@@ -10,6 +10,7 @@ import EditService from "./components/ServiceProvider/EditServiceForm";
 import Header from "./components/Common/Header";
 // import Sidebar from "./components/Common/Sidebar";
 import Profile from "./pages/Profile";
+import AppointmentHistory from "./components/User/AppointmentHistory";
 // import { BrowserRouter as Router, Route, Routes, Switch,useLocation } from 'react-router-dom';
 
 // // Function to conditionally render Sidebar
@@ -59,6 +60,7 @@ function App() {
 
       <AppointmentRequests />
       <UpcomingAppointments />
+      <AppointmentHistory />
       <Profile />
       <Login />
 

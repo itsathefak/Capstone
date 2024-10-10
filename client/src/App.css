@@ -100,24 +100,48 @@
   font-weight: bold;
 }
 
+.com-col {
+  padding: 0 0 0 10px;
+}
+
+.com-col-name, .com-col-time, .com-col-action {
+  width: 20%;
+}
+
+.com-col-email {
+  width: 25%;
+}
+
+.com-col-date {
+  width: 15%;
+}
 
 
-/* Appointment Requests & Upcoming Requests */
 
-.appreq-main-container, .upapp-main-container {
+/* Appointment Requests, Upcoming Requests & Appointment History */
+
+.appreq-main-container, .upapp-main-container, .apphis-main-container {
   margin: 10px;
 }
 
-.appreq-header, .upapp-header {
+.appreq-header, .upapp-header, .apphis-header {
   text-align: left;
   font-size: 20px;
   margin-bottom: 15px;
 }
 
-.appreq-col-name, .appreq-col-email, .appreq-col-date, .appreq-col-timeslot, .appreq-col-action {
-  padding: 0 0 0 10px;
+.appreq-col-name, .appreq-col-time, .appreq-col-action {
+  width: 17%;
+}
+
+.appreq-col-email {
   width: 20%;
 }
+
+.appreq-col-date {
+  width: 12%;
+}
+
 
 /* Header Stylings */
 .app-header {

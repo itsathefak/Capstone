@@ -9,13 +9,15 @@ exports.getAppointmentRequests = async (req, res) => {
       status: "Pending",
     })
       .populate("customerId", "firstName lastName email")
+      .populate("serviceId", "name")
       .sort({ date: 1 })
       .exec();
 
     const data = appointmentRequests.map((appointment) => ({
       _id: appointment._id,
-      name: `${appointment.customerId.firstName} ${appointment.customerId.lastName}`,
-      email: appointment.customerId.email,
+      userName: `${appointment.customerId.firstName} ${appointment.customerId.lastName}`,
+      userEmail: appointment.customerId.email,
+      serviceName: appointment.serviceId.name,
       date: appointment.date.toLocaleDateString(),
       timeslot: `${appointment.startTime}-${appointment.endTime}`,
     }));
@@ -41,13 +43,15 @@ exports.getUpcomingAppointments = async (req, res) => {
       date: { $gt: currentTime },
     })
       .populate("customerId", "firstName lastName email")
+      .populate("serviceId", "name")
       .sort({ date: 1 })
       .exec();
 
     const data = upcomingAppointments.map((appointment) => ({
       _id: appointment._id,
-      name: `${appointment.customerId.firstName} ${appointment.customerId.lastName}`,
-      email: appointment.customerId.email,
+      userName: `${appointment.customerId.firstName} ${appointment.customerId.lastName}`,
+      userEmail: appointment.customerId.email,
+      serviceName: appointment.serviceId.name,
       date: appointment.date.toLocaleDateString(),
       timeslot: `${appointment.startTime}-${appointment.endTime}`,
     }));
