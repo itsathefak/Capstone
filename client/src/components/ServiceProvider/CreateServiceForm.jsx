@@ -1,9 +1,25 @@
 import React, { useState } from "react";
 import { createService } from "../../api/services";
+import { useAuth } from "../../utils/AuthContext";
+
+const InputField = ({ type, placeholder, value, onChange, error }) => (
+  <div className="CreateServiceForm-formGroup">
+    <input
+      className={`CreateServiceForm-input ${error ? "is-invalid" : ""}`}
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      required
+    />
+    {error && <div className="CreateServiceForm-errorMessage">{error}</div>}
+  </div>
+);
 
 const CreateService = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const { user } = useAuth(); // Get user info from useAuth hook
+  const [firstName, setFirstName] = useState(user?.firstName || "");
+  const [lastName, setLastName] = useState(user?.lastName || "");
   const [serviceName, setServiceName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -13,17 +29,15 @@ const CreateService = () => {
   const [price, setPrice] = useState("");
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Validation for time slots
   const validateTimeSlot = (date, start, end) => {
     if (!date || !start || !end) return "Date and times must be provided.";
-
     const startDateTime = new Date(`${date}T${start}`);
     const endDateTime = new Date(`${date}T${end}`);
-    const duration = (endDateTime - startDateTime) / (1000 * 60); // duration in minutes
-
+    const duration = (endDateTime - startDateTime) / (1000 * 60);
     if (duration < 30) return "Time slots must be at least 30 minutes long.";
-
     for (const slot of timeSlots) {
       if (slot.date === date) {
         if (
@@ -35,7 +49,6 @@ const CreateService = () => {
         }
       }
     }
-
     return null;
   };
 
@@ -43,14 +56,13 @@ const CreateService = () => {
   const handleAddTimeSlot = () => {
     const error = validateTimeSlot(date, startTime, endTime);
     if (error) {
-      setErrors({ ...errors, timeSlot: error });
+      setErrors((prev) => ({ ...prev, timeSlot: error }));
       return;
     }
 
     const newSlot = { date, start: startTime, end: endTime };
-    setTimeSlots([...timeSlots, newSlot]);
-
-    setErrors({ ...errors, timeSlot: null });
+    setTimeSlots((prev) => [...prev, newSlot]);
+    setErrors((prev) => ({ ...prev, timeSlot: null }));
   };
 
   const handleRemoveTimeSlot = (index) => {
@@ -61,6 +73,7 @@ const CreateService = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     // Validation for required fields
     const validationErrors = {};
@@ -73,11 +86,12 @@ const CreateService = () => {
     if (timeSlots.length === 0)
       validationErrors.timeSlot = "Please add at least one time slot.";
     const priceValue = parseFloat(price);
-    if (priceValue === "") validationErrors.price = "Price is required.";
+    if (isNaN(priceValue)) validationErrors.price = "Price is required.";
     if (priceValue < 0) validationErrors.price = "Price cannot be negative.";
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setLoading(false);
       return;
     }
 
@@ -99,8 +113,8 @@ const CreateService = () => {
       console.log("Service Data:", serviceData);
 
       // Clear form after successful submission
-      setFirstName("");
-      setLastName("");
+      setFirstName(user?.firstName || "");
+      setLastName(user?.lastName || "");
       setServiceName("");
       setDescription("");
       setDate("");
@@ -112,6 +126,8 @@ const CreateService = () => {
     } catch (error) {
       console.error("Error creating service:", error);
       setErrors({ submit: "Failed to create service. Please try again." });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,61 +135,27 @@ const CreateService = () => {
     <div className="CreateServiceForm-container">
       <form onSubmit={handleSubmit}>
         <h2>Create a Service Now...</h2>
-        <div className="CreateServiceForm-nameContainer">
-          <div className="CreateServiceForm-formGroup">
-            <input
-              className={`CreateServiceForm-input ${
-                errors.firstName ? "is-invalid" : ""
-              }`}
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-            {errors.firstName && (
-              <div className="CreateServiceForm-errorMessage">
-                {errors.firstName}
-              </div>
-            )}
-          </div>
-          <div className="CreateServiceForm-formGroup">
-            <input
-              className={`CreateServiceForm-input ${
-                errors.lastName ? "is-invalid" : ""
-              }`}
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-            {errors.lastName && (
-              <div className="CreateServiceForm-errorMessage">
-                {errors.lastName}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <input
-            className={`CreateServiceForm-input ${
-              errors.serviceName ? "is-invalid" : ""
-            }`}
-            type="text"
-            placeholder="Service Name"
-            value={serviceName}
-            onChange={(e) => setServiceName(e.target.value)}
-            required
-          />
-          {errors.serviceName && (
-            <div className="CreateServiceForm-errorMessage">
-              {errors.serviceName}
-            </div>
-          )}
-        </div>
-
+        <InputField
+          type="text"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          error={errors.firstName}
+        />
+        <InputField
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          error={errors.lastName}
+        />
+        <InputField
+          type="text"
+          placeholder="Service Name"
+          value={serviceName}
+          onChange={(e) => setServiceName(e.target.value)}
+          error={errors.serviceName}
+        />
         <div>
           <textarea
             className={`CreateServiceForm-textarea ${
@@ -190,22 +172,12 @@ const CreateService = () => {
             </div>
           )}
         </div>
-
-        <div>
-          <input
-            className={`CreateServiceForm-input ${
-              errors.date ? "is-invalid" : ""
-            }`}
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-          {errors.date && (
-            <div className="CreateServiceForm-errorMessage">{errors.date}</div>
-          )}
-        </div>
-
+        <InputField
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          error={errors.date}
+        />
         <div className="CreateServiceForm-timeSlotContainer">
           <input
             className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
@@ -230,13 +202,11 @@ const CreateService = () => {
             Add Time Slot
           </button>
         </div>
-
         {errors.timeSlot && (
           <div className="CreateServiceForm-errorMessage">
             {errors.timeSlot}
           </div>
         )}
-
         {date && <h3>Time Slots for {date}</h3>}
         <ul className="CreateServiceForm-timeSlotList">
           {timeSlots
@@ -254,27 +224,20 @@ const CreateService = () => {
               </li>
             ))}
         </ul>
-
-        <div>
-          <input
-            className={`CreateServiceForm-input ${
-              errors.price ? "is-invalid" : ""
-            }`}
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-          {errors.price && (
-            <div className="CreateServiceForm-errorMessage">{errors.price}</div>
-          )}
-        </div>
-
-        <button className="CreateServiceForm-button" type="submit">
-          Create Service
+        <InputField
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          error={errors.price}
+        />
+        <button
+          className="CreateServiceForm-button"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create Service"}
         </button>
-
         {successMessage && (
           <div className="CreateServiceForm-successMessage">
             {successMessage}

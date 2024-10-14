@@ -17,7 +17,15 @@ let serviceSchema = new Schema({
   provider: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: false,
+    required: true,
+  },
+  providerFirstName: {
+    type: String,
+    required: true,
+  },
+  providerLastName: {
+    type: String,
+    required: true,
   },
   availability: [
     {

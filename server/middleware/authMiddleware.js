@@ -1,21 +1,42 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET;
+const User = require("../models/User"); // Import the User model
 
-module.exports = function (req, res, next) {
-  // Get token from header
-  const token = req.header("Authorization")?.replace("Bearer ", "");
+// Middleware to protect routes
+exports.protect = async (req, res, next) => {
+  const token = req.cookies.token; // Access the cookie
 
-  // Check if no token
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res
+      .status(401)
+      .json({ status: "error", msg: "Unauthorized: No token provided" });
   }
 
-  // Verify token
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
-    next();
+    // Verify the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Fetch user details from the database using the user ID in the token
+    req.user = await User.findById(decoded.id).select("-password"); // Exclude password from the result
+
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ status: "error", msg: "Unauthorized: User not found" });
+    }
+
+    next(); // Proceed to the next middleware or route handler
   } catch (err) {
-    return res.status(401).json({ msg: "Token is not valid" });
+    console.error("Token verification error:", err.message);
+
+    // Differentiate between token expiration and other errors
+    if (err.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ status: "error", msg: "Unauthorized: Token has expired" });
+    }
+
+    return res
+      .status(401)
+      .json({ status: "error", msg: "Unauthorized: Invalid token" });
   }
 };

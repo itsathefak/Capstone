@@ -48,4 +48,4 @@ To start the server and client, navigate to each directory and run the respectiv
    cd client  
    npm start
 
-Once both the server and client are running, you should be able to access the application in the browser!
+Once both the server and client are running, you should be able to access application in the browser!

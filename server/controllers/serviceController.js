@@ -1,16 +1,42 @@
 const Service = require("../models/Service");
+const User = require("../models/User"); // Import the User model
+const { validationResult } = require("express-validator");
 
 // Create a new service
 const createService = async (req, res) => {
-  console.log("Received request:", req.body); // Log the incoming request
+  console.log("Received request:", req.body);
+
+  // Validate input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res
+      .status(400)
+      .json({ message: "Validation error", errors: errors.array() });
+  }
+
   try {
     const { serviceName, description, price, timeSlots } = req.body;
+
+    // Ensure provider ID is available
+    const providerId = req.user._id; // Get the authenticated user's ID as the provider
+
+    if (!providerId) {
+      return res.status(400).json({ message: "Provider ID is required" });
+    }
+
+    // Fetch the provider's details
+    const providerDetails = await User.findById(providerId);
+    if (!providerDetails) {
+      return res.status(404).json({ message: "Provider not found" });
+    }
 
     const newService = new Service({
       name: serviceName,
       description,
       price: Number(price),
-      provider: req.providerId, // Set to null if no provider for now
+      provider: providerId, // Associate service with the authenticated user
+      providerFirstName: providerDetails.firstName,
+      providerLastName: providerDetails.lastName,
       availability: timeSlots.map((slot) => ({
         date: slot.date,
         slots: [
@@ -24,15 +50,110 @@ const createService = async (req, res) => {
     });
 
     await newService.save();
-    res
-      .status(201)
-      .json({ message: "Service created successfully", service: newService });
+
+    // Create a simplified service object for the response
+    const serviceResponse = {
+      id: newService._id,
+      name: newService.name,
+      description: newService.description,
+      price: newService.price,
+      provider: {
+        id: newService.provider,
+        firstName: newService.providerFirstName,
+        lastName: newService.providerLastName,
+      },
+      availability: newService.availability.map((availability) => ({
+        date: availability.date,
+        slots: availability.slots.map((slot) => ({
+          startTime: slot.startTime,
+          endTime: slot.endTime,
+          status: slot.status,
+        })),
+      })),
+    };
+
+    res.status(201).json({
+      message: "Service created successfully",
+      service: serviceResponse,
+    });
   } catch (error) {
     console.error("Error creating service:", error);
-    res.status(500).json({ message: "Error creating service", error });
+    res
+      .status(500)
+      .json({ message: "Error creating service", error: error.message });
+  }
+};
+
+// Fetch services for logged-in provider
+const getServicesByProvider = async (req, res) => {
+  const { providerId } = req.query;
+
+  if (!providerId) {
+    return res.status(400).json({ error: "Provider ID is required" });
+  }
+
+  try {
+    // Fetch services from the database using the correct field
+    const services = await Service.find({ provider: providerId }).populate(
+      "provider",
+      "firstName lastName"
+    );
+
+    // Log the services for debugging
+    console.log("Fetched services:", services);
+
+    return res.status(200).json(services);
+  } catch (error) {
+    console.error("Error fetching services:", error);
+    return res.status(500).json({ error: "Failed to fetch services" });
+  }
+};
+
+// Fetch a single service by ID
+const getServiceById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const service = await Service.findById(id);
+
+    if (!service) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    // Return the service details
+    res.status(200).json(service);
+  } catch (error) {
+    console.error("Error fetching service by ID:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch service", error: error.message });
+  }
+};
+
+// Update a service
+const updateService = async (req, res) => {
+  const { serviceId } = req.params;
+  const updatedData = req.body;
+
+  try {
+    const updatedService = await Service.findByIdAndUpdate(
+      serviceId,
+      updatedData,
+      { new: true, runValidators: true }
+    ).populate("provider", "firstName lastName");
+    if (!updatedService) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+    res.status(200).json(updatedService);
+  } catch (error) {
+    console.error("Error updating service:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
 module.exports = {
   createService,
+  getServicesByProvider,
+  getServiceById,
+  updateService,
 };

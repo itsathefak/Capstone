@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
+const cookieParser = require("cookie-parser");
 const servicesRoutes = require("./routes/serviceRoutes");
 const registerUser = require("./routes/userRoutes");
 const cors = require("cors");
@@ -11,14 +12,26 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json()); // Parse JSON requests
+app.use(cookieParser());
 
 // Basic root route to check server status
 app.get("/", (req, res) => {
   res.send("Server is up and running!");
+});
+
+// Test route to check cookies
+app.get("/test-cookies", (req, res) => {
+  console.log(req.cookies);
+  res.send("Check the console for cookies.");
 });
 
 // Register Route

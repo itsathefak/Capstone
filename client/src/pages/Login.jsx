@@ -1,35 +1,53 @@
-import React, { useState } from 'react';
-import { FaEnvelope, FaLock, FaArrowRight } from 'react-icons/fa';
-import { loginUser } from '../api/auth';
+import React, { useState } from "react";
+import { FaEnvelope, FaLock, FaArrowRight } from "react-icons/fa";
+import { loginUser } from "../api/auth";
+import Cookies from "js-cookie";
+import { useAuth } from "../utils/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { email, password } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(''); 
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser(formData); 
-      console.log('Login successful', response);
-      localStorage.setItem('token', response.token); 
-      window.location = '/dashboard'; 
-    } catch (error) {
-      if (error.msg) {
-        setError(error.msg); 
+      const response = await loginUser(formData);
+      console.log("Login successful", response);
+
+      if (response.user && response.token) {
+        // Store the user details and token
+        const cookieData = { user: response.user };
+        Cookies.set("auth", JSON.stringify(cookieData), { expires: 7 });
+        localStorage.setItem("token", response.token);
+
+        // Update AuthContext state with login function
+        login(response.user, response.token);
+
+        // Redirect to dashboard
+        navigate("/dashboard");
       } else {
-        setError('Login failed. Please try again.'); 
+        setError("Login failed. Please try again.");
       }
-      console.error('Login error:', error);
+    } catch (error) {
+      console.error("Login error:", error);
+      if (error.response && error.response.data.msg) {
+        setError(error.response.data.msg);
+      } else {
+        setError("Login failed. Please try again.");
+      }
     }
   };
 
@@ -38,7 +56,8 @@ const Login = () => {
       <div className="login-heading-containerAK">
         <h1 className="appointme-titleAK">AppointME</h1>
         <p className="appointme-descriptionAK">
-          AppointMe helps you connect and book an appointment <br /> with professional people.
+          AppointMe helps you connect and book an appointment <br /> with
+          professional people.
         </p>
       </div>
       <div className="login-form-containerAK">

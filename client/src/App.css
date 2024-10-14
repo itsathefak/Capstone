@@ -21,6 +21,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -36,7 +37,8 @@
   padding: 7px 9px;
 }
 
-.com-primary-btn:hover, .com-primary-btn:active {
+.com-primary-btn:hover,
+.com-primary-btn:active {
   background-color: #034cd6;
   border: 1px solid #034cd6;
   cursor: pointer;
@@ -50,7 +52,8 @@
   padding: 7px 9px;
 }
 
-.com-secondary-btn:hover, .com-secondary-btn:active {
+.com-secondary-btn:hover,
+.com-secondary-btn:active {
   background-color: #e2e2e2;
   border: 1px solid #e2e2e2;
   cursor: pointer;
@@ -104,7 +107,9 @@
   padding: 0 0 0 10px;
 }
 
-.com-col-name, .com-col-time, .com-col-action {
+.com-col-name,
+.com-col-time,
+.com-col-action {
   width: 20%;
 }
 
@@ -120,17 +125,23 @@
 
 /* Appointment Requests, Upcoming Requests & Appointment History */
 
-.appreq-main-container, .upapp-main-container, .apphis-main-container {
+.appreq-main-container,
+.upapp-main-container,
+.apphis-main-container {
   margin: 10px;
 }
 
-.appreq-header, .upapp-header, .apphis-header {
+.appreq-header,
+.upapp-header,
+.apphis-header {
   text-align: left;
   font-size: 20px;
   margin-bottom: 15px;
 }
 
-.appreq-col-name, .appreq-col-time, .appreq-col-action {
+.appreq-col-name,
+.appreq-col-time,
+.appreq-col-action {
   width: 17%;
 }
 
@@ -145,11 +156,8 @@
 
 /* Header Stylings */
 .app-header {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 60px; /* Adjust the height of the header */
+  height: 60px;
   background-color: white;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -170,7 +178,7 @@
 }
 
 .logo-highlight {
-  color: #0058FF; 
+  color: #0058FF;
 }
 
 .header-search .search-input {
@@ -183,7 +191,7 @@
 .header-user {
   display: flex;
   align-items: center;
-  position: relative; 
+  position: relative;
 }
 
 .user-avatar {
@@ -240,10 +248,12 @@
 /* Sidebar Styling */
 .sidebar {
   position: fixed;
-  top: 60px; /* Adjust based on the height of the header */
+  top: 60px;
+  /* Adjust based on the height of the header */
   left: 0;
   width: 250px;
-  height: calc(100vh - 60px); /* Full height minus the header */
+  height: calc(100vh - 60px);
+  /* Full height minus the header */
   background-color: #ffffff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
@@ -265,7 +275,7 @@
   text-decoration: none;
   font-size: 16px;
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 .sidebar-icon {
@@ -273,13 +283,16 @@
   font-size: 18px;
 }
 
-.sidebar-menu li a:hover, .sidebar-menu li a.active {
+.sidebar-menu li a:hover,
+.sidebar-menu li a.active {
   color: #0058FF;
 }
 
 .content {
-  padding-top: 80px; /* This should match or be slightly larger than the header height */
-  padding-left: 260px; /* To align with sidebar if you have a sidebar */
+  padding-top: 80px;
+  /* This should match or be slightly larger than the header height */
+  padding-left: 260px;
+  /* To align with sidebar if you have a sidebar */
   padding-right: 20px;
   min-height: 100vh;
   background-color: #f9f9f9;
@@ -319,7 +332,8 @@
   flex-grow: 1;
 }
 
-.edit-button, .save-button {
+.edit-button,
+.save-button {
   background-color: #0058ff;
   color: white;
   border: none;
@@ -328,7 +342,8 @@
   cursor: pointer;
 }
 
-.edit-button:hover, .save-button:hover {
+.edit-button:hover,
+.save-button:hover {
   background-color: #034cd6;
 }
 
@@ -395,7 +410,23 @@ textarea {
   justify-content: flex-end;
 }
 
-input[readonly], textarea[readonly] {
-  background-color: #f0f0f0; /* Gray background to indicate read-only */
+input[readonly],
+textarea[readonly] {
+  background-color: #f0f0f0;
+  /* Gray background to indicate read-only */
   cursor: not-allowed;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 0;
+}
+
+.link-button:hover {
+  color: #0056b3;
 }

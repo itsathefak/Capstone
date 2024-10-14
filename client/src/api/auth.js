@@ -19,3 +19,13 @@ export const registerUser = async (formData) => {
     throw error.response.data;
   }
 };
+
+// Function to handle user logout
+export const logoutUser = async () => {
+  try {
+    const response = await api.post("/user/logout");
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
