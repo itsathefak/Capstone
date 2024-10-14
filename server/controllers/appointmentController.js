@@ -115,3 +115,37 @@ exports.rejectAppointment = async (req, res) => {
     });
   }
 };
+
+// find appointments with status completed, past date and populate details of customer
+exports.getAppointmentHistory = async (req, res) => {
+  try {
+    const currentTime = new Date();
+
+    const appointmentHistory = await Appointment.find({
+      customerId: "66fe9959e09a98177b1f8591",
+      status: "Completed",
+      date: { $lt: currentTime },
+    })
+      .populate("serviceId", "name")
+      .populate("providerId", "firstName lastName email")
+      .sort({ date: -1 })
+      .exec();
+
+    const data = appointmentHistory.map((appointment) => ({
+      _id: appointment._id,
+      serviceName: appointment.serviceId.name,
+      providerName: `${appointment.providerId.firstName} ${appointment.providerId.lastName}`,
+      providerEmail: appointment.providerId.email,
+      date: appointment.date.toLocaleDateString(),
+      timeslot: `${appointment.startTime}-${appointment.endTime}`,
+    }));
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error reading appointment history:", error);
+    res.status(500).json({
+      message: "Failed to read appointment history",
+      details: error.message,
+    });
+  }
+};

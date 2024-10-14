@@ -73,3 +73,21 @@ export const rejectAppointment = async (appointmentId) => {
     throw error;
   }
 };
+
+// GET call for appointment history
+export const getAppointmentHistory = async () => {
+  try {
+    const response = await api.get(
+      `/appointments/history`
+      //     {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error reading appointment history", error);
+    throw error;
+  }
+};
