@@ -10,6 +10,7 @@ import {
 import CreateService from "./components/ServiceProvider/CreateServiceForm";
 import AppointmentRequests from "./components/ServiceProvider/AppointmentRequests";
 import UpcomingAppointments from "./components/ServiceProvider/UpcomingAppointments";
+import AppointmentHistory from "./components/User/AppointmentHistory";
 import Footer from "./components/Common/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -77,6 +78,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <UpcomingAppointments />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/appointments-history"
+              element={
+                <ProtectedRoute>
+                  <AppointmentHistory />
                 </ProtectedRoute>
               }
             />
