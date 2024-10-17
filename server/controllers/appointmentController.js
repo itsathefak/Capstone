@@ -4,8 +4,14 @@ const User = require("../models/User");
 // find appointments with status pending and populate details of customer
 exports.getAppointmentRequests = async (req, res) => {
   try {
+    const providerId = req.user._id;
+
+    if (!providerId) {
+      return res.status(400).json({ message: "Provider ID is required" });
+    }
+
     const appointmentRequests = await Appointment.find({
-      providerId: "66f1dcefb52c37be859d0056",
+      providerId: providerId,
       status: "Pending",
     })
       .populate("customerId", "firstName lastName email")
@@ -35,10 +41,16 @@ exports.getAppointmentRequests = async (req, res) => {
 // find appointments with status confirmed, date in future and populate details of customer
 exports.getUpcomingAppointments = async (req, res) => {
   try {
+    const providerId = req.user._id;
+
+    if (!providerId) {
+      return res.status(400).json({ message: "Provider ID is required" });
+    }
+
     const currentTime = new Date();
 
     const upcomingAppointments = await Appointment.find({
-      providerId: "66f1dcefb52c37be859d0056",
+      providerId: providerId,
       status: "Confirmed",
       date: { $gt: currentTime },
     })
@@ -119,10 +131,16 @@ exports.rejectAppointment = async (req, res) => {
 // find appointments with status completed, past date and populate details of customer
 exports.getAppointmentHistory = async (req, res) => {
   try {
+    const customerId = req.user._id;
+
+    if (!customerId) {
+      return res.status(400).json({ message: "Customer ID is required" });
+    }
+
     const currentTime = new Date();
 
     const appointmentHistory = await Appointment.find({
-      customerId: "66fe9959e09a98177b1f8591",
+      customerId: customerId,
       status: "Completed",
       date: { $lt: currentTime },
     })

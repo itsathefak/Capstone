@@ -1,15 +1,10 @@
 import api from "./api";
 
 // GET call for appointment requests
-export const getAppointmentRequests = async () => {
+export const getAppointmentRequests = async (providerId) => {
   try {
     const response = await api.get(
-      `/appointments/requests`
-      //     {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // }
+      `/appointments/requests`, providerId
     );
     return response.data;
   } catch (error) {
@@ -19,15 +14,10 @@ export const getAppointmentRequests = async () => {
 };
 
 // GET call for upcoming appointments
-export const getUpcomingAppointments = async () => {
+export const getUpcomingAppointments = async (providerId) => {
   try {
     const response = await api.get(
-      `/appointments/upcoming`
-      //     {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
+      `/appointments/upcoming`, providerId
     );
     return response.data;
   } catch (error) {
@@ -75,15 +65,10 @@ export const rejectAppointment = async (appointmentId) => {
 };
 
 // GET call for appointment history
-export const getAppointmentHistory = async () => {
+export const getAppointmentHistory = async (customerId) => {
   try {
     const response = await api.get(
-      `/appointments/history`
-      //     {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
+      `/appointments/history`, customerId
     );
     return response.data;
   } catch (error) {
