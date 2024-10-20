@@ -28,7 +28,7 @@ exports.protect = async (req, res, next) => {
   } catch (err) {
     console.error("Token verification error:", err.message);
 
-    // Differentiate between token expiration and other errors
+        // Differentiate between token expiration and other errors
     if (err.name === "TokenExpiredError") {
       return res
         .status(401)

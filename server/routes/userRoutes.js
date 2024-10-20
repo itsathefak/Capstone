@@ -5,6 +5,7 @@ const {
   registerUser,
   loginUser,
   logoutUser,
+    getUserProfile,
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -46,6 +47,11 @@ router.post(
 );
 
 router.post("/logout", protect, logoutUser);
+
+router.get("/userProfile", protect, getUserProfile);
+
+
+// Get current user data (protected route)
 
 // Protected route example
 router.get("/protected", protect, (req, res) => {

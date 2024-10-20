@@ -87,3 +87,21 @@ exports.logoutUser = (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ status: "success", msg: "Logged out successfully" });
 };
+
+// Get the logged-in user's profile
+exports.getUserProfile = async (req, res) => {
+  try {
+    // Fetch user data from the database using the ID from the JWT token (req.user.id set by the auth middleware)
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    // Return the user data
+    res.json(user);
+  } catch (err) {
+    console.error("Error fetching user profile:", err.message);
+    res.status(500).json({ msg: "Server Error" });
+  }
+};

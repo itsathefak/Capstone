@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaEnvelope, FaLock, FaArrowRight } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaArrowRight, FaUser } from "react-icons/fa";
 import { loginUser } from "../api/auth";
 import Cookies from "js-cookie";
 import { useAuth } from "../utils/AuthContext";
@@ -51,6 +51,10 @@ const Login = () => {
     }
   };
 
+  const handleNavigate = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="login-page-containerAK">
       <div className="login-heading-containerAK">
@@ -89,6 +93,9 @@ const Login = () => {
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="login-buttonAK">
             Login <FaArrowRight className="arrow-iconAK" />
+          </button>
+          <button onClick={handleNavigate} className="register-buttonAK">
+            Register <FaUser className="arrow-iconAK" />
           </button>
         </form>
       </div>

@@ -462,6 +462,26 @@ body {
   background-color: #0046cc;
 }
 
+.register-buttonAK {
+  width: 100%;
+  background-color: #0058FF;
+  color: white;
+  border: none;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 23px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.register-buttonAK:hover {
+  background-color: #0046cc;
+}
+
 .arrow-iconAK {
   margin-left: 8px;
 }
