@@ -18,7 +18,7 @@ const Header = () => {
   // Fetch services created by the logged-in provider
   useEffect(() => {
     const fetchServices = async () => {
-      if (user && user.id) {
+      if (user && user.id && user.role === "Service Provider") {
         setLoading(true);
         setError(null);
         try {
@@ -85,7 +85,7 @@ const Header = () => {
         {user ? (
           <>
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
               alt="User Avatar"
               className="user-avatar"
             />
@@ -104,29 +104,33 @@ const Header = () => {
                       Logout
                     </button>
                   </li>
-                  <li>
-                    <strong>My Services</strong>
-                    <ul>
-                      {loading ? (
-                        <li>Loading services...</li>
-                      ) : error ? (
-                        <li>{error}</li>
-                      ) : services.length > 0 ? (
-                        services.map((service) => (
-                          <li key={service._id}>
-                            <button
-                              onClick={() => handleServiceClick(service._id)}
-                              className="link-button"
-                            >
-                              {service.name}
-                            </button>
-                          </li>
-                        ))
-                      ) : (
-                        <li>No services found</li>
-                      )}
-                    </ul>
-                  </li>
+
+                  {/* Conditionally show "My Services" if the user is a Service Provider */}
+                  {user.role === "Service Provider" && (
+                    <li>
+                      <strong>My Services</strong>
+                      <ul>
+                        {loading ? (
+                          <li>Loading services...</li>
+                        ) : error ? (
+                          <li>{error}</li>
+                        ) : services.length > 0 ? (
+                          services.map((service) => (
+                            <li key={service._id}>
+                              <button
+                                onClick={() => handleServiceClick(service._id)}
+                                className="link-button"
+                              >
+                                {service.name}
+                              </button>
+                            </li>
+                          ))
+                        ) : (
+                          <li>No services found</li>
+                        )}
+                      </ul>
+                    </li>
+                  )}
                 </ul>
               </div>
             )}
