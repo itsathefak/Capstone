@@ -105,3 +105,26 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ msg: "Server Error" });
   }
 };
+
+// Update user profile
+exports.updateUserProfile = async (req, res) => {
+  try {
+    const { firstName, lastName, phone, address, bio, skills } = req.body; // Destructure the incoming data
+
+    // Find the user by ID and update
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id, // Get the user ID from the `authMiddleware`
+      { firstName, lastName, phone, address, bio, skills }, // Update these fields
+      { new: true, runValidators: true } // Return the updated user and validate
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    res.json(updatedUser); // Return the updated user data
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server Error' });
+  }
+};

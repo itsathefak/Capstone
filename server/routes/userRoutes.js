@@ -5,7 +5,8 @@ const {
   registerUser,
   loginUser,
   logoutUser,
-    getUserProfile,
+  getUserProfile,
+  updateUserProfile,
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -50,8 +51,9 @@ router.post("/logout", protect, logoutUser);
 
 router.get("/userProfile", protect, getUserProfile);
 
+// Update user profile (PUT or PATCH request)
+router.put('/updateProfile', protect, updateUserProfile);
 
-// Get current user data (protected route)
 
 // Protected route example
 router.get("/protected", protect, (req, res) => {

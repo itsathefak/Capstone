@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
+import { useAuth } from "../../../client/src/utils/AuthContext";
 
 const Profile = () => {
   const [userData, setUserData] = useState({
@@ -13,6 +14,9 @@ const Profile = () => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(''); // For success message after save
+  const [errorMessage, setErrorMessage] = useState(''); // For error message
+  const { updateUser } = useAuth();
 
   // Fetch user data when the component loads
   useEffect(() => {
@@ -24,6 +28,7 @@ const Profile = () => {
         setUserData(response.data); // Set the fetched user data
       } catch (error) {
         console.error("Error fetching user data:", error.response?.data);
+        setErrorMessage('Failed to load user data');
       }
     };
 
@@ -39,13 +44,26 @@ const Profile = () => {
   // Handle edit mode
   const handleEdit = () => {
     setIsEditing(true);
+    setSuccessMessage('');
+    setErrorMessage('');
   };
 
-  // Handle save
-  const handleSave = () => {
-    setIsEditing(false);
-    // Optionally save the updated data to the server here
-    console.log('Saved data:', userData);
+  // After a successful API call to update user data:
+  const handleSave = async () => {
+    try {
+      // Send the updated user data to the server
+      const response = await axios.put('http://localhost:5000/user/updateProfile', userData, {
+        withCredentials: true,  // Ensure the cookies are sent with the request
+      });
+
+      // Update the userData state with the new data returned from the server
+      setUserData(response.data);
+      updateUser(response.data); // Update the user globally in the context
+      // setSuccessMessage('Profile updated successfully!');
+    } catch (error) {
+      console.error("Error updating user data:", error.response?.data);
+      setErrorMessage('Failed to update profile');
+    }
   };
 
   return (
@@ -62,8 +80,16 @@ const Profile = () => {
           <h4>Software Engineer</h4>
           <p>{userData.email}</p>
         </div>
-        {!isEditing && <button className="edit-button" onClick={handleEdit}>Edit</button>}
+        {!isEditing && (
+          <button className="edit-button" onClick={handleEdit}>
+            Edit
+          </button>
+        )}
       </div>
+
+      {/* Success or Error Messages */}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
 
       {/* Personal Information Section */}
       <div className="personal-info-section">
@@ -137,7 +163,9 @@ const Profile = () => {
 
       {isEditing && (
         <div className="save-section">
-          <button className="save-button" onClick={handleSave}>Save Changes</button>
+          <button className="save-button" onClick={handleSave}>
+            Save Changes
+          </button>
         </div>
       )}
     </div>
