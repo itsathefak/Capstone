@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const servicesRoutes = require("./routes/serviceRoutes");
 const registerUser = require("./routes/userRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const userServiceRoutes = require("./routes/userServiceRoutes");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -37,6 +38,7 @@ app.get("/test-cookies", (req, res) => {
 app.use("/user", registerUser);
 app.use("/services", servicesRoutes);
 app.use("/appointments", appointmentRoutes);
+app.use("/userService", userServiceRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
