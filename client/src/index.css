@@ -664,7 +664,6 @@ body {
 
   .service-price {
     margin-bottom: 10px;
-    /* Ensure there’s space below the price */
   }
 
   .more-details-wrapper {
@@ -672,8 +671,6 @@ body {
     justify-content: center;
     width: 100%;
     margin-top: 5px;
-    /* Adds additional spacing from the price */
     position: relative;
-    /* Ensures it stays below the price */
   }
 }
