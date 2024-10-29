@@ -66,6 +66,8 @@
   /* margin: 0 0.5rem; */
   width: 100%;
   font-size: 15px;
+  background-color: white;
+  border-radius: 4px;
 }
 
 .com-table th {
@@ -78,12 +80,17 @@
   text-align: left;
   padding: 10px;
 }
+/* 
+.com-table td{
+  word-break: break-all;
+  white-space: normal;
+} */
 
 .com-action-btn-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  column-gap: 10px;
+  gap: 10px;
 }
 
 .com-table-pagination {
@@ -115,6 +122,13 @@
 
 .com-col-email {
   width: 25%;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.com-row-email {
+  word-break: break-all;
+  white-space: normal;
 }
 
 .com-col-date {
@@ -147,6 +161,13 @@
 
 .appreq-col-email {
   width: 20%;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.appreq-row-email {
+  word-break: break-all;
+  white-space: normal;
 }
 
 .appreq-col-date {
@@ -429,4 +450,57 @@ textarea[readonly] {
 
 .link-button:hover {
   color: #0056b3;
+}
+
+
+@media (max-width: 426px) {
+
+  /* mobile view for table row */
+  .com-table {
+    font-size: 13px;
+    background-color: transparent;
+  }
+  
+  .com-table thead {
+    display: none;
+  }
+
+  .com-table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+
+  .com-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .com-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .com-table tbody td::before {
+    content: attr(data-label); 
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+  }
+
+  .com-action-btn-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+  
+  /* mobile styling for appt req, upcoming appt, and appt history */
+
+  .appreq-header, .upapp-header, .apphis-header {
+    font-size: 18px;
+  }
 }

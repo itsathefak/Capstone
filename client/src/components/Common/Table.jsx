@@ -205,7 +205,7 @@ function Table({ type, data, onAccept, onReject }) {
             <tbody>{tableRows}</tbody>
             <tfoot>
               <tr>
-                <td colSpan="5" className="com-table-pagination">
+                <td colSpan={type === "appointment requests" ? 6 : 5} className="com-table-pagination">
                   {/* previous btn disabled if current page is 1 */}
                   <button
                     onClick={handlePreviousPage}
