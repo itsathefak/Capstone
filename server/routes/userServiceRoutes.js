@@ -7,3 +7,5 @@ router.get(
   "/services-with-user-image",
   userServiceController.getServicesWithUserImage
 );
+
+module.exports = router;
