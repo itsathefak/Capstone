@@ -22,6 +22,8 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthContext";
+import ServicesList from "./components/User/ServicesList";
+import ServiceDetail from "./components/User/ServiceDetails";
 
 function LayoutWithHeaderAndSidebar() {
   const location = useLocation(); // Now it's within Router context
@@ -89,6 +91,14 @@ function LayoutWithHeaderAndSidebar() {
           element={
             <ProtectedRoute>
               <UpcomingAppointments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/service-list"
+          element={
+            <ProtectedRoute>
+              <ServicesList />
             </ProtectedRoute>
           }
         />

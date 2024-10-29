@@ -3,9 +3,9 @@ const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const servicesRoutes = require("./routes/serviceRoutes");
 const registerUser = require("./routes/userRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 const cors = require("cors");
 require("dotenv").config();
-const appointmentRoutes = require("./routes/appointmentRoutes");
 
 const app = express();
 
@@ -19,7 +19,6 @@ const corsOptions = {
 
 // Middleware
 app.use(cors(corsOptions));
-
 app.use(express.json()); // Parse JSON requests
 app.use(cookieParser());
 
@@ -34,20 +33,16 @@ app.get("/test-cookies", (req, res) => {
   res.send("Check the console for cookies.");
 });
 
-// Register Route
+// Register Routes
 app.use("/user", registerUser);
+app.use("/services", servicesRoutes);
+app.use("/appointments", appointmentRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
-
-// Routes
-// Use services route
-app.use("/services", servicesRoutes);
-// Use appointments route
-app.use("/appointments", appointmentRoutes);
 
 // Define the port
 const PORT = process.env.PORT || 5000;
