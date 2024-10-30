@@ -102,6 +102,14 @@ function LayoutWithHeaderAndSidebar() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/appointment-history"
+          element={
+            <ProtectedRoute>
+              <AppointmentHistory />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Redirect to login for any unmatched routes */}
         <Route path="*" element={<Navigate to="/" />} />
