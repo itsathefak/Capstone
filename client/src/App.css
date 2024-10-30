@@ -80,11 +80,6 @@
   text-align: left;
   padding: 10px;
 }
-/* 
-.com-table td{
-  word-break: break-all;
-  white-space: normal;
-} */
 
 .com-action-btn-container {
   display: flex;

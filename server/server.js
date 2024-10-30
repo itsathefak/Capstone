@@ -13,6 +13,9 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+// Scheduler for updating completed appointments
+require("./schedulers/completedAppointment");
+
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
