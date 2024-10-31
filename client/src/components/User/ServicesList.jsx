@@ -39,6 +39,7 @@ const ServicesList = () => {
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
+  
 
   return (
     <div className="services-list">
