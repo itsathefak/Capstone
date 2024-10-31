@@ -1,9 +1,6 @@
 # Capstone Project Introduction
 
-AppointMe is an easy-to-use appointment booking website that connectspeople with professional service providers. There are two main types of
-users on this platform: Service Providers and Regular Users. Serviceproviders, like doctors or chartered accountants, can join our platformtocreate listings for their services. They can set up their availabilitybycreating specific dates and time slots, making it simple for users toseewhen they are free. Regular users can access these services and book an appointment
-conveniently. The service provider is notified in his dashboard whentheuser books an appointment. The Service providers can either approveor
-decline the booking. After that, a notification is sent to the user informinghim or her about the service provider's decision, thus making the wholeprocess efficient and easy to follow.
+AppointMe is an easy-to-use appointment booking website that connects people with professional service providers. There are two main types of users on this platform: Service Providers and Regular Users. Service providers, like doctors or chartered accountants, can join our platform to create listings for their services. They can set up their availability by creating specific dates and time slots, making it simple for users to see when they are free. Regular users can access these services and book an appointment conveniently. The service provider is notified in his dashboard when the user books an appointment. The Service providers can either approve or decline the booking. After that, a notification is sent to the user informing them about the service provider's decision, thus making the whole process efficient and easy to follow.
 
 ## Prerequisites
 
@@ -14,19 +11,19 @@ Before running the app, make sure you have a couple of things ready:
 
 ## Getting Started
 
-Let’s get your local setup up and running with a few simple steps!
+Let's get your local setup up and running with a few simple steps!
 
-First things first, you’ll want to clone the repository to your local machine. Open your terminal and run:
+First, you'll want to clone the repository to your local machine. Open your terminal and run:
 
 - git clone https://github.com/Anetiafaber/Capstone.git
 
-- Next, install the node_modules using "npm intall"
+- Next, install the node_modules using "npm install"
 
-- Create, .env file in the root of both server and client folder
+- Create a .env file in the root of both the server and client folder
 
 - inside server/.env file add
 
-MONGO_URI = Your_MongoDB_Connection_String  
+MONGO_URI = Your_MongoDB_Connection_String  
 PORT = 5000
 
 - inside client/.env file add
@@ -48,4 +45,4 @@ To start the server and client, navigate to each directory and run the respectiv
    cd client  
    npm start
 
-Once both the server and client are running, you should be able to access application in the browser!
+Once both the server and client are running, you should be able to access the application in the browser!
