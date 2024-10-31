@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { getAppointmentRequests, getUpcomingAppointments, acceptAppointment, rejectAppointment, getAppointmentHistory } = require("../controllers/appointmentController");
+const {
+  getAppointmentRequests,
+  getUpcomingAppointments,
+  acceptAppointment,
+  rejectAppointment,
+  getAppointmentHistory,
+} = require("../controllers/appointmentController");
 const { protect } = require("../middleware/authMiddleware");
+const { bookService } = require("../controllers/bookingController");
 
 // GET all appointment requests (only for logged-in service providers)
 router.get("/requests", protect, getAppointmentRequests);
@@ -17,5 +24,8 @@ router.put("/requests/reject", protect, rejectAppointment);
 
 // GET appointment history (only for logged-in service providers)
 router.get("/history", protect, getAppointmentHistory);
+
+// Route to book a service
+router.post("/book", protect, bookService);
 
 module.exports = router;

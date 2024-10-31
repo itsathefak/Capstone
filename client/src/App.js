@@ -16,6 +16,7 @@ import Footer from "./components/Common/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EditService from "./components/ServiceProvider/EditServiceForm";
+import BookingForm from "./components/User/BookServiceForm";
 import Header from "./components/Common/Header";
 import Sidebar from "./components/Common/SideBar"; // Make sure the import for Sidebar is correct
 import Profile from "./pages/Profile";
@@ -107,6 +108,14 @@ function LayoutWithHeaderAndSidebar() {
           element={
             <ProtectedRoute>
               <AppointmentHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/book-service/:serviceId"
+          element={
+            <ProtectedRoute>
+              <BookingForm />
             </ProtectedRoute>
           }
         />

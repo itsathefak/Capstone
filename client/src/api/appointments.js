@@ -76,3 +76,29 @@ export const getAppointmentHistory = async (customerId) => {
     throw error;
   }
 };
+
+// Api calls for BookServiceForm
+
+// Function to fetch available time slots
+export const fetchAvailableTimeSlots = async (serviceId, date) => {
+  try {
+    const response = await api.get(
+      `/appointments/available?serviceId=${serviceId}&date=${date}`
+    );
+    return response.data; // Return the available time slots
+  } catch (error) {
+    console.error("Error fetching available time slots:", error);
+    throw error;
+  }
+};
+
+// Function to book a service
+export const bookService = async (bookingDetails) => {
+  try {
+    const response = await api.post("/appointments/book", bookingDetails);
+    return response.data; // Return booking confirmation
+  } catch (error) {
+    console.error("Error booking service:", error);
+    throw error;
+  }
+};

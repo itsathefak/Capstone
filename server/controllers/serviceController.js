@@ -1,5 +1,5 @@
 const Service = require("../models/Service");
-const User = require("../models/User"); // Import the User model
+const User = require("../models/User");
 const { validationResult } = require("express-validator");
 
 // Create a new service
@@ -18,7 +18,7 @@ const createService = async (req, res) => {
     const { serviceName, description, price, timeSlots } = req.body;
 
     // Ensure provider ID is available
-    const providerId = req.user._id; // Get the authenticated user's ID as the provider
+    const providerId = req.user._id;
 
     if (!providerId) {
       return res.status(400).json({ message: "Provider ID is required" });
@@ -34,7 +34,7 @@ const createService = async (req, res) => {
       name: serviceName,
       description,
       price: Number(price),
-      provider: providerId, // Associate service with the authenticated user
+      provider: providerId,
       providerFirstName: providerDetails.firstName,
       providerLastName: providerDetails.lastName,
       availability: timeSlots.map((slot) => ({

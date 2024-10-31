@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
-import { FaEnvelope, FaUser, FaLock, FaArrowRight, FaWrench } from 'react-icons/fa';
-import { registerUser } from '../api/auth';
+import React, { useState } from "react";
+import {
+  FaEnvelope,
+  FaUser,
+  FaLock,
+  FaArrowRight,
+  FaWrench,
+} from "react-icons/fa";
+import { registerUser } from "../api/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    role: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    role: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const { firstName, lastName, email, role, password, confirmPassword } = formData;
+  const { firstName, lastName, email, role, password, confirmPassword } =
+    formData;
 
   // Password strength validation function
   const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!passwordRegex.test(password)) {
       return "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.";
@@ -30,7 +38,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -50,17 +58,17 @@ const Register = () => {
     }
 
     try {
-      const response = await registerUser(formData); 
-      console.log('Registration successful', response);
-      localStorage.setItem('token', response.token); 
-      window.location = '/dashboard'; 
+      const response = await registerUser(formData);
+      console.log("Registration successful", response);
+      localStorage.setItem("token", response.token);
+      // window.location = '/dashboard';
     } catch (err) {
       if (err.response && err.response.data && err.response.data.msg) {
-        setError(err.response.data.msg); 
+        setError(err.response.data.msg);
       } else {
-        setError('An error occurred during registration.');
+        setError("An error occurred during registration.");
       }
-      console.error('Registration error:', err);
+      console.error("Registration error:", err);
     }
   };
 
@@ -155,7 +163,7 @@ const Register = () => {
             />
           </div>
 
-          {error && <p className="error-message">{error}</p>} 
+          {error && <p className="error-message">{error}</p>}
 
           <button type="submit" className="login-buttonAK">
             Register
