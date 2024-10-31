@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from "../../../client/src/utils/AuthContext";
+import { useAuth } from "../../../client/src/utils/AuthContext"; // Ensure this path is correct
 
 const Profile = () => {
   const [userData, setUserData] = useState({
@@ -48,8 +48,9 @@ const Profile = () => {
     setErrorMessage('');
   };
 
-  // After a successful API call to update user data:
+  // After a successful API call to update user data
   const handleSave = async () => {
+    setIsEditing(false);
     try {
       // Send the updated user data to the server
       const response = await axios.put('http://localhost:5000/user/updateProfile', userData, {
