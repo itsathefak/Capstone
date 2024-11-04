@@ -32,11 +32,6 @@ export const acceptAppointment = async (appointmentId) => {
     const response = await api.put(
       `/appointments/requests/accept`,
       { appointmentId }
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // }
     );
     return response.data;
   } catch (error) {
@@ -51,11 +46,6 @@ export const rejectAppointment = async (appointmentId) => {
     const response = await api.put(
       `/appointments/requests/reject`,
       { appointmentId }
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // }
     );
     return response.data;
   } catch (error) {

@@ -1,5 +1,6 @@
 const Appointment = require("../models/Appointment");
 const User = require("../models/User");
+const emailService = require("../utils/emailService");
 
 // find appointments with status pending and populate details of customer
 exports.getAppointmentRequests = async (req, res) => {
@@ -87,11 +88,36 @@ exports.acceptAppointment = async (req, res) => {
       appointmentId,
       { status: "Confirmed" },
       { new: true }
-    );
+    )
+    .populate("customerId", "firstName lastName email")
+    .populate("serviceId", "name")
+    .populate("providerId", "firstName lastName");
 
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
+
+    const customer = appointment.customerId;
+    const service = appointment.serviceId;
+    const provider = appointment.providerId;
+
+    if (!customer || !service || !provider) {
+      return res.status(404).json({ message: "Customer, Service or Provider details not found" });
+    }
+
+    // send confirmed email to the provided email address
+    await emailService.sendConfirmationEmail({
+      email: customer.email,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      date: appointment.date.toISOString().split("T")[0],
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      price: appointment.price,
+      serviceName: service.name,
+      providerName: `${provider.firstName} ${provider.lastName}`,
+      status: "Confirmed"
+    });
 
     res.status(200).json({ message: "Appointment accepted", appointment });
   } catch (error) {
@@ -112,11 +138,35 @@ exports.rejectAppointment = async (req, res) => {
       appointmentId,
       { status: "Rejected" },
       { new: true }
-    );
+    ).populate("customerId", "firstName lastName email")
+    .populate("serviceId", "name")
+    .populate("providerId", "firstName lastName");
 
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
+
+    const customer = appointment.customerId;
+    const service = appointment.serviceId;
+    const provider = appointment.providerId;
+
+    if (!customer || !service || !provider) {
+      return res.status(404).json({ message: "Customer, Service or Provider details not found" });
+    }
+
+    // send confirmed email to the provided email address
+    await emailService.sendConfirmationEmail({
+      email: customer.email,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      date: appointment.date.toISOString().split("T")[0],
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      price: appointment.price,
+      serviceName: service.name,
+      providerName: `${provider.firstName} ${provider.lastName}`,
+      status: "Rejected"
+    });
 
     res.status(200).json({ message: "Appointment rejected", appointment });
   } catch (error) {

@@ -87,6 +87,7 @@ exports.bookService = async (req, res) => {
       price: service.price,
       serviceName: service.name,
       providerName: service.providerName,
+      status: "Pending"
     });
 
     return res
