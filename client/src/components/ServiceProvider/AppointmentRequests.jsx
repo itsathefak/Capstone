@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Table from "../Common/Table";
 import { getAppointmentRequests, acceptAppointment, rejectAppointment } from "../../api/appointments";
 import LoadingIndicator from "../Common/LoadingIndicator";
+import Toast from "../Common/Toast";
 
 function AppointmentRequests() {
   const [appointmentRequests, setAppointmentRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [toastMessage, setToastMessage] = useState("");
 
   // function called which performs get call and returns data to state variable
   useEffect(() => {
@@ -14,6 +16,7 @@ function AppointmentRequests() {
         setLoading(true);
         const data = await getAppointmentRequests();
         setAppointmentRequests(data);
+
       } catch (error) {
         console.error("Error reading appointment requests:", error);
       }
@@ -31,12 +34,11 @@ function AppointmentRequests() {
         setLoading(true);
         await acceptAppointment(appointmentId);
 
-        debugger;
-
         setAppointmentRequests((prevRequests) =>
           prevRequests.filter((req) => req._id !== appointmentId)
         );
-        console.log("Appointment accepted");
+
+        setToastMessage("Appointment Accepted");
       } catch (error) {
         console.error("Error accepting the appointment:", error);
       }
@@ -55,7 +57,8 @@ function AppointmentRequests() {
         setAppointmentRequests((prevRequests) =>
           prevRequests.filter((req) => req._id !== appointmentId)
         );
-        console.log("Appointment rejected");
+        // showToast("Appointment rejected");
+        setToastMessage("Appointment Rejected");
       } catch (error) {
         console.error("Error rejecting the appointment:", error);
       }
@@ -67,6 +70,7 @@ function AppointmentRequests() {
   return (
     <div className="appreq-main-container">
       {loading && <LoadingIndicator />}
+      {toastMessage && <Toast message={toastMessage} duration={3000} onClose={() => setToastMessage("")} />}
 
       <h2 className="appreq-header">Appointment Requests</h2>
 
