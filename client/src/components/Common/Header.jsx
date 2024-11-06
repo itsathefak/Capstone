@@ -11,6 +11,7 @@ const Header = () => {
   const [error, setError] = useState(null);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [fontScale, setFontScale] = useState(() => parseFloat(localStorage.getItem('fontScale')) || 1.0);
 
   // Access user data and logout function from AuthContext
   const { user, logout: clientLogout } = useAuth();
@@ -35,6 +36,45 @@ const Header = () => {
 
     fetchServices();
   }, [user]);
+
+  // font increase/decrease functionality
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--font-size-smaller', `${0.85 * fontScale}rem`);
+    root.style.setProperty('--font-size-small', `${0.875 * fontScale}rem`);
+    root.style.setProperty('--font-size-body', `${0.9 * fontScale}rem`);
+    root.style.setProperty('--font-size-regular', `${1 * fontScale}rem`);
+    root.style.setProperty('--font-size-highlight', `${1.125 * fontScale}rem`);
+    root.style.setProperty('--font-size-page-header', `${1.25 * fontScale}rem`);
+    root.style.setProperty('--font-size-larger', `${1.5 * fontScale}rem`);
+    root.style.setProperty('--font-size-app-title', `${2.25 * fontScale}rem`);
+
+    root.style.setProperty('--font-size-t-smaller', `${0.82 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-small', `${0.85 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-body', `${0.85 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-regular', `${0.95 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-highlight', `${1.05 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-page-header', `${1.18 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-larger', `${1.4 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-app-title', `${2.1 * fontScale}rem`);
+
+    root.style.setProperty('--font-size-m-smaller', `${0.75 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-small', `${0.8 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-body', `${0.8 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-regular', `${0.9 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-highlight', `${1 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-page-header', `${1.125 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-larger', `${1.3 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-app-title', `${1.8 * fontScale}rem`);
+    
+    localStorage.setItem('fontScale', fontScale);
+
+  }, [fontScale]);
+
+  // Handlers to increase or decrease the font scale
+  const increaseFontScale = () => setFontScale(prevScale => prevScale + 0.1);
+  const decreaseFontScale = () => setFontScale(prevScale => Math.max(0.1, prevScale - 0.1));
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -131,6 +171,20 @@ const Header = () => {
                       </ul>
                     </li>
                   )}
+
+                  <li>
+                    <hr />
+                  </li>
+
+                  <li>
+                    <strong>Font Scale</strong>
+                    <div className="com-font-scale-controls">
+                      <button onClick={increaseFontScale} className="com-secondary-btn">+</button>
+                      <span>{Math.round(fontScale * 100)}%</span>
+                      <button onClick={decreaseFontScale} className="com-secondary-btn">-</button>
+                    </div>
+                  </li>
+
                 </ul>
               </div>
             )}
