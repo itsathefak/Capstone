@@ -73,6 +73,10 @@ exports.loginUser = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        phone: user.phone || "",       
+        address: user.address || "",
+        bio: user.bio || "",
+        skills: user.skills || [],
         role: user.role,
       },
     });
@@ -92,7 +96,7 @@ exports.logoutUser = (req, res) => {
 exports.getUserProfile = async (req, res) => {
   try {
     // Fetch user data from the database using the ID from the JWT token (req.user.id set by the auth middleware)
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id).select("-password -__v");
 
     if (!user) {
       return res.status(404).json({ msg: "User not found" });

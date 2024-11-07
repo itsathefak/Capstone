@@ -26,18 +26,24 @@ const Login = () => {
     try {
       const response = await loginUser(formData);
       console.log("Login successful", response);
-
+  
       if (response.user && response.token) {
         // Store the user details and token
         const cookieData = { user: response.user };
         Cookies.set("auth", JSON.stringify(cookieData), { expires: 7 });
         localStorage.setItem("token", response.token);
-
+  
         // Update AuthContext state with login function
         login(response.user, response.token);
-
-        // Redirect to dashboard
-        navigate("/dashboard");
+        const { firstName, lastName, phone, address, bio, skills } = response.user;
+        const isProfileComplete = firstName && lastName && phone && address && bio && skills && skills.length > 0;  
+           
+        // Redirect based on profile completeness
+        if (isProfileComplete) {
+          navigate("/dashboard");
+        } else {
+          navigate("/profile"); 
+        }
       } else {
         setError("Login failed. Please try again.");
       }
@@ -48,11 +54,11 @@ const Login = () => {
       } else {
         setError("Login failed. Please try again.");
       }
-    }
-  };
+    } 
+  };  
 
   const handleNavigate = () => {
-    navigate('/register');
+    navigate("/register");
   };
 
   return (

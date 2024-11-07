@@ -16,9 +16,12 @@ let userSchema = new Schema({
     required: true,
     unique: true,
   },
-  phoneNumber: {
+  phone: {  // Renamed from phoneNumber to phone
     type: String,
     required: false,
+  },
+  address: {  // Added address field
+    type: String,
   },
   userImage: {
     type: String,
