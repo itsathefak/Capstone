@@ -30,7 +30,7 @@ function LayoutWithHeaderAndSidebar() {
   const location = useLocation(); // Now it's within Router context
 
   // Define routes where the Header and Sidebar should be hidden
-  const noHeaderRoutes = ["/", "/register"];
+  const noHeaderRoutes = ["/abc"];
   const noSidebarRoutes = ["/", "/register"]; // Same routes where you don't want the Sidebar
 
   return (
@@ -108,14 +108,6 @@ function LayoutWithHeaderAndSidebar() {
           element={
             <ProtectedRoute>
               <AppointmentHistory />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/book-service/:serviceId"
-          element={
-            <ProtectedRoute>
-              <BookingForm />
             </ProtectedRoute>
           }
         />

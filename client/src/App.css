@@ -190,8 +190,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .com-loading-overlay p {
@@ -219,8 +224,16 @@
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 0.9; }
+
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  10%,
+  90% {
+    opacity: 0.9;
+  }
 }
 
 /* Font change functionality */
@@ -980,10 +993,12 @@ textarea[readonly] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100vh;
   background-color: #F4F7FC;
   margin-right: auto;
   margin-left: auto;
+  margin-top: 40px;
+  height: 85vh;
+  margin-bottom: 40px;
   padding-left: 3rem;
   padding-right: 3rem;
 }
@@ -1417,6 +1432,7 @@ textarea[readonly] {
   }
 }
 
+
 /* index.css ends here */
 
 
@@ -1447,7 +1463,7 @@ textarea[readonly] {
     font-size: var(--font-size-m-body);
     background-color: transparent;
   }
-  
+
   .com-table thead {
     display: none;
   }
@@ -1473,7 +1489,7 @@ textarea[readonly] {
   }
 
   .com-table tbody td::before {
-    content: attr(data-label); 
+    content: attr(data-label);
     font-weight: bold;
     margin-right: 10px;
     color: #333;
@@ -1491,10 +1507,12 @@ textarea[readonly] {
   .com-toast-container {
     font-size: var(--font-size-m-body);
   }
-  
+
   /* mobile styling for appt req, upcoming appt, and appt history */
 
-  .appreq-header, .upapp-header, .apphis-header {
+  .appreq-header,
+  .upapp-header,
+  .apphis-header {
     font-size: var(--font-size-m-page-header);
   }
 }
