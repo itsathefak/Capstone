@@ -5,6 +5,7 @@ const servicesRoutes = require("./routes/serviceRoutes");
 const registerUser = require("./routes/userRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const userServiceRoutes = require("./routes/userServiceRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -42,6 +43,7 @@ app.use("/user", registerUser);
 app.use("/services", servicesRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/userService", userServiceRoutes);
+app.use("/contact", contactRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
