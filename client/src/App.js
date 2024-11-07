@@ -24,6 +24,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthContext";
 import ServicesList from "./components/User/ServicesList";
+import Contact from "./pages/Contact";
 import ServiceDetail from "./components/User/ServiceDetails";
 
 function LayoutWithHeaderAndSidebar() {
@@ -100,6 +101,15 @@ function LayoutWithHeaderAndSidebar() {
           element={
             <ProtectedRoute>
               <ServicesList />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/contact-us" element={<Contact />} />
+        <Route
+          path="/book-service/:serviceId"
+          element={
+            <ProtectedRoute>
+              <BookingForm />
             </ProtectedRoute>
           }
         />
