@@ -825,6 +825,74 @@ textarea[readonly] {
 }
 
 
+/* Unauthorized Component CSS Starts from here */
+
+.Unauthorized-hero {
+  height: 100vh;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+}
+
+.Unauthorized-hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.Unauthorized-title {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.Unauthorized-subtitle {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.Unauthorized-message {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.Unauthorized-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.Unauthorized-button {
+  background-color: #ffffff;
+  color: #3b82f6;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.Unauthorized-button:hover {
+  background-color: #e0e7ff;
+  transform: translateY(-5px);
+}
+
+.Unauthorized-button-secondary {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.Unauthorized-button-secondary:hover {
+  background-color: #1e40af;
+}
+
+
 /* Create Service Form */
 
 .CreateServiceForm-container {
