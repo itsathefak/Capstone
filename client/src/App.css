@@ -556,7 +556,274 @@ textarea[readonly] {
 
 
 
-/* index.css starts here */
+/* Home Page CSS starts here */
+
+/* Hero Section */
+.Home-hero {
+  height: 100vh;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+}
+
+.Home-hero-content h1 {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.Home-subtitle {
+  font-size: 1.6rem;
+  max-width: 600px;
+  margin: 25px auto;
+}
+
+.Home-button {
+  background-color: #ffffff;
+  color: #3b82f6;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.Home-button:hover {
+  background-color: #e0e7ff;
+  transform: translateY(-5px);
+}
+
+/* Features Section */
+.Home-features-section {
+  padding: 80px 40px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.Home-features-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 50px;
+}
+
+.Home-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.Home-feature {
+  background-color: #f9fafe;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.Home-feature:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.Home-feature-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 15px;
+}
+
+/* Lists Section */
+.Home-lists-section {
+  padding: 70px 40px;
+  background-color: #f5f7fa;
+}
+
+.Home-lists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto 0 auto;
+}
+
+.Home-list {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.Home-list-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 20px;
+}
+
+.Home-list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.Home-list-item-icon {
+  width: 20px;
+  height: 20px;
+  color: #10b981;
+  margin-right: 10px;
+}
+
+/* Call to Action Section */
+.Home-cta-section {
+  background-color: #1e40af;
+  color: #ffffff;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.Home-cta-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 25px;
+}
+
+.Home-cta-text {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.Home-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.Home-cta-button {
+  background-color: #ffffff;
+  color: #fff;
+  padding: 12px 40px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.Home-cta-outline-button {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+}
+
+.Home-cta-button:hover {
+  transform: translateY(-5px);
+}
+
+.Home-button-primary {
+  background-color: #ffffff;
+  color: #1e40af;
+  padding: 12px 40px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.Home-button-primary:hover {
+  background-color: #e0e7ff;
+  transform: translateY(-5px);
+}
+
+/* Stats Section */
+.Home-stats-section {
+  padding: 70px 40px;
+  background-color: #ffffff;
+}
+
+.Home-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.Home-stat {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.Home-stat-number {
+  font-size: 3rem;
+  color: #3b82f6;
+  margin-bottom: 10px;
+}
+
+
+/* Testimonials Section */
+.Home-testimonials-section {
+  padding: 80px 40px;
+  background-color: #f5f7fa;
+  text-align: center;
+}
+
+.Home-testimonials-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 50px;
+}
+
+.Home-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.Home-testimonial {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.Home-testimonial:hover {
+  transform: translateY(-5px);
+}
+
+.Home-testimonial-feedback {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.Home-testimonial-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.Home-testimonial-role {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
 
 /* Create Service Form */
 
