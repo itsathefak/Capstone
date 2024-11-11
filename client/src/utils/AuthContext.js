@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         updateUser,
         loading,
         isAuthenticated,
-        hasRole, // Provide the role check function
+        hasRole,
       }}
     >
       {!loading && children}
