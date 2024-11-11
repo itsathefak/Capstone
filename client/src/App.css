@@ -1730,6 +1730,7 @@ textarea[readonly] {
     background-color: transparent;
   }
 
+
   .com-table thead {
     display: none;
   }
@@ -1755,6 +1756,7 @@ textarea[readonly] {
   }
 
   .com-table tbody td::before {
+    content: attr(data-label);
     content: attr(data-label);
     font-weight: bold;
     margin-right: 10px;

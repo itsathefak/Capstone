@@ -26,6 +26,8 @@ import { AuthProvider } from "./utils/AuthContext";
 import ServicesList from "./components/User/ServicesList";
 import Contact from "./pages/Contact";
 import ServiceDetail from "./components/User/ServiceDetails";
+import Home from "./pages/Home";
+import Unauthorized from "./components/Common/Unauthorized";
 
 function LayoutWithHeaderAndSidebar() {
   const location = useLocation(); // Now it's within Router context
@@ -44,8 +46,10 @@ function LayoutWithHeaderAndSidebar() {
 
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Protected Routes */}
         <Route
@@ -99,6 +103,15 @@ function LayoutWithHeaderAndSidebar() {
         <Route
           path="/service-list"
           element={
+            // <ProtectedRoute>
+            <ServicesList />
+            // </ProtectedRoute>
+          }
+        />
+        <Route path="/contact-us" element={<Contact />} />
+        <Route
+          path="/book-service/:serviceId"
+          element={
             <ProtectedRoute>
               <ServicesList />
             </ProtectedRoute>
@@ -123,7 +136,7 @@ function LayoutWithHeaderAndSidebar() {
         />
 
         {/* Redirect to login for any unmatched routes */}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/unauthorized" />} />
       </Routes>
     </>
   );
