@@ -55,7 +55,7 @@ function LayoutWithHeaderAndSidebar() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="User">
               <Dashboard />
             </ProtectedRoute>
           }
@@ -71,7 +71,7 @@ function LayoutWithHeaderAndSidebar() {
         <Route
           path="/create-service"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="Service Provider">
               <CreateService />
             </ProtectedRoute>
           }
@@ -79,7 +79,7 @@ function LayoutWithHeaderAndSidebar() {
         <Route
           path="/edit-service/:serviceId"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requiredRole="Service Provider">
               <EditService />
             </ProtectedRoute>
           }

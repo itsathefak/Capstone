@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user and token data from localStorage or cookies
+  // Load user, token, and role data from localStorage or cookies
   useEffect(() => {
     const token = localStorage.getItem("token");
     const cookieData = Cookies.get("auth")
@@ -25,7 +25,12 @@ export const AuthProvider = ({ children }) => {
     return !!user;
   };
 
-  // Login function to set the user and token
+  // Returns true if user has a specific role
+  const hasRole = (role) => {
+    return user && user.role === role;
+  };
+
+  // Login function to set the user, token, and role
   const login = (userData, token) => {
     setUser(userData);
     localStorage.setItem("token", token);
@@ -39,13 +44,10 @@ export const AuthProvider = ({ children }) => {
       ? JSON.parse(Cookies.get("auth"))
       : null;
 
-    // Update the cookie with new user data if it exists
     if (cookieData) {
-      Cookies.set(
-        "auth",
-        JSON.stringify({ user: updatedUserData }),
-        { expires: 7 }
-      );
+      Cookies.set("auth", JSON.stringify({ user: updatedUserData }), {
+        expires: 7,
+      });
     }
   };
 
@@ -58,9 +60,17 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, updateUser, loading, isAuthenticated }}
+      value={{
+        user,
+        login,
+        logout,
+        updateUser,
+        loading,
+        isAuthenticated,
+        hasRole, // Provide the role check function
+      }}
     >
-      {!loading && children} {/* Ensure children are rendered only after loading */}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
