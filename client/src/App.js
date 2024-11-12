@@ -28,6 +28,7 @@ import Contact from "./pages/Contact";
 import ServiceDetail from "./components/User/ServiceDetails";
 import Home from "./pages/Home";
 import Unauthorized from "./components/Common/Unauthorized";
+import AdminContacts from "./pages/AdminContacts";
 
 function LayoutWithHeaderAndSidebar() {
   const location = useLocation(); // Now it's within Router context
@@ -131,6 +132,14 @@ function LayoutWithHeaderAndSidebar() {
           element={
             <ProtectedRoute requiredRole="User">
               <AppointmentHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-contact"
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <AdminContacts />
             </ProtectedRoute>
           }
         />

@@ -10,7 +10,6 @@ export const submitContactForm = async (contactData) => {
     throw error;
   }
 };
-
 // Function to fetch all contact submissions for the admin
 export const fetchContacts = async () => {
   try {
