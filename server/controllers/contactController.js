@@ -32,3 +32,14 @@ exports.submitContactForm = async (req, res) => {
     res.status(500).json({ error: "Failed to submit contact form" });
   }
 };
+
+// Fetch all contact form submissions for the admin panel
+exports.getAllContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 }); // Sort by newest first
+    res.status(200).json({ contacts });
+  } catch (error) {
+    console.error("Error fetching contact forms:", error);
+    res.status(500).json({ error: "Failed to fetch contact forms" });
+  }
+};
