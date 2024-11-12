@@ -2236,6 +2236,249 @@ textarea[readonly] {
   }
 }
 
+/* Admin-contact css */
+.admin-contacts-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-contacts-container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Contacts Table Styles */
+.contacts-table {
+  width: 100%;
+  border-collapse: collapse;
+  animation: fadeIn 1s ease-out;
+}
+
+.contacts-table th,
+.contacts-table td {
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.contacts-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.contacts-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.contacts-table tr:hover {
+  background-color: #f1f1f1;
+  transform: translateX(5px);
+  transition: transform 0.2s ease-in-out;
+}
+
+.contacts-table td {
+  color: #555;
+}
+
+/* Style for the loading and error state */
+.admin-contacts-loading,
+.admin-contacts-error {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 30px;
+  animation: fadeIn 1.5s ease-out;
+}
+
+.admin-contacts-error {
+  color: #e74c3c;
+}
+
+.loading-spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #007bff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation for fading in elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Media Queries for responsiveness */
+/* Media Queries for Tablet screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .admin-contacts-container {
+    padding: 20px;
+  }
+
+  .contacts-table th,
+  .contacts-table td {
+    padding: 8px 15px;
+  }
+
+  .contacts-table {
+    font-size: 1.1rem;
+  }
+
+  .contact-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .contact-card {
+    width: 100%;
+    max-width: 350px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    animation: fadeIn 1s ease-out;
+  }
+
+  .contact-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #007bff;
+  }
+
+  .contact-card p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .contact-card p span {
+    font-weight: bold;
+  }
+}
+
+/* Media Queries for Mobile screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .admin-contacts-container {
+    padding: 15px;
+  }
+
+  .contacts-table {
+    display: none;
+    /* Hide table on mobile screens */
+  }
+
+  .contact-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .contact-card {
+    width: 100%;
+    max-width: 320px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    animation: fadeIn 1s ease-out;
+  }
+
+  .contact-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #007bff;
+  }
+
+  .contact-card p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  .contact-card p span {
+    font-weight: bold;
+  }
+}
+
+/* Media Queries for Small Mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .contact-card {
+    padding: 10px;
+  }
+
+  .contact-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .contact-card p {
+    font-size: 0.85rem;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Button Styles */
+.button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Fade-in animation for the contact cards */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 
 /* index.css ends here */
 
