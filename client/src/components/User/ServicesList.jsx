@@ -39,7 +39,6 @@ const ServicesList = () => {
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
-  
 
   return (
     <div className="services-list">
@@ -54,28 +53,26 @@ const ServicesList = () => {
       {error && <p className="error-message">{error}</p>}
       {services.length > 0 ? (
         sortServices(services).map((service) => (
-<div key={service._id} className="service-card">
-  <img
-    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
-    alt="unsplash"
-    className="profile-avatar"
-  />
-  <div className="service-details">
-    <h3 className="service-name">{service.name}</h3>
-    <p className="service-provider-name">
-      {service.provider.firstName} {service.provider.lastName}
-    </p>
-    <p className="service-description">{service.description}</p>
-    <p className="service-price">From CA ${service.price}</p>
-    <div className="more-details-wrapper">
-      <Link to={`/service/${service._id}`} className="more-details-button">
-        More Details
-      </Link>
-    </div>
-  </div>
-</div>
-
-
+          <div key={service._id} className="service-card">
+            <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+              alt="unsplash"
+              className="profile-avatar"
+            />
+            <div className="service-details">
+              <h3 className="service-name">{service.name}</h3>
+              <p className="service-provider-name">
+                {service.provider ? `${service.provider.firstName} ${service.provider.lastName}` : "Provider Info Unavailable"}
+              </p>
+              <p className="service-description">{service.description}</p>
+              <p className="service-price">From CA ${service.price}</p>
+              <div className="more-details-wrapper">
+                <Link to={`/service/${service._id}`} className="more-details-button">
+                  More Details
+                </Link>
+              </div>
+            </div>
+          </div>
         ))
       ) : (
         <p>Loading services...</p>

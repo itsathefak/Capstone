@@ -61,7 +61,7 @@ const Register = () => {
       const response = await registerUser(formData);
       console.log("Registration successful", response);
       localStorage.setItem("token", response.token);
-      // window.location = '/dashboard';
+      window.location = '/login';
     } catch (err) {
       if (err.response && err.response.data && err.response.data.msg) {
         setError(err.response.data.msg);
@@ -135,6 +135,7 @@ const Register = () => {
               </option>
               <option value="Service Provider">Service Provider</option>
               <option value="User">Regular User</option>
+              <option value="Admin">Admin</option>
             </select>
           </div>
 

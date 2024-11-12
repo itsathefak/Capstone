@@ -10,3 +10,14 @@ export const submitContactForm = async (contactData) => {
     throw error;
   }
 };
+
+// Function to fetch all contact submissions for the admin
+export const fetchContacts = async () => {
+  try {
+    const response = await api.get("/contact/admin/contacts");
+    return response.data.contacts; // Return just the contacts array
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    throw new Error("Unable to fetch contacts. Please try again later.");
+  }
+};

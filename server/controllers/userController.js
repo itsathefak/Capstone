@@ -73,7 +73,7 @@ exports.loginUser = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        phone: user.phone || "",       
+        phone: user.phone || "",
         address: user.address || "",
         bio: user.bio || "",
         skills: user.skills || [],
@@ -123,12 +123,12 @@ exports.updateUserProfile = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).json({ msg: 'User not found' });
+      return res.status(404).json({ msg: "User not found" });
     }
 
     res.json(updatedUser); // Return the updated user data
   } catch (error) {
     console.error(error);
-    res.status(500).json({ msg: 'Server Error' });
+    res.status(500).json({ msg: "Server Error" });
   }
 };

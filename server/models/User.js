@@ -16,11 +16,13 @@ let userSchema = new Schema({
     required: true,
     unique: true,
   },
-  phone: {  // Renamed from phoneNumber to phone
+  phone: {
+    // Renamed from phoneNumber to phone
     type: String,
     required: false,
   },
-  address: {  // Added address field
+  address: {
+    // Added address field
     type: String,
   },
   userImage: {
@@ -34,7 +36,7 @@ let userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ["Service Provider", "User"],
+    enum: ["Service Provider", "User", "Admin"],
     required: true,
   },
   password: {

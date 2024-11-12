@@ -466,9 +466,6 @@
   align-items: center;
 }
 
-.collapse-btn:hover {
-  /* color: #0058FF; */
-}
 
 .com-sidebar-menu {
   list-style: none;
@@ -521,7 +518,7 @@
   transition: padding-left 0.3s ease;
 }
 
-.com-sidebar.collapsed + .content {
+.com-sidebar.collapsed+.content {
   padding-left: 100px;
 }
 
@@ -1374,50 +1371,160 @@ textarea[readonly] {
 }
 
 /* Footer Styles */
-.footer-containerAK {
+.footer-container {
   width: 100%;
   background-color: #2E2E2E;
   color: white;
-  text-align: center;
-  padding: 10px 0;
+  padding: 40px 0 20px;
   z-index: 1001;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
 }
 
-.footer-textAK {
-  margin: 0;
-  font-size: var(--font-size-small);
+/* Footer Styles */
+.footer-container {
+  width: 100%;
+  background-color: #000;
+  /* Black background */
+  color: white;
+  padding: 40px 0 20px;
+  z-index: 1001;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
 }
 
+/* Footer Styles */
+.footer-container {
+  width: 100%;
+  background-color: #000;
+  /* Black background */
+  color: white;
+  padding: 40px 0 20px;
+  z-index: 1001;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
 
+/* Footer Sections */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  /* Allow sections to wrap in smaller screens */
+}
+
+.footer-section {
+  flex: 1;
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
+  /* Align headings to the left */
+}
+
+.footer-section p,
+.footer-section ul {
+  color: #bbb;
+  text-align: left;
+  /* Align text to the left */
+}
+
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 8px 0;
+}
+
+.footer-section ul li a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #fff;
+}
+
+/* Social Media Icons */
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.social-icons a {
+  color: #bbb;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #fff;
+}
+
+/* Contact Info */
+.contact-info a {
+  color: #bbb;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  color: #fff;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  /* Align bottom text to the left */
+  color: #bbb;
+  padding-top: 20px;
+  margin-left: 20px;
+  /* Slight margin from the left */
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .footer-containerAK {
-    padding: 15px;
-  }
-
-  .footer-textAK {
-    font-size: var(--font-size-t-small);
-  }
-
-  .BS-form-group {
+  .footer-content {
     flex-direction: column;
+    align-items: flex-start;
+    /* Left-align the content on mobile */
   }
 
-  .BS-input,
-  .BS-select {
-    margin: 0 0 15px;
+  .footer-section {
+    padding: 0 20px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .footer-bottom {
+    padding-top: 20px;
+    margin-left: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .footer-containerAK {
-    padding: 10px;
+  .footer-title {
+    font-size: 1rem;
   }
 
-  .footer-textAK {
-    font-size: var(--font-size-m-smaller);
+  .footer-section ul li a {
+    font-size: 0.9rem;
+  }
+
+  .social-icons a {
+    font-size: 1.3rem;
   }
 }
+
 
 /* Login and Register Components CSS Starts */
 .login-page-containerAK {

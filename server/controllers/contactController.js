@@ -15,9 +15,9 @@ exports.submitContactForm = async (req, res) => {
     });
 
     // Save the contact message to the database
-    const savedContact = await newContact.save();
+    await newContact.save();
 
-    // Respond with success message
+    // Respond with success message immediately
     res.status(201).json({ message: "Contact form submitted successfully!" });
   } catch (error) {
     console.error("Error submitting contact form:", error);
