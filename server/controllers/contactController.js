@@ -1,4 +1,7 @@
 const Contact = require("../models/Contact");
+const {
+  sendContactConfirmationEmail,
+} = require("../utils/contactEmailService");
 
 // Handle contact form submission
 exports.submitContactForm = async (req, res) => {
@@ -19,6 +22,11 @@ exports.submitContactForm = async (req, res) => {
 
     // Respond with success message immediately
     res.status(201).json({ message: "Contact form submitted successfully!" });
+
+    // Send a confirmation email in the background
+    sendContactConfirmationEmail({ firstName, lastName, email, message }).catch(
+      (error) => console.error("Error sending confirmation email:", error)
+    );
   } catch (error) {
     console.error("Error submitting contact form:", error);
     res.status(500).json({ error: "Failed to submit contact form" });
