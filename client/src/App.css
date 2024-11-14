@@ -2713,3 +2713,96 @@ textarea[readonly] {
     font-size: var(--font-size-m-page-header);
   }
 }
+
+/* Modal overlay (background) */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensures the modal appears above other content */
+}
+
+/* Modal content container */
+.profile-onboarding-modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%; /* Responsive width */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out; /* Adds fade-in effect */
+}
+
+/* Modal title */
+.profile-onboarding-modal h2 {
+  font-size: 1.5em;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+/* Modal input labels */
+.profile-onboarding-modal label {
+  display: block;
+  font-weight: bold;
+  color: #555555;
+  margin-top: 15px;
+  text-align: left;
+}
+
+/* Modal input fields */
+.profile-onboarding-modal input,
+.profile-onboarding-modal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-size: 1em;
+}
+
+/* Modal textarea for bio */
+.profile-onboarding-modal textarea {
+  height: 100px;
+  resize: vertical; /* Allow resizing vertically */
+}
+
+/* Button container */
+.profile-modal-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Modal buttons */
+.profile-modal-navigation button {
+  background-color: #0058ff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Button hover effect */
+.profile-modal-navigation button:hover {
+  background-color: #003bb5;
+}
+
+.profile-error-text {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -34,7 +34,7 @@ function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
 
   // Define routes where the Header and Sidebar should be hidden
-  const noHeaderRoutes = ["/"];
+  const noHeaderRoutes = ["/", "/register", "/login", "/unauthorized"];
   const noSidebarRoutes = ["/", "/register", "/login", "/unauthorized"]; // Same routes where you don't want the Sidebar
 
   return (
