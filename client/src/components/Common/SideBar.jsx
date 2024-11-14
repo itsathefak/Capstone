@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,21 @@ import {
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { user, logout: clientLogout } = useAuth();
+
+  // Expanded sidebar in screen sizes above 768px (desktop views)
+  // Collapsed sidebar in screen sizes below 768px (tablet and mobile views)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCollapsed(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);

@@ -30,7 +30,7 @@ import Home from "./pages/Home";
 import Unauthorized from "./components/Common/Unauthorized";
 import AdminContacts from "./pages/AdminContacts";
 
-function LayoutWithHeaderAndSidebar() {
+function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
 
   // Define routes where the Header and Sidebar should be hidden
@@ -38,116 +38,113 @@ function LayoutWithHeaderAndSidebar() {
   const noSidebarRoutes = ["/", "/register", "/login", "/unauthorized"]; // Same routes where you don't want the Sidebar
 
   return (
-    <>
+    <div className="layout">
       {/* Conditionally render the header only if the current route is not in the noHeaderRoutes */}
       {!noHeaderRoutes.includes(location.pathname) && <Header />}
 
       {/* Conditionally render the sidebar only if the current route is not in the noSidebarRoutes */}
-      {/* {!noSidebarRoutes.includes(location.pathname) && <Sidebar />} */}
+      <div className="main-container">
+        {!noSidebarRoutes.includes(location.pathname) && <Sidebar />}
 
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
+        <div className={`content ${noSidebarRoutes.includes(location.pathname) ? "no-sidebar" : ""}`}>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute requiredRole="User">
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/create-service"
-          element={
-            <ProtectedRoute requiredRole="Service Provider">
-              <CreateService />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/edit-service/:serviceId"
-          element={
-            <ProtectedRoute requiredRole="Service Provider">
-              <EditService />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/appointment-requests"
-          element={
-            <ProtectedRoute requiredRole="Service Provider">
-              <AppointmentRequests />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/upcoming-appointments"
-          element={
-            <ProtectedRoute requiredRole="Service Provider">
-              <UpcomingAppointments />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/service-list"
-          element={
-            // <ProtectedRoute>
-            <ServicesList />
-            // </ProtectedRoute>
-          }
-        />
-        <Route path="/contact-us" element={<Contact />} />
-        <Route
-          path="/book-service/:serviceId"
-          element={
-            <ProtectedRoute>
-              <ServicesList />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/contact-us" element={<Contact />} />
-        <Route
-          path="/book-service/:serviceId"
-          element={
-            <ProtectedRoute>
-              <BookingForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/appointment-history"
-          element={
-            <ProtectedRoute requiredRole="User">
-              <AppointmentHistory />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin-contact"
-          element={
-            <ProtectedRoute requiredRole="Admin">
-              <AdminContacts />
-            </ProtectedRoute>
-          }
-        />
+            {/* Protected Routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute requiredRole="User">
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/create-service"
+              element={
+                <ProtectedRoute requiredRole="Service Provider">
+                  <CreateService />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-service/:serviceId"
+              element={
+                <ProtectedRoute requiredRole="Service Provider">
+                  <EditService />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/appointment-requests"
+              element={
+                <ProtectedRoute requiredRole="Service Provider">
+                  <AppointmentRequests />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/upcoming-appointments"
+              element={
+                <ProtectedRoute requiredRole="Service Provider">
+                  <UpcomingAppointments />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/service-list"
+              element={
+                // <ProtectedRoute>
+                <ServicesList />
+                // </ProtectedRoute>
+              }
+            />
+            <Route path="/contact-us" element={<Contact />} />
+            <Route
+              path="/book-service/:serviceId"
+              element={
+                <ProtectedRoute>
+                  <ServicesList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/appointment-history"
+              element={
+                <ProtectedRoute requiredRole="User">
+                  <AppointmentHistory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-contact"
+              element={
+                <ProtectedRoute requiredRole="Admin">
+                  <AdminContacts />
+                </ProtectedRoute>
+              }
+            />
 
-        {/* Redirect to login for any unmatched routes */}
-        <Route path="*" element={<Navigate to="/unauthorized" />} />
-      </Routes>
-    </>
+            {/* Redirect to login for any unmatched routes */}
+            <Route path="*" element={<Navigate to="/unauthorized" />} />
+          </Routes>
+
+        </div>
+      </div>
+      {/* <Footer /> */}
+    </div>
   );
 }
 
@@ -156,7 +153,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="App">
-          <LayoutWithHeaderAndSidebar />
+          <SplitAppLayout />
           <Footer />
         </div>
       </Router>
