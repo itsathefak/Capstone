@@ -52,6 +52,12 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/service-list" activeClassName="active">
+                <FontAwesomeIcon icon={faList} className="com-sidebar-icon" />
+                {!isCollapsed && <span>Services</span>}
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/create-service" activeClassName="active">
                 <FontAwesomeIcon
                   icon={faPlusSquare}
