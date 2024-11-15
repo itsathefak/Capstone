@@ -25,10 +25,10 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthContext";
 import ServicesList from "./components/User/ServicesList";
 import Contact from "./pages/Contact";
-import ServiceDetail from "./components/User/ServiceDetails";
 import Home from "./pages/Home";
 import Unauthorized from "./components/Common/Unauthorized";
 import AdminContacts from "./pages/AdminContacts";
+import ServiceDetails from "./components/User/ServiceDetails";
 
 function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
@@ -103,12 +103,21 @@ function SplitAppLayout() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/service-list"
               element={
                 // <ProtectedRoute>
                 <ServicesList />
                 // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/service-list/:serviceId"
+              element={
+                <ProtectedRoute>
+                  <ServiceDetails />
+                </ProtectedRoute>
               }
             />
             <Route path="/contact-us" element={<Contact />} />
@@ -139,6 +148,7 @@ function SplitAppLayout() {
 
             {/* Redirect to login for any unmatched routes */}
             <Route path="*" element={<Navigate to="/unauthorized" />} />
+            <Route path="/service-list/:serviceId" element={<ServiceDetails />} />
           </Routes>
 
         </div>

@@ -111,22 +111,15 @@ const getServicesByProvider = async (req, res) => {
 
 // Fetch a single service by ID
 const getServiceById = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    const service = await Service.findById(id);
-
+    const service = await Service.findById(req.params.id).populate("provider", "firstName lastName");
     if (!service) {
       return res.status(404).json({ message: "Service not found" });
     }
-
-    // Return the service details
     res.status(200).json(service);
   } catch (error) {
-    console.error("Error fetching service by ID:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to fetch service", error: error.message });
+    console.error("Error fetching service by ID:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

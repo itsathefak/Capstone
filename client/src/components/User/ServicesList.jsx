@@ -67,9 +67,10 @@ const ServicesList = () => {
               <p className="service-description">{service.description}</p>
               <p className="service-price">From CA ${service.price}</p>
               <div className="more-details-wrapper">
-                <Link to={`/service/${service._id}`} className="more-details-button">
+                <Link to={`/service-list/${service._id}`} className="more-details-button">
                   More Details
                 </Link>
+
               </div>
             </div>
           </div>

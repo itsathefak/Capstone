@@ -23,7 +23,7 @@ router.post(
 router.get("/", protect, getServicesByProvider);
 
 // GET route to fetch a service by ID
-router.get("/:id", protect, getServiceById);
+router.get("/:id", getServiceById);
 
 // Update Service Route
 router.put("/:serviceId", protect, updateService);
