@@ -208,17 +208,18 @@
 
 .com-toast-container {
   position: fixed;
-  bottom: 20px;
+  bottom: 115px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333;
+  background-color: #296ff6;
   color: #fff;
   padding: 10px 20px;
+  font-weight: 500;
   border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   font-size: var(--font-size-highlight);
   opacity: 0.9;
-  z-index: 1001;
+  z-index: 1002;
   animation: fadeInOut 3s;
 }
 
@@ -1001,6 +1002,9 @@ textarea[readonly] {
 
 .CreateServiceForm-formGroup {
   flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .is-invalid {
@@ -1100,6 +1104,59 @@ textarea[readonly] {
   color: #d9534f;
 }
 
+.CreateServiceForm-input {
+  width: 100%;
+  padding-right: 40px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.CreateServiceForm-timeSlotContainer .CreateServiceForm-button, .EditServiceForm-timeSlotContainer .EditServiceForm-button {
+  max-width: 320px;
+  margin-bottom: 12px;
+}
+
+/* Voice input button styling */
+.CreateServiceForm-voiceButton, .EditServiceForm-voiceButton, .BS-voiceButton {
+  position: absolute;
+  right: 8px;
+  top: 15%;
+  background-color: #f0f0f0;
+  border: none;
+  color: #333;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.BS-voiceButton {
+  top: auto;
+}
+
+.CreateServiceForm-voiceButton:hover, .EditServiceForm-voiceButton:hover, .BS-voiceButton:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.1);
+}
+
+.CreateServiceForm-voiceButton:active, .EditServiceForm-voiceButton:active, .BS-voiceButton:active {
+  background-color: #d0d0d0;
+  transform: scale(1);
+}
+
+.CreateServiceForm-voiceButton:focus, .EditServiceForm-voiceButton:focus, .BS-voiceButton:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+
 /* Edit Service Form CSS */
 
 .EditServiceForm-container {
@@ -1139,6 +1196,9 @@ textarea[readonly] {
 
 .EditServiceForm-formGroup {
   flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .is-invalid {
@@ -1315,36 +1375,6 @@ textarea[readonly] {
   background-color: #0056b3;
 }
 
-
-
-
-/* Responsive design for CreateServiceForm */
-@media (max-width: 768px) {
-  .CreateServiceForm-container {
-    padding: 15px;
-  }
-
-  .CreateServiceForm-nameContainer {
-    flex-direction: column;
-  }
-
-  .CreateServiceForm-input {
-    font-size: var(--font-size-t-regular);
-  }
-}
-
-@media (max-width: 480px) {
-
-  .CreateServiceForm-input,
-  .CreateServiceForm-textarea,
-  .CreateServiceForm-button {
-    font-size: var(--font-size-m-regular);
-  }
-
-  .CreateServiceForm-removeTimeSlotButton {
-    font-size: var(--font-size-m-smaller);
-  }
-}
 
 /* Footer Styles */
 .footer-container {
@@ -1718,6 +1748,13 @@ textarea[readonly] {
   margin-bottom: 15px;
 }
 
+.BS-input-group {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .BS-input,
 .BS-textarea,
 .BS-select {
@@ -1764,13 +1801,62 @@ textarea[readonly] {
 }
 
 .BS-date-time {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* width: 50%; */
+  margin: 0 auto;
   margin-bottom: 20px;
+}
+
+.BS-select {
+  min-width: 200px;
 }
 
 .BS-loading {
   text-align: center;
   font-size: var(--font-size-highlight);
   color: #0058FF;
+}
+
+/* Responsive design for CreateServiceForm, Edit and Book service */
+@media (max-width: 768px) {
+  .CreateServiceForm-container {
+    padding: 15px;
+  }
+
+  .CreateServiceForm-nameContainer {
+    flex-direction: column;
+  }
+
+  .CreateServiceForm-input {
+    font-size: var(--font-size-t-regular);
+  }
+
+  .BS-date-time {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .CreateServiceForm-input,
+  .CreateServiceForm-textarea,
+  .CreateServiceForm-button {
+    font-size: var(--font-size-m-regular);
+  }
+
+  .CreateServiceForm-removeTimeSlotButton {
+    font-size: var(--font-size-m-smaller);
+  }
+
+  .EditServiceForm-timeSlotItem, .EditServiceForm-timeSlotContainer, .CreateServiceForm-timeSlotItem, .CreateServiceForm-timeSlotContainer {
+    flex-direction: column;
+  }
+
+  .BS-date-time {
+    flex-direction: column;
+  }
 }
 
 

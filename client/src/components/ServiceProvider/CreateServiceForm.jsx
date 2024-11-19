@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { createService } from "../../api/services";
 import { useAuth } from "../../utils/AuthContext";
 
-const InputField = ({ type, placeholder, value, onChange, error }) => (
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const InputField = ({ type, placeholder, value, onChange, error, onVoiceInput }) => (
   <div className="CreateServiceForm-formGroup">
     <input
       className={`CreateServiceForm-input ${error ? "is-invalid" : ""}`}
@@ -12,6 +14,15 @@ const InputField = ({ type, placeholder, value, onChange, error }) => (
       onChange={onChange}
       required
     />
+    {onVoiceInput && (
+      <button
+        type="button"
+        className="CreateServiceForm-voiceButton"
+        onClick={onVoiceInput}
+      >
+        🎤
+      </button>
+    )}
     {error && <div className="CreateServiceForm-errorMessage">{error}</div>}
   </div>
 );
@@ -30,6 +41,65 @@ const CreateService = () => {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Speech recognition for input fields 
+  const handleVoiceInput = (setFieldValue, type) => {
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+  
+    recognition.onresult = (event) => {
+      const spokenText = event.results[0][0].transcript;
+  
+      if (type === "date") {
+        const normalizedText = spokenText.replace(/(\d+)(st|nd|rd|th)/, "$1");
+
+        const spokenDate = new Date(normalizedText);
+
+        if (!isNaN(spokenDate)) {
+          setFieldValue(spokenDate.toISOString().split("T")[0]);
+        } else {
+          const utterance = new SpeechSynthesisUtterance(
+            "Could not understand the date. Please try again."
+          );
+          window.speechSynthesis.speak(utterance);
+        }
+      } else if (type === "time") {
+        const timeRegex = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i;
+        let spokenTime = spokenText.replace(/a.m./, "AM").replace(/p.m./, "PM");
+
+        const match = spokenTime.match(timeRegex);
+        if (match) {
+          const [_, hours, minutes, period] = match;
+          let adjustedHours = parseInt(hours, 10);
+          if (period?.toUpperCase() === "PM" && adjustedHours < 12) {
+            adjustedHours += 12;
+          } else if (period?.toUpperCase() === "AM" && adjustedHours === 12) {
+            adjustedHours = 0;
+          }
+          setFieldValue(`${String(adjustedHours).padStart(2, "0")}:${minutes}`);
+        }
+        else {
+          const utterance = new SpeechSynthesisUtterance(
+            "Could not understand the time. Please try again."
+          );
+          window.speechSynthesis.speak(utterance);
+        }
+      }
+       else {
+        setFieldValue(spokenText);
+      }
+    };
+  
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+    };
+  };
+  
 
   // Validation for time slots
   const validateTimeSlot = (date, start, end) => {
@@ -140,6 +210,7 @@ const CreateService = () => {
           placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          onVoiceInput={() => handleVoiceInput(setFirstName)}
           error={errors.firstName}
         />
         <InputField
@@ -147,6 +218,7 @@ const CreateService = () => {
           placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          onVoiceInput={() => handleVoiceInput(setLastName)}
           error={errors.lastName}
         />
         <InputField
@@ -154,9 +226,10 @@ const CreateService = () => {
           placeholder="Service Name"
           value={serviceName}
           onChange={(e) => setServiceName(e.target.value)}
+          onVoiceInput={() => handleVoiceInput(setServiceName)}
           error={errors.serviceName}
         />
-        <div>
+        <div className="CreateServiceForm-formGroup">
           <textarea
             className={`CreateServiceForm-textarea ${
               errors.description ? "is-invalid" : ""
@@ -166,6 +239,13 @@ const CreateService = () => {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
+          <button
+            type="button"
+            className="CreateServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setDescription)}
+          >
+            🎤
+          </button>
           {errors.description && (
             <div className="CreateServiceForm-errorMessage">
               {errors.description}
@@ -176,23 +256,42 @@ const CreateService = () => {
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          onVoiceInput={() => handleVoiceInput(setDate, "date")}
           error={errors.date}
         />
         <div className="CreateServiceForm-timeSlotContainer">
-          <input
-            className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required={!!date}
-          />
-          <input
-            className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required={!!date}
-          />
+          <div className="CreateServiceForm-formGroup">
+            <input
+              className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
+              type="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              required={!!date}
+            />
+            <button
+              type="button"
+              className="CreateServiceForm-voiceButton"
+              onClick={() => handleVoiceInput(setStartTime, "time")}
+            >
+              🎤
+            </button>
+          </div>
+          <div className="CreateServiceForm-formGroup">
+            <input
+              className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
+              type="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              required={!!date}
+            />
+            <button
+              type="button"
+              className="CreateServiceForm-voiceButton"
+              onClick={() => handleVoiceInput(setEndTime, "time")}
+            >
+              🎤
+            </button>
+          </div>
           <button
             className="CreateServiceForm-button"
             type="button"
@@ -229,6 +328,7 @@ const CreateService = () => {
           placeholder="Price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          onVoiceInput={() => handleVoiceInput(setPrice)}
           error={errors.price}
         />
         <button

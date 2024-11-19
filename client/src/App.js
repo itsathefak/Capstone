@@ -29,12 +29,13 @@ import Home from "./pages/Home";
 import Unauthorized from "./components/Common/Unauthorized";
 import AdminContacts from "./pages/AdminContacts";
 import ServiceDetails from "./components/User/ServiceDetails";
+import BookServiceForm from "./components/User/BookServiceForm";
 
 function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
 
   // Define routes where the Header and Sidebar should be hidden
-  const noHeaderRoutes = ["/", "/register", "/login", "/unauthorized"];
+  const noHeaderRoutes = ["/register", "/login", "/unauthorized"];
   const noSidebarRoutes = ["/", "/register", "/login", "/unauthorized"]; // Same routes where you don't want the Sidebar
 
   return (
@@ -125,7 +126,7 @@ function SplitAppLayout() {
               path="/book-service/:serviceId"
               element={
                 <ProtectedRoute>
-                  <ServicesList />
+                  <BookServiceForm />
                 </ProtectedRoute>
               }
             />

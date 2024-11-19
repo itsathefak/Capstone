@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchServiceById, updateService } from "../../api/services";
 
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
 const EditService = ({ onUpdate }) => {
   const { serviceId } = useParams();
   const [firstName, setFirstName] = useState("");
@@ -41,6 +43,63 @@ const EditService = ({ onUpdate }) => {
       fetchServiceDetails();
     }
   }, [serviceId]);
+
+  // Speech recognition for input fields 
+  const handleVoiceInput = (setFieldValue, type) => {
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+  
+    recognition.onresult = (event) => {
+      const spokenText = event.results[0][0].transcript;
+  
+      if (type === "date") {
+        const normalizedText = spokenText.replace(/(\d+)(st|nd|rd|th)/, "$1");
+
+        const spokenDate = new Date(normalizedText);
+
+        if (!isNaN(spokenDate)) {
+          setFieldValue(spokenDate.toISOString().split("T")[0]);
+        } else {
+          const utterance = new SpeechSynthesisUtterance(
+            "Could not understand the date. Please try again."
+          );
+          window.speechSynthesis.speak(utterance);
+        }
+      } else if (type === "time") {
+        const timeRegex = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i;
+        let spokenTime = spokenText.replace(/a.m./, "AM").replace(/p.m./, "PM");
+
+        const match = spokenTime.match(timeRegex);
+        if (match) {
+          const [_, hours, minutes, period] = match;
+          let adjustedHours = parseInt(hours, 10);
+          if (period?.toUpperCase() === "PM" && adjustedHours < 12) {
+            adjustedHours += 12;
+          } else if (period?.toUpperCase() === "AM" && adjustedHours === 12) {
+            adjustedHours = 0;
+          }
+          setFieldValue(`${String(adjustedHours).padStart(2, "0")}:${minutes}`);
+        }
+        else {
+          const utterance = new SpeechSynthesisUtterance(
+            "Could not understand the time. Please try again."
+          );
+          window.speechSynthesis.speak(utterance);
+        }
+      } else {
+        setFieldValue(spokenText);
+      }
+    };
+  
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+    };
+  };
 
   const validateTimeSlot = (date, start, end) => {
     if (!date || !start || !end) return "Date and times must be provided.";
@@ -170,6 +229,13 @@ const EditService = ({ onUpdate }) => {
             }`}
             required
           />
+          <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setFirstName)}
+          >
+            🎤
+          </button>
           {errors.firstName && (
             <div className="EditServiceForm-errorMessage">
               {errors.firstName}
@@ -187,6 +253,13 @@ const EditService = ({ onUpdate }) => {
             }`}
             required
           />
+          <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setLastName)}
+          >
+            🎤
+          </button>
           {errors.lastName && (
             <div className="EditServiceForm-errorMessage">
               {errors.lastName}
@@ -204,6 +277,13 @@ const EditService = ({ onUpdate }) => {
             }`}
             required
           />
+          <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setServiceName)}
+          >
+            🎤
+          </button>
           {errors.serviceName && (
             <div className="EditServiceForm-errorMessage">
               {errors.serviceName}
@@ -220,6 +300,13 @@ const EditService = ({ onUpdate }) => {
             }`}
             required
           />
+          <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setDescription)}
+          >
+            🎤
+          </button>
           {errors.description && (
             <div className="EditServiceForm-errorMessage">
               {errors.description}
@@ -236,25 +323,50 @@ const EditService = ({ onUpdate }) => {
             }`}
             required
           />
+          <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setDate, "date")}
+          >
+            🎤
+          </button>
           {errors.date && (
             <div className="EditServiceForm-errorMessage">{errors.date}</div>
           )}
         </div>
         <div className="EditServiceForm-timeSlotContainer">
-          <input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            placeholder="Start Time"
-            className="EditServiceForm-input"
-          />
-          <input
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            placeholder="End Time"
-            className="EditServiceForm-input"
-          />
+          <div className="EditServiceForm-formGroup">
+            <input
+              type="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              placeholder="Start Time"
+              className="EditServiceForm-input"
+            />
+            <button
+              type="button"
+              className="EditServiceForm-voiceButton"
+              onClick={() => handleVoiceInput(setStartTime, "time")}
+            >
+              🎤
+            </button>
+          </div>
+          <div className="EditServiceForm-formGroup">
+            <input
+              type="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              placeholder="End Time"
+              className="EditServiceForm-input"
+            />
+            <button
+              type="button"
+              className="EditServiceForm-voiceButton"
+              onClick={() => handleVoiceInput(setEndTime, "time")}
+            >
+              🎤
+            </button>
+          </div>
           <button
             type="button"
             onClick={handleAddTimeSlot}
@@ -296,6 +408,13 @@ const EditService = ({ onUpdate }) => {
             }`}
             required
           />
+          <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setPrice)}
+          >
+            🎤
+          </button>
           {errors.price && (
             <div className="EditServiceForm-errorMessage">{errors.price}</div>
           )}
