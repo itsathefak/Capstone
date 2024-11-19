@@ -478,11 +478,11 @@
   transition: padding-left 0.3s ease;
 }
 
-.com-sidebar + .content {
+.com-sidebar+.content {
   padding-left: 285px;
 }
 
-.com-sidebar.collapsed + .content {
+.com-sidebar.collapsed+.content {
   padding-left: 95px;
 }
 
@@ -1114,13 +1114,16 @@ textarea[readonly] {
   border-radius: 4px;
 }
 
-.CreateServiceForm-timeSlotContainer .CreateServiceForm-button, .EditServiceForm-timeSlotContainer .EditServiceForm-button {
+.CreateServiceForm-timeSlotContainer .CreateServiceForm-button,
+.EditServiceForm-timeSlotContainer .EditServiceForm-button {
   max-width: 320px;
   margin-bottom: 12px;
 }
 
 /* Voice input button styling */
-.CreateServiceForm-voiceButton, .EditServiceForm-voiceButton, .BS-voiceButton {
+.CreateServiceForm-voiceButton,
+.EditServiceForm-voiceButton,
+.BS-voiceButton {
   position: absolute;
   right: 8px;
   top: 15%;
@@ -1141,17 +1144,23 @@ textarea[readonly] {
   top: auto;
 }
 
-.CreateServiceForm-voiceButton:hover, .EditServiceForm-voiceButton:hover, .BS-voiceButton:hover {
+.CreateServiceForm-voiceButton:hover,
+.EditServiceForm-voiceButton:hover,
+.BS-voiceButton:hover {
   background-color: #e0e0e0;
   transform: scale(1.1);
 }
 
-.CreateServiceForm-voiceButton:active, .EditServiceForm-voiceButton:active, .BS-voiceButton:active {
+.CreateServiceForm-voiceButton:active,
+.EditServiceForm-voiceButton:active,
+.BS-voiceButton:active {
   background-color: #d0d0d0;
   transform: scale(1);
 }
 
-.CreateServiceForm-voiceButton:focus, .EditServiceForm-voiceButton:focus, .BS-voiceButton:focus {
+.CreateServiceForm-voiceButton:focus,
+.EditServiceForm-voiceButton:focus,
+.BS-voiceButton:focus {
   outline: none;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
 }
@@ -1850,7 +1859,10 @@ textarea[readonly] {
     font-size: var(--font-size-m-smaller);
   }
 
-  .EditServiceForm-timeSlotItem, .EditServiceForm-timeSlotContainer, .CreateServiceForm-timeSlotItem, .CreateServiceForm-timeSlotContainer {
+  .EditServiceForm-timeSlotItem,
+  .EditServiceForm-timeSlotContainer,
+  .CreateServiceForm-timeSlotItem,
+  .CreateServiceForm-timeSlotContainer {
     flex-direction: column;
   }
 
@@ -1885,22 +1897,32 @@ textarea[readonly] {
   }
 }
 
-/* Services List Styles */
+/* User Services List Styles */
+
+/* Banner Styles */
+.full-width-banner {
+  width: 100%;
+  height: 250px;
+  background-image: url('https://www.travelpa.co.za/wp-content/uploads/2018/03/Services.png');
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 24px;
+}
 
 .services-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   margin: 0 auto;
   max-width: 1400px;
-  padding: 20px;
+  padding: 24px;
 }
 
 .services-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .services-heading {
@@ -1908,34 +1930,75 @@ textarea[readonly] {
   text-align: left;
 }
 
-.sort-options {
-  padding: 5px;
+/* Sort Dropdown Styles */
+.sort-dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.sort-label {
+  font-size: var(--font-size-small);
+  color: #333;
+}
+
+.sort-dropdown {
+  padding: 10px 14px;
+  font-size: var(--font-size-small);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  color: #333;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  font-weight: bold;
+}
+
+.sort-dropdown:hover,
+.sort-dropdown:focus {
+  border-color: #1e90ff;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.sort-dropdown::after {
+  content: "▼";
+  font-size: 10px;
+  color: #888;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Service Card Styles */
 .service-card {
   display: flex;
   align-items: flex-start;
-  padding: 15px;
+  padding: 20px;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  gap: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  gap: 24px;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-avatar {
   margin-top: 10px;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-
+  border-radius: 8px;
 }
 
 .service-details {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   text-align: left;
 }
 
@@ -1947,7 +2010,7 @@ textarea[readonly] {
 .service-provider-name,
 .service-description,
 .service-price {
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-body);
   color: #555;
 }
 
@@ -1959,22 +2022,21 @@ textarea[readonly] {
 /* Wrapper for More Details button */
 .more-details-wrapper {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 20px;
+  right: 20px;
 }
 
 .service-card:hover {
   background-color: #e8f0fe;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   transform: translateY(-4px);
 }
 
 .more-details-button {
-  bottom: 16px;
-  right: 16px;
   background-color: #1e90ff;
   color: white;
-  padding: 8px 12px;
+  padding: 10px 16px;
+  /* Increase padding */
   border-radius: 4px;
   font-size: var(--font-size-body);
   font-weight: bold;
@@ -2002,13 +2064,14 @@ textarea[readonly] {
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
-    gap: 15px;
+    gap: 16px;
   }
 
   .profile-avatar {
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    /* Adjust size for mobile */
+    height: 90px;
     flex-shrink: 0;
   }
 
@@ -2031,7 +2094,21 @@ textarea[readonly] {
     margin-top: 5px;
     position: relative;
   }
+
+  .banner {
+    height: 200px;
+  }
+
+  .banner-text h1 {
+    font-size: 2em;
+  }
+
+  .banner-text p {
+    font-size: 1em;
+  }
 }
+
+
 
 /* Contact Page */
 
@@ -2665,12 +2742,12 @@ textarea[readonly] {
     padding: 20px 10px;
   } */
 
-  .com-sidebar + .content {
+  .com-sidebar+.content {
     padding-left: 75px;
     padding-right: 10px;
   }
 
- .com-sidebar.collapsed + .content {
+  .com-sidebar.collapsed+.content {
     padding-left: 75px;
     padding-right: 10px;
   }
@@ -2724,17 +2801,17 @@ textarea[readonly] {
   .com-sidebar.collapsed .collapse-btn {
     margin-left: 13px;
   }
-  
+
   /* .content {
     padding: 20px 10px;
   } */
 
-  .com-sidebar + .content {
+  .com-sidebar+.content {
     padding-left: 58px;
     padding-right: 10px;
   }
 
-  .com-sidebar.collapsed + .content {
+  .com-sidebar.collapsed+.content {
     padding-left: 58px;
     padding-right: 10px;
   }
@@ -2802,11 +2879,13 @@ textarea[readonly] {
 
 /* Modal overlay (background) */
 .ReactModal__Overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000; /* Ensures the modal appears above other content */
+  z-index: 1000;
+  /* Ensures the modal appears above other content */
 }
 
 /* Modal content container */
@@ -2815,10 +2894,12 @@ textarea[readonly] {
   border-radius: 8px;
   padding: 20px;
   max-width: 500px;
-  width: 90%; /* Responsive width */
+  width: 90%;
+  /* Responsive width */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
-  animation: fadeIn 0.3s ease-in-out; /* Adds fade-in effect */
+  animation: fadeIn 0.3s ease-in-out;
+  /* Adds fade-in effect */
 }
 
 /* Modal title */
@@ -2851,7 +2932,8 @@ textarea[readonly] {
 /* Modal textarea for bio */
 .profile-onboarding-modal textarea {
   height: 100px;
-  resize: vertical; /* Allow resizing vertically */
+  resize: vertical;
+  /* Allow resizing vertically */
 }
 
 /* Button container */
@@ -2888,6 +2970,7 @@ textarea[readonly] {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -2910,7 +2993,7 @@ textarea[readonly] {
 }
 
 .user-service-title {
-  font-size:var(--font-size-larger);
+  font-size: var(--font-size-larger);
   font-weight: bold;
   color: #333;
 }
@@ -2934,13 +3017,13 @@ textarea[readonly] {
 }
 
 .user-provider-name {
-  font-size:var(--font-size-larger);
+  font-size: var(--font-size-larger);
   font-weight: bold;
   color: #333;
 }
 
 .user-provider-rating {
-  font-size:var(--font-size-m-page-header);
+  font-size: var(--font-size-m-page-header);
   color: #ffb400;
 }
 
@@ -2948,7 +3031,7 @@ textarea[readonly] {
   margin-top: 15px;
   line-height: 1.6;
   color: #666;
-  font-size:var(--font-size-body);
+  font-size: var(--font-size-body);
 }
 
 .user-order-summary {
@@ -2961,7 +3044,7 @@ textarea[readonly] {
 }
 
 .user-order-summary h3 {
-  font-size:var(--font-size-body);
+  font-size: var(--font-size-body);
   font-weight: bold;
   margin-bottom: 15px;
 }
@@ -2969,7 +3052,7 @@ textarea[readonly] {
 .user-summary-details p {
   display: flex;
   justify-content: space-between;
-  font-size:var(--font-size-regular);
+  font-size: var(--font-size-regular);
   margin: 8px 0;
   color: #333;
 }
@@ -2994,7 +3077,8 @@ textarea[readonly] {
   color: #fff;
   border: none;
   border-radius: 5px;
-  font-size: var(--font-size-body);;
+  font-size: var(--font-size-body);
+  ;
   cursor: pointer;
   margin-top: 20px;
   text-align: center;

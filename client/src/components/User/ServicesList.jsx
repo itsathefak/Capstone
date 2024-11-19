@@ -41,43 +41,57 @@ const ServicesList = () => {
   };
 
   return (
-    <div className="services-list">
-      <div className="services-header">
-        <h2 className="services-heading">Services</h2>
-        <select className="sort-options" value={sortOption} onChange={handleSortChange}>
-          <option value="price">Sort by Price</option>
-          <option value="name">Sort by A-Z</option>
-          <option value="date">Sort by Date</option>
-        </select>
-      </div>
-      {error && <p className="error-message">{error}</p>}
-      {services.length > 0 ? (
-        sortServices(services).map((service) => (
-          <div key={service._id} className="service-card">
-            <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
-              alt="unsplash"
-              className="profile-avatar"
-            />
-            <div className="service-details">
-              <h3 className="service-name">{service.name}</h3>
-              <p className="service-provider-name">
-                {service.provider ? `${service.provider.firstName} ${service.provider.lastName}` : "Provider Info Unavailable"}
-              </p>
-              <p className="service-description">{service.description}</p>
-              <p className="service-price">From CA ${service.price}</p>
-              <div className="more-details-wrapper">
-                <Link to={`/service-list/${service._id}`} className="more-details-button">
-                  More Details
-                </Link>
+    <div>
+      <div className="full-width-banner"></div>
 
+      <div className="services-list">
+        <div className="services-header">
+          <h2 className="services-heading">Services</h2>
+          <div className="sort-dropdown-wrapper">
+            <label htmlFor="sort-options" className="sort-label">Sort by:</label>
+            <select
+              id="sort-options"
+              className="sort-dropdown"
+              value={sortOption}
+              onChange={handleSortChange}
+            >
+              <option value="price">Price</option>
+              <option value="name">A-Z</option>
+              <option value="date">Date</option>
+            </select>
+          </div>
+        </div>
+
+        {error && <p className="error-message">{error}</p>}
+        {services.length > 0 ? (
+          sortServices(services).map((service) => (
+            <div key={service._id} className="service-card">
+              <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+              alt="Service Provider"
+                className="profile-avatar"
+              />
+              <div className="service-details">
+                <h3 className="service-name">{service.name}</h3>
+                <p className="service-provider-name">
+                  {service.provider
+                    ? `${service.provider.firstName} ${service.provider.lastName}`
+                    : "Provider Info Unavailable"}
+                </p>
+                <p className="service-description">{service.description}</p>
+                <p className="service-price">From CA ${service.price}</p>
+                <div className="more-details-wrapper">
+                  <Link to={`/service/${service._id}`} className="more-details-button">
+                    More Details
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))
-      ) : (
-        <p>Loading services...</p>
-      )}
+          ))
+        ) : (
+          <p>Loading services...</p>
+        )}
+      </div>
     </div>
   );
 };
