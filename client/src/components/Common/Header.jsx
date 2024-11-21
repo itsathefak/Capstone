@@ -47,7 +47,11 @@ const Header = () => {
     root.style.setProperty('--font-size-highlight', `${1.125 * fontScale}rem`);
     root.style.setProperty('--font-size-page-header', `${1.25 * fontScale}rem`);
     root.style.setProperty('--font-size-larger', `${1.5 * fontScale}rem`);
+    root.style.setProperty('--font-size-company-header', `${1.9 * fontScale}rem`);
     root.style.setProperty('--font-size-app-title', `${2.25 * fontScale}rem`);
+    root.style.setProperty('--font-size-home-features', `${2.8 * fontScale}rem`);
+    root.style.setProperty('--font-size-home-stat', `${3 * fontScale}rem`);
+    root.style.setProperty('--font-size-hero-title', `${4 * fontScale}rem`);
 
     root.style.setProperty('--font-size-t-smaller', `${0.82 * fontScale}rem`);
     root.style.setProperty('--font-size-t-small', `${0.85 * fontScale}rem`);
@@ -56,7 +60,11 @@ const Header = () => {
     root.style.setProperty('--font-size-t-highlight', `${1.05 * fontScale}rem`);
     root.style.setProperty('--font-size-t-page-header', `${1.18 * fontScale}rem`);
     root.style.setProperty('--font-size-t-larger', `${1.4 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-company-header', `${1.75 * fontScale}rem`);
     root.style.setProperty('--font-size-t-app-title', `${2.1 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-home-features', `${2.2 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-home-stat', `${2.5 * fontScale}rem`);
+    root.style.setProperty('--font-size-t-hero-title', `${3.2 * fontScale}rem`);
 
     root.style.setProperty('--font-size-m-smaller', `${0.75 * fontScale}rem`);
     root.style.setProperty('--font-size-m-small', `${0.8 * fontScale}rem`);
@@ -65,7 +73,11 @@ const Header = () => {
     root.style.setProperty('--font-size-m-highlight', `${1 * fontScale}rem`);
     root.style.setProperty('--font-size-m-page-header', `${1.125 * fontScale}rem`);
     root.style.setProperty('--font-size-m-larger', `${1.3 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-company-header', `${1.45 * fontScale}rem`);
     root.style.setProperty('--font-size-m-app-title', `${1.8 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-home-features', `${1.9 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-home-stat', `${2.1 * fontScale}rem`);
+    root.style.setProperty('--font-size-m-hero-title', `${2.3 * fontScale}rem`);
     
     localStorage.setItem('fontScale', fontScale);
 
