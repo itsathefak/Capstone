@@ -129,9 +129,7 @@ const Header = () => {
         </a>
       </div>
 
-      <div className="header-search">
-        <input type="text" placeholder="Search..." className="search-input" />
-      </div>
+
 
       <div className="header-user" ref={dropdownRef}>
         {user ? (
