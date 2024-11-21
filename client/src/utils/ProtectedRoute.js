@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
-const ProtectedRoute = ({ children, requiredRole }) => {
+const ProtectedRoute = ({ children, requiredRoles }) => {
   const { isAuthenticated, loading, hasRole } = useAuth();
 
   if (loading) {
@@ -13,7 +13,8 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     return <Navigate to="/login" />;
   }
 
-  if (requiredRole && !hasRole(requiredRole)) {
+  // Check if the user has any of the required roles
+  if (requiredRoles && !requiredRoles.some((role) => hasRole(role))) {
     return <Navigate to="/unauthorized" />;
   }
 

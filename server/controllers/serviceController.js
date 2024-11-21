@@ -15,7 +15,7 @@ const createService = async (req, res) => {
   }
 
   try {
-    const { serviceName, description, price, timeSlots } = req.body;
+    const { serviceName, category, description, price, timeSlots } = req.body;
 
     // Ensure provider ID is available
     const providerId = req.user._id;
@@ -33,6 +33,7 @@ const createService = async (req, res) => {
     const newService = new Service({
       name: serviceName,
       description,
+      category,
       price: Number(price),
       provider: providerId,
       providerFirstName: providerDetails.firstName,
@@ -56,6 +57,7 @@ const createService = async (req, res) => {
       id: newService._id,
       name: newService.name,
       description: newService.description,
+      category: newService.category,
       price: newService.price,
       provider: {
         id: newService.provider,
@@ -112,7 +114,10 @@ const getServicesByProvider = async (req, res) => {
 // Fetch a single service by ID
 const getServiceById = async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id).populate("provider", "firstName lastName");
+    const service = await Service.findById(req.params.id).populate(
+      "provider",
+      "firstName lastName"
+    );
     if (!service) {
       return res.status(404).json({ message: "Service not found" });
     }

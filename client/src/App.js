@@ -18,7 +18,7 @@ import Register from "./pages/Register";
 import EditService from "./components/ServiceProvider/EditServiceForm";
 import BookingForm from "./components/User/BookServiceForm";
 import Header from "./components/Common/Header";
-import Sidebar from "./components/Common/SideBar"; // Make sure the import for Sidebar is correct
+import Sidebar from "./components/Common/SideBar";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
@@ -47,23 +47,27 @@ function SplitAppLayout() {
       <div className="main-container">
         {!noSidebarRoutes.includes(location.pathname) && <Sidebar />}
 
-        <div className={`content ${noSidebarRoutes.includes(location.pathname) ? "no-sidebar" : ""}`}>
+        <div
+          className={`content ${
+            noSidebarRoutes.includes(location.pathname) ? "no-sidebar" : ""
+          }`}
+        >
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Home />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
-
             {/* Protected Routes */}
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute requiredRole="User">
+                <ProtectedRoute requiredRole={["User", "Service Provider"]}>
                   <Dashboard />
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/profile"
               element={
@@ -85,6 +89,24 @@ function SplitAppLayout() {
               element={
                 <ProtectedRoute requiredRole="Service Provider">
                   <EditService />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/services/:serviceId"
+              element={
+                <ProtectedRoute requiredRole="User">
+                  <ServiceDetails />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/book-service/:serviceId"
+              element={
+                <ProtectedRoute requiredRole="User">
+                  <BookingForm />
                 </ProtectedRoute>
               }
             />
@@ -146,12 +168,9 @@ function SplitAppLayout() {
                 </ProtectedRoute>
               }
             />
-
             {/* Redirect to login for any unmatched routes */}
             <Route path="*" element={<Navigate to="/unauthorized" />} />
-            <Route path="/service-list/:serviceId" element={<ServiceDetails />} />
           </Routes>
-
         </div>
       </div>
       {/* <Footer /> */}

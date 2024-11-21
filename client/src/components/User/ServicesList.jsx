@@ -48,7 +48,9 @@ const ServicesList = () => {
         <div className="services-header">
           <h2 className="services-heading">Services</h2>
           <div className="sort-dropdown-wrapper">
-            <label htmlFor="sort-options" className="sort-label">Sort by:</label>
+            <label htmlFor="sort-options" className="sort-label">
+              Sort by:
+            </label>
             <select
               id="sort-options"
               className="sort-dropdown"
@@ -67,8 +69,8 @@ const ServicesList = () => {
           sortServices(services).map((service) => (
             <div key={service._id} className="service-card">
               <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
-              alt="Service Provider"
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+                alt="Service Provider"
                 className="profile-avatar"
               />
               <div className="service-details">
@@ -81,7 +83,10 @@ const ServicesList = () => {
                 <p className="service-description">{service.description}</p>
                 <p className="service-price">From CA ${service.price}</p>
                 <div className="more-details-wrapper">
-                  <Link to={`/service/${service._id}`} className="more-details-button">
+                  <Link
+                    to={`/services/${service._id}`}
+                    className="more-details-button"
+                  >
                     More Details
                   </Link>
                 </div>

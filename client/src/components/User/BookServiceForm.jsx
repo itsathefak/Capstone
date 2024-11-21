@@ -215,42 +215,51 @@ const BookServiceForm = () => {
       <form className="BS-form" onSubmit={handleSubmit}>
         <h2 className="BS-form-title">Your Booking Details</h2>
 
+        <label className="BS-label" htmlFor="firstName">
+          First Name:
+        </label>
         <div className="BS-form-group">
-          <div className="BS-input-group">
-            <input
-              className="BS-input"
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-            <button
-              type="button"
-              className="BS-voiceButton"
-              onClick={() => handleVoiceInput(setFirstName)}
-            >
-              🎤
-            </button>
-          </div>
-          <div className="BS-input-group">
-            <input
-              className="BS-input"
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-            <button
-              type="button"
-              className="BS-voiceButton"
-              onClick={() => handleVoiceInput(setLastName)}
-            >
-              🎤
-            </button>
-          </div>
+          <input
+            className="BS-input"
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="BS-voiceButton"
+            onClick={() => handleVoiceInput(setFirstName)}
+          >
+            🎤
+          </button>
         </div>
+
+        <label className="BS-label" htmlFor="lastName">
+          Last Name:
+        </label>
+        <div className="BS-input-group">
+          <input
+            className="BS-input"
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="BS-voiceButton"
+            onClick={() => handleVoiceInput(setLastName)}
+          >
+            🎤
+          </button>
+        </div>
+
+        <label className="BS-label" htmlFor="email">
+          Email:
+        </label>
 
         <div className="BS-form-group">
           <div className="BS-input-group">
@@ -271,6 +280,10 @@ const BookServiceForm = () => {
             </button>
           </div>
         </div>
+
+        <label className="BS-label" htmlFor="note">
+          Add note/description:
+        </label>
 
         <div className="BS-input-group">
           <textarea
@@ -348,8 +361,10 @@ const BookServiceForm = () => {
                     <option
                       key={slot._id}
                       value={`${slot.startTime}-${slot.endTime}`}
+                      disabled={slot.status === "Booked"}
                     >
-                      {slot.startTime} - {slot.endTime}
+                      {slot.startTime} - {slot.endTime}{" "}
+                      {slot.status === "Booked" ? "(Booked)" : ""}
                     </option>
                   ))}
                 </select>

@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import { createService } from "../../api/services";
 import { useAuth } from "../../utils/AuthContext";
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const InputField = ({ type, placeholder, value, onChange, error, onVoiceInput }) => (
+const InputField = ({
+  type,
+  placeholder,
+  value,
+  onChange,
+  error,
+  onVoiceInput,
+}) => (
   <div className="CreateServiceForm-formGroup">
     <input
       className={`CreateServiceForm-input ${error ? "is-invalid" : ""}`}
@@ -12,7 +20,6 @@ const InputField = ({ type, placeholder, value, onChange, error, onVoiceInput })
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      required
     />
     {onVoiceInput && (
       <button
@@ -35,6 +42,8 @@ const CreateService = () => {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [timeSlots, setTimeSlots] = useState([]);
+  const [category, setCategory] = useState("");
+
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
@@ -42,7 +51,7 @@ const CreateService = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Speech recognition for input fields 
+  // Speech recognition for input fields
   const handleVoiceInput = (setFieldValue, type) => {
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser.");
@@ -51,10 +60,10 @@ const CreateService = () => {
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
     recognition.start();
-  
+
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript;
-  
+
       if (type === "date") {
         const normalizedText = spokenText.replace(/(\d+)(st|nd|rd|th)/, "$1");
 
@@ -82,24 +91,21 @@ const CreateService = () => {
             adjustedHours = 0;
           }
           setFieldValue(`${String(adjustedHours).padStart(2, "0")}:${minutes}`);
-        }
-        else {
+        } else {
           const utterance = new SpeechSynthesisUtterance(
             "Could not understand the time. Please try again."
           );
           window.speechSynthesis.speak(utterance);
         }
-      }
-       else {
+      } else {
         setFieldValue(spokenText);
       }
     };
-  
+
     recognition.onerror = (event) => {
       console.error("Speech recognition error:", event.error);
     };
   };
-  
 
   // Validation for time slots
   const validateTimeSlot = (date, start, end) => {
@@ -149,6 +155,8 @@ const CreateService = () => {
     const validationErrors = {};
     if (!firstName) validationErrors.firstName = "First name is required.";
     if (!lastName) validationErrors.lastName = "Last name is required.";
+    if (!category) validationErrors.category = "Please select a category.";
+
     if (!serviceName)
       validationErrors.serviceName = "Service name is required.";
     if (!description) validationErrors.description = "Description is required.";
@@ -168,6 +176,7 @@ const CreateService = () => {
     const serviceData = {
       firstName,
       lastName,
+      category,
       serviceName,
       description,
       date,
@@ -205,6 +214,9 @@ const CreateService = () => {
     <div className="CreateServiceForm-container">
       <form onSubmit={handleSubmit}>
         <h2>Create a Service Now...</h2>
+        <label className="BS-label" htmlFor="firstName">
+          First Name
+        </label>
         <InputField
           type="text"
           placeholder="First Name"
@@ -213,6 +225,10 @@ const CreateService = () => {
           onVoiceInput={() => handleVoiceInput(setFirstName)}
           error={errors.firstName}
         />
+        <label className="BS-label" htmlFor="lastName">
+          Last Name
+        </label>
+
         <InputField
           type="text"
           placeholder="Last Name"
@@ -221,6 +237,36 @@ const CreateService = () => {
           onVoiceInput={() => handleVoiceInput(setLastName)}
           error={errors.lastName}
         />
+
+        <div className="CreateServiceForm-formGroup">
+          <label className="BS-label" htmlFor="category">
+            Category
+          </label>
+          <select
+            id="category"
+            className={`CreateServiceForm-textarea ${
+              errors.category ? "is-invalid" : ""
+            }`}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Select Category</option>
+            <option value="health">Health</option>
+            <option value="education">Education</option>
+            <option value="technology">Technology</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="other">Other</option>
+          </select>
+          {errors.category && (
+            <div className="CreateServiceForm-errorMessage">
+              {errors.category}
+            </div>
+          )}
+        </div>
+
+        <label className="BS-label" htmlFor="serviceName">
+          Service Name
+        </label>
         <InputField
           type="text"
           placeholder="Service Name"
@@ -230,6 +276,9 @@ const CreateService = () => {
           error={errors.serviceName}
         />
         <div className="CreateServiceForm-formGroup">
+          <label className="BS-label" htmlFor="description">
+            Description
+          </label>
           <textarea
             className={`CreateServiceForm-textarea ${
               errors.description ? "is-invalid" : ""
@@ -237,7 +286,6 @@ const CreateService = () => {
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
           />
           <button
             type="button"
@@ -252,9 +300,14 @@ const CreateService = () => {
             </div>
           )}
         </div>
-        <InputField
+        <label className="BS-label" htmlFor="date">
+          Select Date
+        </label>
+        <input
           type="date"
+          className="dateinput"
           value={date}
+          min={new Date().toISOString().split("T")[0]}
           onChange={(e) => setDate(e.target.value)}
           onVoiceInput={() => handleVoiceInput(setDate, "date")}
           error={errors.date}
@@ -266,7 +319,6 @@ const CreateService = () => {
               type="time"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
-              required={!!date}
             />
             <button
               type="button"
@@ -282,7 +334,6 @@ const CreateService = () => {
               type="time"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
-              required={!!date}
             />
             <button
               type="button"
@@ -323,6 +374,11 @@ const CreateService = () => {
               </li>
             ))}
         </ul>
+
+        <label className="BS-label" htmlFor="price">
+          Price
+        </label>
+
         <InputField
           type="number"
           placeholder="Price"

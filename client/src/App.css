@@ -1013,6 +1013,7 @@ textarea[readonly] {
   flex: 1;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -1026,6 +1027,7 @@ textarea[readonly] {
   font-size: var(--font-size-small);
   margin-top: -10px;
   margin-bottom: 10px;
+  width: -webkit-fill-available;
   display: flex;
   align-items: center;
 }
@@ -1763,7 +1765,6 @@ textarea[readonly] {
 .BS-form-group {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
 }
 
 .BS-input-group {
@@ -1798,7 +1799,8 @@ textarea[readonly] {
 }
 
 .BS-label {
-  margin-bottom: 5px;
+  margin-left: 5px;
+  text-align: left;
   font-weight: bold;
   color: #000;
 }
@@ -3096,4 +3098,19 @@ textarea[readonly] {
 
 .user-book-button:hover {
   background-color: #0056b3;
+}
+
+.dateinput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: var(--font-size-regular);
+  transition: border-color 0.3s ease-in-out;
+}
+
+.dateinput:focus {
+  border-color: #0058ff;
+  outline: none;
 }
