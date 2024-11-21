@@ -2,32 +2,6 @@ import React, { useState } from "react";
 import TableRow from "./TableRow";
 
 function Table({ type, data, onAccept, onReject }) {
-  let sampleData = [
-    {
-      name: "John Doe",
-      email: "john.doe@gmail.com",
-      date: "03-25-2024",
-      timeslot: "11:00-12:00",
-    },
-    {
-      name: "John Doe",
-      email: "john.doe@gmail.com",
-      date: "03-25-2024",
-      timeslot: "11:00-12:00",
-    },
-    {
-      name: "John Doe",
-      email: "john.doe@gmail.com",
-      date: "03-25-2024",
-      timeslot: "11:00-12:00",
-    },
-    {
-      name: "John Doe",
-      email: "john.doe@gmail.com",
-      date: "03-25-2024",
-      timeslot: "11:00-12:00",
-    },
-  ];
 
   // Instantiate the table row component for each record in the table
   const tableRows = data.map((row) => (
@@ -202,7 +176,17 @@ function Table({ type, data, onAccept, onReject }) {
                 )}
               </tr>
             </thead>
-            <tbody>{tableRows}</tbody>
+            <tbody>
+              {data.length === 0 ? (
+                  <tr>
+                    <td colSpan={type === "appointment requests" ? 6 : 5} className="com-table-no-records">
+                      No Data Available!
+                    </td>
+                  </tr>
+                ) : (
+                  tableRows
+              )}
+            </tbody>
             <tfoot>
               <tr>
                 <td colSpan={type === "appointment requests" ? 6 : 5} className="com-table-pagination">
