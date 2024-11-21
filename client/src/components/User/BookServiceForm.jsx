@@ -218,7 +218,7 @@ const BookServiceForm = () => {
         <label className="BS-label" htmlFor="firstName">
           First Name:
         </label>
-        <div className="BS-form-group">
+        <div className="BS-input-group">
           <input
             className="BS-input"
             type="text"

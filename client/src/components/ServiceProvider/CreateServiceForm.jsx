@@ -238,10 +238,10 @@ const CreateService = () => {
           error={errors.lastName}
         />
 
+        <label className="BS-label" htmlFor="category">
+          Category
+        </label>
         <div className="CreateServiceForm-formGroup">
-          <label className="BS-label" htmlFor="category">
-            Category
-          </label>
           <select
             id="category"
             className={`CreateServiceForm-textarea ${
@@ -275,10 +275,12 @@ const CreateService = () => {
           onVoiceInput={() => handleVoiceInput(setServiceName)}
           error={errors.serviceName}
         />
-        <div className="CreateServiceForm-formGroup">
-          <label className="BS-label" htmlFor="description">
+
+        <label className="BS-label" htmlFor="description">
             Description
           </label>
+        <div className="CreateServiceForm-formGroup">
+          
           <textarea
             className={`CreateServiceForm-textarea ${
               errors.description ? "is-invalid" : ""
@@ -303,6 +305,7 @@ const CreateService = () => {
         <label className="BS-label" htmlFor="date">
           Select Date
         </label>
+        <div className="CreateServiceForm-formGroup">
         <input
           type="date"
           className="dateinput"
@@ -312,6 +315,14 @@ const CreateService = () => {
           onVoiceInput={() => handleVoiceInput(setDate, "date")}
           error={errors.date}
         />
+        <button
+            type="button"
+            className="EditServiceForm-voiceButton"
+            onClick={() => handleVoiceInput(setDate, "date")}
+          >
+            🎤
+          </button>
+          </div>
         <div className="CreateServiceForm-timeSlotContainer">
           <div className="CreateServiceForm-formGroup">
             <input
