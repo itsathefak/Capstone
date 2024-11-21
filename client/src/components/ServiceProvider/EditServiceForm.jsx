@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchServiceById, updateService } from "../../api/services";
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const EditService = ({ onUpdate }) => {
   const { serviceId } = useParams();
@@ -44,7 +45,7 @@ const EditService = ({ onUpdate }) => {
     }
   }, [serviceId]);
 
-  // Speech recognition for input fields 
+  // Speech recognition for input fields
   const handleVoiceInput = (setFieldValue, type) => {
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser.");
@@ -53,10 +54,10 @@ const EditService = ({ onUpdate }) => {
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
     recognition.start();
-  
+
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript;
-  
+
       if (type === "date") {
         const normalizedText = spokenText.replace(/(\d+)(st|nd|rd|th)/, "$1");
 
@@ -84,8 +85,7 @@ const EditService = ({ onUpdate }) => {
             adjustedHours = 0;
           }
           setFieldValue(`${String(adjustedHours).padStart(2, "0")}:${minutes}`);
-        }
-        else {
+        } else {
           const utterance = new SpeechSynthesisUtterance(
             "Could not understand the time. Please try again."
           );
@@ -95,7 +95,7 @@ const EditService = ({ onUpdate }) => {
         setFieldValue(spokenText);
       }
     };
-  
+
     recognition.onerror = (event) => {
       console.error("Speech recognition error:", event.error);
     };
@@ -218,9 +218,13 @@ const EditService = ({ onUpdate }) => {
     <div className="EditServiceForm-container">
       <form onSubmit={handleSubmit}>
         <h2>Edit Service Details</h2>
+
+        {/* First Name Field */}
         <div className="EditServiceForm-formGroup">
+          <label htmlFor="firstName">First Name</label>
           <input
             type="text"
+            id="firstName"
             placeholder="First Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -242,9 +246,13 @@ const EditService = ({ onUpdate }) => {
             </div>
           )}
         </div>
+
+        {/* Last Name Field */}
         <div className="EditServiceForm-formGroup">
+          <label htmlFor="lastName">Last Name</label>
           <input
             type="text"
+            id="lastName"
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -266,9 +274,13 @@ const EditService = ({ onUpdate }) => {
             </div>
           )}
         </div>
+
+        {/* Service Name Field */}
         <div className="EditServiceForm-formGroup">
+          <label htmlFor="serviceName">Service Name</label>
           <input
             type="text"
+            id="serviceName"
             placeholder="Service Name"
             value={serviceName}
             onChange={(e) => setServiceName(e.target.value)}
@@ -290,8 +302,12 @@ const EditService = ({ onUpdate }) => {
             </div>
           )}
         </div>
+
+        {/* Description Field */}
         <div className="EditServiceForm-formGroup">
+          <label htmlFor="description">Description</label>
           <textarea
+            id="description"
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -313,9 +329,14 @@ const EditService = ({ onUpdate }) => {
             </div>
           )}
         </div>
+
+        {/* Date Field */}
         <div className="EditServiceForm-formGroup">
+          <label htmlFor="date">Date</label>
           <input
             type="date"
+            id="date"
+            min={new Date().toISOString().split("T")[0]}
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className={`EditServiceForm-input ${
@@ -334,13 +355,16 @@ const EditService = ({ onUpdate }) => {
             <div className="EditServiceForm-errorMessage">{errors.date}</div>
           )}
         </div>
+
+        {/* Time Slots */}
         <div className="EditServiceForm-timeSlotContainer">
           <div className="EditServiceForm-formGroup">
+            <label htmlFor="startTime">Start Time</label>
             <input
               type="time"
+              id="startTime"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
-              placeholder="Start Time"
               className="EditServiceForm-input"
             />
             <button
@@ -352,11 +376,12 @@ const EditService = ({ onUpdate }) => {
             </button>
           </div>
           <div className="EditServiceForm-formGroup">
+            <label htmlFor="endTime">End Time</label>
             <input
               type="time"
+              id="endTime"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
-              placeholder="End Time"
               className="EditServiceForm-input"
             />
             <button
@@ -375,31 +400,13 @@ const EditService = ({ onUpdate }) => {
             Add Time Slot
           </button>
         </div>
-        {errors.timeSlot && (
-          <div className="EditServiceForm-errorMessage">{errors.timeSlot}</div>
-        )}
-        <div className="EditServiceForm-timeSlotsList">
-          {timeSlots.map((slot) => (
-            <div key={slot.date} className="EditServiceForm-dateSlots">
-              {slot.slots.map((s, index) => (
-                <div key={index} className="EditServiceForm-timeSlotItem">
-                  <span>{`${s.startTime} - ${s.endTime}`}</span>
-                  <h4>{slot.date}</h4>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveTimeSlot(slot.date, index)}
-                    className="EditServiceForm-removeTimeSlotButton"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+
+        {/* Price Field */}
         <div className="EditServiceForm-formGroup">
+          <label htmlFor="price">Price</label>
           <input
             type="number"
+            id="price"
             placeholder="Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -419,6 +426,8 @@ const EditService = ({ onUpdate }) => {
             <div className="EditServiceForm-errorMessage">{errors.price}</div>
           )}
         </div>
+
+        {/* Submit Button */}
         <button type="submit" className="EditServiceForm-button">
           Update Service
         </button>

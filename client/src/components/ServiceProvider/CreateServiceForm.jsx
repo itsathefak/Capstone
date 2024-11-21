@@ -325,6 +325,8 @@ const CreateService = () => {
           </div>
         <div className="CreateServiceForm-timeSlotContainer">
           <div className="CreateServiceForm-formGroup">
+            <label htmlFor="startTime">Start Time</label>
+
             <input
               className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
               type="time"
@@ -340,6 +342,8 @@ const CreateService = () => {
             </button>
           </div>
           <div className="CreateServiceForm-formGroup">
+            <label htmlFor="endTime">End Time</label>
+
             <input
               className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
               type="time"

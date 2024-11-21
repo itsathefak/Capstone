@@ -8,6 +8,8 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import CreateService from "./components/ServiceProvider/CreateServiceForm";
 import AppointmentRequests from "./components/ServiceProvider/AppointmentRequests";
 import UpcomingAppointments from "./components/ServiceProvider/UpcomingAppointments";
@@ -30,13 +32,23 @@ import Unauthorized from "./components/Common/Unauthorized";
 import AdminContacts from "./pages/AdminContacts";
 import ServiceDetails from "./components/User/ServiceDetails";
 import BookServiceForm from "./components/User/BookServiceForm";
+import AboutPage from "./pages/AboutPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
 
+  const stripePromise = loadStripe("your-publishable-key-here");
+
   // Define routes where the Header and Sidebar should be hidden
   const noHeaderRoutes = ["/register", "/login", "/unauthorized"];
-  const noSidebarRoutes = ["/", "/register", "/login", "/unauthorized"]; // Same routes where you don't want the Sidebar
+  const noSidebarRoutes = [
+    "/",
+    "/about",
+    "/register",
+    "/login",
+    "/unauthorized",
+  ]; // Same routes where you don't want the Sidebar
 
   return (
     <div className="layout">
@@ -57,13 +69,25 @@ function SplitAppLayout() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+
             <Route path="/unauthorized" element={<Unauthorized />} />
             {/* Protected Routes */}
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute requiredRole={["User", "Service Provider"]}>
+                <ProtectedRoute requiredRole={["User"]}>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Payment"
+              element={
+                <ProtectedRoute requiredRole="User">
+                  <Elements stripe={stripePromise}>
+                    <PaymentPage />
+                  </Elements>
                 </ProtectedRoute>
               }
             />
