@@ -9,6 +9,8 @@ import {
   faCalendarAlt,
   faList,
   faBars,
+  faUserCog,  // Icon for Admin settings
+  faEnvelope,  // Icon for Admin Contact
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = () => {
@@ -92,6 +94,22 @@ const Sidebar = () => {
                   className="com-sidebar-icon"
                 />
                 {!isCollapsed && <span>Appointment History</span>}
+              </NavLink>
+            </li>
+          </>
+        )}
+        {user && user.role === "Admin" && (
+          <>
+            <li>
+              <NavLink to="/service-list" activeClassName="active">
+                <FontAwesomeIcon icon={faList} className="com-sidebar-icon" />
+                {!isCollapsed && <span>Service List</span>}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin-contact" activeClassName="active">
+                <FontAwesomeIcon icon={faEnvelope} className="com-sidebar-icon" />
+                {!isCollapsed && <span>Admin Contact</span>}
               </NavLink>
             </li>
           </>
