@@ -1039,6 +1039,10 @@ textarea[readonly] {
   align-items: flex-start;
 }
 
+.CreateServiceForm-timeInput, .EditServiceForm-timeInput {
+  width: 100%;
+}
+
 .is-invalid {
   border-color: #ff4d4d;
   background-color: #ffe5e5;
@@ -1197,6 +1201,14 @@ textarea[readonly] {
 .BS-voiceButton:focus {
   outline: none;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.voiceButton-date {
+  right: 35px;
+}
+
+.voiceButton-Category {
+  right: 20px;
 }
 
 
@@ -1821,6 +1833,7 @@ textarea[readonly] {
   margin-left: 5px;
   text-align: left;
   color: #000;
+  font-weight: 500;
 }
 
 .BS-button {
@@ -1861,6 +1874,7 @@ textarea[readonly] {
 @media (max-width: 768px) {
   .CreateServiceForm-container {
     padding: 15px;
+    margin: 12px;
   }
 
   .CreateServiceForm-nameContainer {

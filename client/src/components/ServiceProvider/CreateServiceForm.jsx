@@ -52,7 +52,7 @@ const CreateService = () => {
   const [loading, setLoading] = useState(false);
 
   // Speech recognition for input fields
-  const handleVoiceInput = (setFieldValue, type) => {
+  const handleVoiceInput = (setFieldValue, type, options = []) => {
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser.");
       return;
@@ -94,6 +94,23 @@ const CreateService = () => {
         } else {
           const utterance = new SpeechSynthesisUtterance(
             "Could not understand the time. Please try again."
+          );
+          window.speechSynthesis.speak(utterance);
+        }
+      } else if (type === "category") {
+        
+        const normalizedSpokenText = spokenText.trim().toLowerCase();
+        const matchedOption = options.find(
+          (category) => {
+            return category.toLowerCase() === normalizedSpokenText
+          }
+        );
+
+        if (matchedOption) {
+          setFieldValue(matchedOption.toLowerCase());
+        } else {
+          const utterance = new SpeechSynthesisUtterance(
+            `The spoken category does not match any available options. Please try again.`
           );
           window.speechSynthesis.speak(utterance);
         }
@@ -257,6 +274,21 @@ const CreateService = () => {
             <option value="entertainment">Entertainment</option>
             <option value="other">Other</option>
           </select>
+          <button
+            type="button"
+            className="CreateServiceForm-voiceButton voiceButton-Category"
+            onClick={() =>
+              handleVoiceInput(setCategory, "category", [
+                "Health",
+                "Education",
+                "Technology",
+                "Entertainment",
+                "Other",
+              ])
+            }
+          >
+            🎤
+          </button>
           {errors.category && (
             <div className="CreateServiceForm-errorMessage">
               {errors.category}
@@ -277,10 +309,9 @@ const CreateService = () => {
         />
 
         <label className="BS-label" htmlFor="description">
-            Description
-          </label>
+          Description
+        </label>
         <div className="CreateServiceForm-formGroup">
-          
           <textarea
             className={`CreateServiceForm-textarea ${
               errors.description ? "is-invalid" : ""
@@ -306,57 +337,59 @@ const CreateService = () => {
           Select Date
         </label>
         <div className="CreateServiceForm-formGroup">
-        <input
-          type="date"
-          className="dateinput"
-          value={date}
-          min={new Date().toISOString().split("T")[0]}
-          onChange={(e) => setDate(e.target.value)}
-          onVoiceInput={() => handleVoiceInput(setDate, "date")}
-          error={errors.date}
-        />
-        <button
+          <input
+            type="date"
+            className="dateinput"
+            value={date}
+            min={new Date().toISOString().split("T")[0]}
+            onChange={(e) => setDate(e.target.value)}
+            onVoiceInput={() => handleVoiceInput(setDate, "date")}
+            error={errors.date}
+          />
+          <button
             type="button"
-            className="EditServiceForm-voiceButton"
+            className="CreateServiceForm-voiceButton voiceButton-date"
             onClick={() => handleVoiceInput(setDate, "date")}
           >
             🎤
           </button>
-          </div>
+        </div>
         <div className="CreateServiceForm-timeSlotContainer">
-          <div className="CreateServiceForm-formGroup">
+          <div className="CreateServiceForm-timeInput">
             <label htmlFor="startTime">Start Time</label>
-
-            <input
-              className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-            />
-            <button
-              type="button"
-              className="CreateServiceForm-voiceButton"
-              onClick={() => handleVoiceInput(setStartTime, "time")}
-            >
-              🎤
-            </button>
+            <div className="CreateServiceForm-formGroup">
+              <input
+                className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+              <button
+                type="button"
+                className="CreateServiceForm-voiceButton"
+                onClick={() => handleVoiceInput(setStartTime, "time")}
+              >
+                🎤
+              </button>
+            </div>
           </div>
-          <div className="CreateServiceForm-formGroup">
+          <div className="CreateServiceForm-timeInput">
             <label htmlFor="endTime">End Time</label>
-
-            <input
-              className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-            />
-            <button
-              type="button"
-              className="CreateServiceForm-voiceButton"
-              onClick={() => handleVoiceInput(setEndTime, "time")}
-            >
-              🎤
-            </button>
+            <div className="CreateServiceForm-formGroup">
+              <input
+                className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+              <button
+                type="button"
+                className="CreateServiceForm-voiceButton"
+                onClick={() => handleVoiceInput(setEndTime, "time")}
+              >
+                🎤
+              </button>
+            </div>
           </div>
           <button
             className="CreateServiceForm-button"

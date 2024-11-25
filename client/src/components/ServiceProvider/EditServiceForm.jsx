@@ -220,8 +220,9 @@ const EditService = ({ onUpdate }) => {
         <h2>Edit Service Details</h2>
 
         {/* First Name Field */}
+        <label className="BS-label" htmlFor="firstName">First Name</label>
         <div className="EditServiceForm-formGroup">
-          <label htmlFor="firstName">First Name</label>
+          
           <input
             type="text"
             id="firstName"
@@ -248,8 +249,9 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Last Name Field */}
+        <label className="BS-label" htmlFor="lastName">Last Name</label>
         <div className="EditServiceForm-formGroup">
-          <label htmlFor="lastName">Last Name</label>
+          
           <input
             type="text"
             id="lastName"
@@ -276,8 +278,9 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Service Name Field */}
+        <label className="BS-label" htmlFor="serviceName">Service Name</label>
         <div className="EditServiceForm-formGroup">
-          <label htmlFor="serviceName">Service Name</label>
+          
           <input
             type="text"
             id="serviceName"
@@ -304,8 +307,9 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Description Field */}
+        <label className="BS-label" htmlFor="description">Description</label>
         <div className="EditServiceForm-formGroup">
-          <label htmlFor="description">Description</label>
+          
           <textarea
             id="description"
             placeholder="Description"
@@ -331,8 +335,9 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Date Field */}
+        <label className="BS-label" htmlFor="date">Date</label>
         <div className="EditServiceForm-formGroup">
-          <label htmlFor="date">Date</label>
+          
           <input
             type="date"
             id="date"
@@ -346,7 +351,7 @@ const EditService = ({ onUpdate }) => {
           />
           <button
             type="button"
-            className="EditServiceForm-voiceButton"
+            className="EditServiceForm-voiceButton voiceButton-date"
             onClick={() => handleVoiceInput(setDate, "date")}
           >
             🎤
@@ -358,8 +363,9 @@ const EditService = ({ onUpdate }) => {
 
         {/* Time Slots */}
         <div className="EditServiceForm-timeSlotContainer">
+        <div className="EditServiceForm-timeInput">
+        <label htmlFor="startTime">Start Time</label>
           <div className="EditServiceForm-formGroup">
-            <label htmlFor="startTime">Start Time</label>
             <input
               type="time"
               id="startTime"
@@ -375,8 +381,10 @@ const EditService = ({ onUpdate }) => {
               🎤
             </button>
           </div>
+          </div>
+          <div className="EditServiceForm-timeInput">
+          <label htmlFor="endTime">End Time</label>
           <div className="EditServiceForm-formGroup">
-            <label htmlFor="endTime">End Time</label>
             <input
               type="time"
               id="endTime"
@@ -392,6 +400,7 @@ const EditService = ({ onUpdate }) => {
               🎤
             </button>
           </div>
+          </div>
           <button
             type="button"
             onClick={handleAddTimeSlot}
@@ -402,8 +411,9 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Price Field */}
+        <label className="BS-label" htmlFor="price">Price</label>
         <div className="EditServiceForm-formGroup">
-          <label htmlFor="price">Price</label>
+          
           <input
             type="number"
             id="price"
