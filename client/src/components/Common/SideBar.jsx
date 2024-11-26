@@ -38,14 +38,14 @@ const Sidebar = () => {
 
   return (
     <nav className={`com-sidebar ${isCollapsed ? "collapsed" : ""}`}>
-      <button className="collapse-btn" onClick={toggleSidebar}>
+      <button className="collapse-btn" onClick={toggleSidebar} aria-label="Menu">
         <FontAwesomeIcon icon={faBars} />
       </button>
       <ul className="com-sidebar-menu">
         {user && user.role === "Service Provider" && (
           <>
             <li>
-              <NavLink to="/appointment-requests" activeClassName="active">
+              <NavLink to="/appointment-requests" activeclassname="active" aria-label="Appointment Requests">
                 <FontAwesomeIcon
                   icon={faClipboardList}
                   className="com-sidebar-icon"
@@ -54,13 +54,13 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/service-list" activeClassName="active">
+              <NavLink to="/service-list" activeclassname="active" aria-label="Services">
                 <FontAwesomeIcon icon={faList} className="com-sidebar-icon" />
                 {!isCollapsed && <span>Services</span>}
               </NavLink>
             </li>
             <li>
-              <NavLink to="/create-service" activeClassName="active">
+              <NavLink to="/create-service" activeclassname="active" aria-label="Create Service">
                 <FontAwesomeIcon
                   icon={faPlusSquare}
                   className="com-sidebar-icon"
@@ -69,7 +69,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/upcoming-appointments" activeClassName="active">
+              <NavLink to="/upcoming-appointments" activeclassname="active" aria-label="Upcoming Appointments">
                 <FontAwesomeIcon
                   icon={faCalendarAlt}
                   className="com-sidebar-icon"
@@ -82,13 +82,13 @@ const Sidebar = () => {
         {user && user.role === "User" && (
           <>
             <li>
-              <NavLink to="/service-list" activeClassName="active">
+              <NavLink to="/service-list" activeclassname="active" aria-label="Services">
                 <FontAwesomeIcon icon={faList} className="com-sidebar-icon" />
                 {!isCollapsed && <span>Services</span>}
               </NavLink>
             </li>
             <li>
-              <NavLink to="/appointment-history" activeClassName="active">
+              <NavLink to="/appointment-history" activeclassname="active" aria-label="Appointment History">
                 <FontAwesomeIcon
                   icon={faCalendarCheck}
                   className="com-sidebar-icon"
@@ -101,13 +101,13 @@ const Sidebar = () => {
         {user && user.role === "Admin" && (
           <>
             <li>
-              <NavLink to="/service-list" activeClassName="active">
+              <NavLink to="/service-list" activeclassname="active" aria-label="Service List">
                 <FontAwesomeIcon icon={faList} className="com-sidebar-icon" />
                 {!isCollapsed && <span>Service List</span>}
               </NavLink>
             </li>
             <li>
-              <NavLink to="/admin-contact" activeClassName="active">
+              <NavLink to="/admin-contact" activeclassname="active" aria-label="Admin Contact">
                 <FontAwesomeIcon icon={faEnvelope} className="com-sidebar-icon" />
                 {!isCollapsed && <span>Admin Contact</span>}
               </NavLink>

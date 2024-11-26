@@ -201,12 +201,9 @@ const CreateService = () => {
       price: priceValue,
     };
 
-    console.log("Submitting service data:", serviceData);
-
     try {
       await createService(serviceData);
       setSuccessMessage("Service created successfully!");
-      console.log("Service Data:", serviceData);
 
       // Clear form after successful submission
       setFirstName(user?.firstName || "");
@@ -338,6 +335,7 @@ const CreateService = () => {
         </label>
         <div className="CreateServiceForm-formGroup">
           <input
+            id="date"
             type="date"
             className="dateinput"
             value={date}
@@ -359,6 +357,7 @@ const CreateService = () => {
             <label htmlFor="startTime">Start Time</label>
             <div className="CreateServiceForm-formGroup">
               <input
+                id="startTime"
                 className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
                 type="time"
                 value={startTime}
@@ -377,6 +376,7 @@ const CreateService = () => {
             <label htmlFor="endTime">End Time</label>
             <div className="CreateServiceForm-formGroup">
               <input
+                id="endTime"
                 className="CreateServiceForm-input CreateServiceForm-timeSlotInput"
                 type="time"
                 value={endTime}

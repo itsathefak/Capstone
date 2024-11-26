@@ -106,8 +106,9 @@ const Profile = () => {
       case 2:
         return (
           <>
-            <label>Phone</label>
+            <label htmlFor='mPhone'>Phone</label>
             <input
+              id="mPhone"
               type="text"
               name="phone"
               value={userData.phone}
@@ -115,8 +116,9 @@ const Profile = () => {
               required
             />
             {validationErrors.phone && <span className="profile-error-text">{validationErrors.phone}</span>}
-            <label>Address</label>
+            <label htmlFor="mAddress">Address</label>
             <input
+              id="mAddress"
               type="text"
               name="address"
               value={userData.address}
@@ -129,8 +131,9 @@ const Profile = () => {
       case 3:
         return (
           <>
-            <label>Skills (comma-separated)</label>
+            <label htmlFor="mSkills">Skills (comma-separated)</label>
             <input
+              id="mSkills"
               type="text"
               name="skills"
               value={userData.skills}
@@ -143,8 +146,9 @@ const Profile = () => {
       case 4:
         return (
           <>
-            <label>Bio (minimum 5 characters)</label>
+            <label htmlFor="mBio">Bio (minimum 5 characters)</label>
             <textarea
+              id="mBio"
               name="bio"
               value={userData.bio}
               onChange={handleChange}
@@ -171,7 +175,7 @@ const Profile = () => {
         />
         <div className="profile-info">
           <h2>{userData.firstName} {userData.lastName}</h2>
-          <h4>Software Engineer</h4>
+          <h3>Software Engineer</h3>
           <p>{userData.email}</p>
         </div>
         {!isEditing && (
@@ -190,8 +194,9 @@ const Profile = () => {
         <h3>Personal Information</h3>
         <div className="personal-info">
           <div>
-            <label>First Name</label>
+            <label htmlFor="firstName">First Name</label>
             <input
+              id="firstName"
               type="text"
               name="firstName"
               value={userData.firstName}
@@ -200,8 +205,9 @@ const Profile = () => {
             />
           </div>
           <div>
-            <label>Last Name</label>
+            <label htmlFor="lastName">Last Name</label>
             <input
+              id="lastName"
               type="text"
               name="lastName"
               value={userData.lastName}
@@ -212,8 +218,9 @@ const Profile = () => {
         </div>
         <div className="personal-info">
           <div>
-            <label>Phone</label>
+            <label htmlFor="phone">Phone</label>
             <input
+              id="phone"
               type="text"
               name="phone"
               value={userData.phone}
@@ -222,8 +229,9 @@ const Profile = () => {
             />
           </div>
           <div>
-            <label>Address</label>
+            <label htmlFor="address">Address</label>
             <input
+              id="address"
               type="text"
               name="address"
               value={userData.address}
@@ -233,8 +241,9 @@ const Profile = () => {
           </div>
         </div>
         <div>
-          <label>Bio</label>
+          <label htmlFor="bio">Bio</label>
           <textarea
+            id="bio"
             name="bio"
             value={userData.bio}
             onChange={handleChange}
@@ -245,8 +254,9 @@ const Profile = () => {
 
       {/* Skills Section */}
       <div className="skills-section">
-        <label>Skills</label>
+        <label htmlFor="skills">Skills</label>
         <input
+          id="skills"
           type="text"
           name="skills"
           value={userData.skills}

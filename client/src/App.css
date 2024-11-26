@@ -917,7 +917,7 @@ textarea[readonly] {
 .Home-testimonial-name {
   font-size: var(--font-size-highlight);
   font-weight: 600;
-  color: #3b82f6;
+  color: #0058FF;
 }
 
 .Home-testimonial-role {
@@ -2116,8 +2116,9 @@ textarea[readonly] {
 }
 
 .more-details-button {
-  background-color: #1e90ff;
-  color: white;
+  color: #FFFFFF;
+  background-color: #0058FF;
+  border: 1px solid #0058FF;
   padding: 10px 16px;
   border-radius: 4px;
   font-size: var(--font-size-body);

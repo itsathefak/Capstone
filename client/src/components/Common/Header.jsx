@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../api/auth";
 import { useAuth } from "../../utils/AuthContext";
 import { fetchServicesByProvider } from "../../api/services";
+import profile from "../../assets/profilepic.jpg";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -135,7 +136,7 @@ const Header = () => {
         {user ? (
           <>
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+              src={profile}
               alt="User Avatar"
               className="user-avatar"
             />

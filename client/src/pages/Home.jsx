@@ -165,7 +165,7 @@ const Home = () => {
               <p className="Home-testimonial-feedback">
                 "{testimonial.feedback}"
               </p>
-              <h4 className="Home-testimonial-name">- {testimonial.name}</h4>
+              <h3 className="Home-testimonial-name">- {testimonial.name}</h3>
               <p className="Home-testimonial-role">{testimonial.role}</p>
             </div>
           ))}

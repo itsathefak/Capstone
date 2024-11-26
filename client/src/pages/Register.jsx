@@ -126,6 +126,7 @@ const Register = () => {
             <select
               name="role"
               value={role}
+              aria-label="User Type"
               onChange={handleChange}
               className="login-selectAK"
               required
