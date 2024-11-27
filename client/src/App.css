@@ -3188,7 +3188,7 @@ textarea[readonly] {
 }
 
 .payment-title {
-  font-size: 1.8rem;
+  font-size: var(--font-size-company-header);
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: #333;
@@ -3218,7 +3218,7 @@ textarea[readonly] {
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: var(--font-size-regular);
   cursor: pointer;
   width: 100%;
   transition: background 0.3s ease;
@@ -3251,7 +3251,7 @@ textarea[readonly] {
 }
 
 .about-title {
-  font-size: 2.5rem;
+  font-size: var(--font-size-app-title);
   font-weight: 800;
   margin-bottom: 20px;
   background: linear-gradient(to right, #fff, #fff);
@@ -3260,7 +3260,7 @@ textarea[readonly] {
 }
 
 .about-description {
-  font-size: 1.25rem;
+  font-size: var(--font-size-page-header);
   color: #fff;
   max-width: 800px;
   margin: 0 auto;
@@ -3269,7 +3269,7 @@ textarea[readonly] {
 
 .about-subtitle {
   margin-top: 20px;
-  font-size: 2rem;
+  font-size: var(--font-size-company-header);
   font-weight: 600;
   color: #034cd6;
   text-align: center;
@@ -3304,14 +3304,14 @@ textarea[readonly] {
 }
 
 .about-card-title {
-  font-size: 1.25rem;
+  font-size: var(--font-size-page-header);
   color: #0058ff;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .about-card-description {
-  font-size: 1rem;
+  font-size: var(--font-size-regular);
   color: #000000;
 }
 
@@ -3320,20 +3320,20 @@ textarea[readonly] {
 }
 
 .about-icon {
-  font-size: 2.5rem;
+  font-size: var(--font-size-app-title);
   color: #0058ff;
   margin-bottom: 10px;
 }
 
 .about-feature-title {
-  font-size: 1.25rem;
+  font-size: var(--font-size-page-header);
   font-weight: 600;
   color: #0058ff;
   margin-bottom: 10px;
 }
 
 .about-feature-description {
-  font-size: 1rem;
+  font-size: var(--font-size-regular);
   color: #000000;
 }
 
@@ -3348,7 +3348,7 @@ textarea[readonly] {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.25rem;
+  font-size: var(--font-size-page-header);
   margin-bottom: 10px;
 }
 
@@ -3361,7 +3361,7 @@ textarea[readonly] {
   color: #0058ff;
   padding: 5px 10px;
   border-radius: 20px;
-  font-size: 0.875rem;
+  font-size: var(--font-size-small);
   font-weight: 500;
 }
 
@@ -3375,13 +3375,13 @@ textarea[readonly] {
 }
 
 .about-cta-title {
-  font-size: 2rem;
+  font-size: var(--font-size-company-header);
   font-weight: 700;
   margin-bottom: 15px;
 }
 
 .about-cta-description {
-  font-size: 1rem;
+  font-size: var(--font-size-regular);
   max-width: 600px;
   margin: 0 auto;
   margin-bottom: 20px;
@@ -3390,7 +3390,7 @@ textarea[readonly] {
 .about-cta-button {
   background-color: white;
   color: #0058ff;
-  font-size: 1rem;
+  font-size: var(--font-size-regular);
   font-weight: 600;
   padding: 10px 20px;
   border-radius: 50px;
@@ -3408,16 +3408,16 @@ textarea[readonly] {
 @media (max-width: 768px) {
 
   .about-title {
-    font-size: 2rem;
+    font-size: var(--font-size-t-app-title);
   }
 
   .about-description {
-    font-size: 1rem;
+    font-size: var(--font-size-t-highlight);
     padding: 0 10px;
   }
 
   .about-subtitle {
-    font-size: 1.5rem;
+    font-size: var(--font-size-t-larger);
   }
 
   .about-grid {
@@ -3433,15 +3433,15 @@ textarea[readonly] {
   }
 
   .about-cta-title {
-    font-size: 1.75rem;
+    font-size: var(--font-size-t-company-header);
   }
 
   .about-cta-description {
-    font-size: 0.875rem;
+    font-size: var(--font-size-t-body);
   }
 
   .about-cta-button {
     padding: 8px 16px;
-    font-size: 0.875rem;
+    font-size: var(--font-size-t-body);
   }
 }

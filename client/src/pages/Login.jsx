@@ -40,7 +40,7 @@ const Login = () => {
            
         // Redirect based on profile completeness
         if (isProfileComplete) {
-          navigate("/dashboard");
+          navigate("/");
         } else {
           navigate("/profile"); 
         }

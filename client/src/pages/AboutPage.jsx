@@ -11,8 +11,8 @@ export default function AboutPage() {
   const teamMembers = [
     { name: "Aman Sharma", role: "Full Stack Developer", avatar: "AS" },
     { name: "Athef Ayub Khan", role: "UX Designer", avatar: "AAK" },
-    { name: "Anitia Feber", role: "Backend Developer", avatar: "AF" },
-    { name: "Daksh", role: "Frontend Developer", avatar: "D" },
+    { name: "Anetia Faber", role: "Frontend Developer", avatar: "AF" },
+    { name: "Daksh Pathak", role: "Backend Developer", avatar: "DP" },
   ];
 
   return (
