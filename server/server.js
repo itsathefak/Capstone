@@ -6,8 +6,10 @@ const registerUser = require("./routes/userRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const userServiceRoutes = require("./routes/userServiceRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const generateSitemap = require("./utils/sitemapGenerator");
 const cors = require("cors");
 require("dotenv").config();
+
 
 const app = express();
 
@@ -57,4 +59,5 @@ const PORT = process.env.PORT || 5000;
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  generateSitemap();
 });

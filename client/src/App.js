@@ -74,14 +74,6 @@ function SplitAppLayout() {
             <Route path="/unauthorized" element={<Unauthorized />} />
             {/* Protected Routes */}
             <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute requiredRole={["User"]}>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/Payment"
               element={
                 <ProtectedRoute requiredRole="User">
