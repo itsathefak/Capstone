@@ -33,10 +33,16 @@ const Contact = () => {
 
   return (
     <div className="contact-page">
+      {/* Banner Section */}
       <div className="contact-banner">
-        <img src="https://it-expertsolutions.com/images/2020/10/30/contact-us-banner.jpg" alt="Contact Us Banner" className="banner-image" />
+        <img
+          src="https://it-expertsolutions.com/images/2020/10/30/contact-us-banner.jpg"
+          alt="Contact Us Banner"
+          className="banner-image"
+        />
       </div>
 
+      {/* Company Details Section */}
       <div className="company-details">
         <h2>Contact Us</h2>
         <div className="details-card">
@@ -63,7 +69,8 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      {/* Map Container */}
+
+      {/* Map Section */}
       <div className="map-container">
         <div className="map-card left">
           <h3>Toronto Location</h3>
@@ -76,7 +83,6 @@ const Contact = () => {
             loading="lazy"
           ></iframe>
         </div>
-
         <div className="map-card right">
           <h3>Waterloo Location</h3>
           <iframe
@@ -90,7 +96,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Contact Form */}
+      {/* Contact Form Section */}
       <div className="contact-form">
         <h2>Get In Touch</h2>
         {status && <p className={`status-message ${status.type}`}>{status.message}</p>}

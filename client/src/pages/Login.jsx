@@ -73,25 +73,33 @@ const Login = () => {
       <div className="login-form-containerAK">
         <form className="login-formAK" onSubmit={handleSubmit}>
           <div className="input-containerAK">
+            <label htmlFor="email" className="input-labelAK">
+              Email
+            </label>
             <FaEnvelope className="input-iconAK" />
             <input
               type="email"
+              id="email"
               name="email"
               value={email}
               onChange={handleChange}
-              placeholder="Email"
+              placeholder="Enter your email"
               className="login-inputAK"
               required
             />
           </div>
           <div className="input-containerAK">
+            <label htmlFor="password" className="input-labelAK">
+              Password
+            </label>
             <FaLock className="input-iconAK" />
             <input
               type="password"
+              id="password"
               name="password"
               value={password}
               onChange={handleChange}
-              placeholder="Password"
+              placeholder="Enter your password"
               className="login-inputAK"
               required
             />
@@ -107,6 +115,7 @@ const Login = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Login;

@@ -400,6 +400,7 @@
 
 
 
+
 /* Sidebar Styling and Layout */
 
 .com-sidebar {
@@ -1039,7 +1040,8 @@ textarea[readonly] {
   align-items: flex-start;
 }
 
-.CreateServiceForm-timeInput, .EditServiceForm-timeInput {
+.CreateServiceForm-timeInput,
+.EditServiceForm-timeInput {
   width: 100%;
 }
 
@@ -1548,26 +1550,56 @@ textarea[readonly] {
   margin-left: 20px;
 }
 
-/* Mobile Responsiveness */
+/* Footer Responsiveness */
+/* Footer Responsiveness */
 @media (max-width: 768px) {
+  .footer-container {
+    padding: 20px 10px;
+  }
+
   .footer-content {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .footer-section {
-    padding: 0 20px;
-    text-align: left;
-    margin-bottom: 20px;
+    width: 100%;
+    padding: 0 10px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .footer-title {
+    font-size: var(--font-size-large);
+    margin-bottom: 10px;
+  }
+
+  .footer-section ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-section ul li {
+    margin-bottom: 10px;
+  }
+
+  .social-icons {
+    justify-content: center;
+    gap: 15px;
   }
 
   .footer-bottom {
-    padding-top: 20px;
-    margin-left: 20px;
+    margin-top: 20px;
+    font-size: var(--font-size-smaller);
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
+  .footer-container {
+    padding: 10px 5px;
+  }
+
   .footer-title {
     font-size: var(--font-size-m-highlight);
   }
@@ -1576,10 +1608,21 @@ textarea[readonly] {
     font-size: var(--font-size-m-regular);
   }
 
+  .footer-section p {
+    font-size: var(--font-size-smaller);
+  }
+
   .social-icons a {
-    font-size: var(--font-size-m-larger);
+    font-size: var(--font-size-m-regular);
+  }
+
+  .footer-bottom {
+    font-size: var(--font-size-smaller);
+    margin-top: 15px;
   }
 }
+
+
 
 
 /* Login and Register Components CSS Starts */

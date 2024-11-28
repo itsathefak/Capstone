@@ -82,51 +82,65 @@ const Register = () => {
           with professional people.
         </p>
       </div>
-
       <div className="login-form-containerAK">
         <form className="login-formAK" onSubmit={handleSubmit}>
           <div className="input-containerAK">
+            <label htmlFor="email" className="input-labelAK">
+              Email
+            </label>
             <FaEnvelope className="input-iconAK" />
             <input
               type="email"
+              id="email"
               name="email"
               value={email}
               onChange={handleChange}
-              placeholder="Email"
+              placeholder="Enter your email"
               className="login-inputAK"
               required
             />
           </div>
           <div className="input-containerAK">
+            <label htmlFor="firstName" className="input-labelAK">
+              First Name
+            </label>
             <FaUser className="input-iconAK" />
             <input
               type="text"
+              id="firstName"
               name="firstName"
               value={firstName}
               onChange={handleChange}
-              placeholder="First Name"
+              placeholder="Enter your first name"
               className="login-inputAK"
               required
             />
           </div>
           <div className="input-containerAK">
+            <label htmlFor="lastName" className="input-labelAK">
+              Last Name
+            </label>
             <FaUser className="input-iconAK" />
             <input
               type="text"
+              id="lastName"
               name="lastName"
               value={lastName}
               onChange={handleChange}
-              placeholder="Last Name"
+              placeholder="Enter your last name"
               className="login-inputAK"
               required
             />
           </div>
           <div className="input-containerAK">
+            <label htmlFor="role" className="input-labelAK">
+              User Type
+            </label>
             <FaWrench className="input-iconAK" />
             <select
+              id="role"
               name="role"
               value={role}
-              aria-label="User Type"
               onChange={handleChange}
               className="login-selectAK"
               required
@@ -139,34 +153,39 @@ const Register = () => {
               <option value="Admin">Admin</option>
             </select>
           </div>
-
           <div className="input-containerAK">
+            <label htmlFor="password" className="input-labelAK">
+              Password
+            </label>
             <FaLock className="input-iconAK" />
             <input
               type="password"
+              id="password"
               name="password"
               value={password}
               onChange={handleChange}
-              placeholder="Password"
+              placeholder="Enter your password"
               className="login-inputAK"
               required
             />
           </div>
           <div className="input-containerAK">
+            <label htmlFor="confirmPassword" className="input-labelAK">
+              Confirm Password
+            </label>
             <FaLock className="input-iconAK" />
             <input
               type="password"
+              id="confirmPassword"
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleChange}
-              placeholder="Confirm Password"
+              placeholder="Confirm your password"
               className="login-inputAK"
               required
             />
           </div>
-
           {error && <p className="error-message">{error}</p>}
-
           <button type="submit" className="login-buttonAK">
             Register
             <FaArrowRight className="arrow-iconAK" />
@@ -175,6 +194,6 @@ const Register = () => {
       </div>
     </div>
   );
-};
+}  
 
 export default Register;
