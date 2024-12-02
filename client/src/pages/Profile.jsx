@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import { useAuth } from "../../../client/src/utils/AuthContext";
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const [userData, setUserData] = useState({
@@ -166,6 +167,12 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
+      <Helmet>
+        <title>Profile | AppointMe</title>
+        <meta name="description" content="Visit my profile page to view and manage my account details like contact details, skills, occupation, and profile image." />
+        <meta name="keywords" content="profile, account, contact details, bio" />
+      </Helmet>
+
       {/* Profile Header Section */}
       <div className="profile-header">
         <img

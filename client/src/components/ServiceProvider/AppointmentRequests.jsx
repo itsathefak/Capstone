@@ -3,6 +3,7 @@ import Table from "../Common/Table";
 import { getAppointmentRequests, acceptAppointment, rejectAppointment } from "../../api/appointments";
 import LoadingIndicator from "../Common/LoadingIndicator";
 import Toast from "../Common/Toast";
+import { Helmet } from "react-helmet";
 
 function AppointmentRequests() {
   const [appointmentRequests, setAppointmentRequests] = useState([]);
@@ -69,6 +70,13 @@ function AppointmentRequests() {
 
   return (
     <div className="appreq-main-container">
+
+      <Helmet>
+        <title>Appointment Requests | AppointMe</title>
+        <meta name="description" content="Manage appointment requests efficiently with options to accept or reject them." />
+        <meta name="keywords" content="appointment requests, accept appointment, reject appointment" />
+      </Helmet>
+
       {loading && <LoadingIndicator />}
       {toastMessage && <Toast message={toastMessage} duration={3000} onClose={() => setToastMessage("")} />}
 

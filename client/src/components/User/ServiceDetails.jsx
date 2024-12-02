@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 
 const ServiceDetails = () => {
   const { serviceId } = useParams();
@@ -34,6 +36,11 @@ const ServiceDetails = () => {
 
   return (
     <div className="user-service-details">
+      <Helmet>
+        <title>Service Details | AppointMe</title>
+        <meta name="description" content="Find more details about the service like the provider reviews and service charges." />
+        <meta name="keywords" content="service details, service charges" />
+      </Helmet>
       <div className="user-service-content">
         <h2 className="user-service-title">{service.name}</h2>
         <div className="user-service-provider">

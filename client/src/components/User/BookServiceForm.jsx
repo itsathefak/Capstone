@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchServiceById } from "../../api/services";
 import { bookService } from "../../api/appointments";
+import { Helmet } from "react-helmet";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -180,6 +181,12 @@ const BookServiceForm = () => {
 
   return (
     <div className="BS-form-container">
+      <Helmet>
+        <title>Book a Service | AppointMe</title>
+        <meta name="description" content="Book a service by adding the user details and scheduling an appointment." />
+        <meta name="keywords" content="book service, book appointment, schedule appointment" />
+      </Helmet>
+
       <h1 className="BS-title">Book Service: {service.name}</h1>
 
       {/* Provider Details Table */}

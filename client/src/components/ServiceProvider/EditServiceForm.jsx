@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchServiceById, updateService } from "../../api/services";
+import { Helmet } from "react-helmet";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -216,6 +217,12 @@ const EditService = ({ onUpdate }) => {
 
   return (
     <div className="EditServiceForm-container">
+      <Helmet>
+        <title>Edit Service | AppointMe</title>
+        <meta name="description" content="Manage services details like category, description along with date and time efficiently." />
+        <meta name="keywords" content="edit services, service categories, edit date and time slots" />
+      </Helmet>
+
       <form onSubmit={handleSubmit}>
         <h2>Edit Service Details</h2>
 

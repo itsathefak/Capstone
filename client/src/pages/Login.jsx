@@ -4,6 +4,7 @@ import { loginUser } from "../api/auth";
 import Cookies from "js-cookie";
 import { useAuth } from "../utils/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const { login } = useAuth();
@@ -63,6 +64,12 @@ const Login = () => {
 
   return (
     <div className="login-page-containerAK">
+      <Helmet>
+        <title>Login | AppointMe</title>
+        <meta name="description" content="Login as a User or Service provider to book an appointment and/or create services of your own." />
+        <meta name="keywords" content="login, user login, sign in" />
+      </Helmet>
+
       <div className="login-heading-containerAK">
         <h1 className="appointme-titleAK">AppointME</h1>
         <p className="appointme-descriptionAK">

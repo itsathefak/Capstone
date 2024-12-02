@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
+import { Helmet } from "react-helmet";
 
 const Unauthorized = () => {
   const { user, isAuthenticated } = useAuth();
@@ -12,6 +13,12 @@ const Unauthorized = () => {
 
   return (
     <section className="Unauthorized-hero">
+      <Helmet>
+        <title>Unauthorized | AppointMe</title>
+        <meta name="description" content="You have been denied access to this page. Contact us to know more." />
+        <meta name="keywords" content="unauthorized, access denied, no permission" />
+      </Helmet>
+
       <div className="Unauthorized-hero-content">
         <h1 className="Unauthorized-title">Access Denied</h1>
         <p className="Unauthorized-subtitle">{message}</p>

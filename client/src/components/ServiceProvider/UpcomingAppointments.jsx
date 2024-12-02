@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from '../Common/Table';
 import { getUpcomingAppointments } from "../../api/appointments";
 import LoadingIndicator from "../Common/LoadingIndicator";
+import { Helmet } from "react-helmet";
 
 function UpcomingAppointments() {
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
@@ -27,11 +28,17 @@ function UpcomingAppointments() {
 
     return (
         <div className="upapp-main-container">
-            {loading && <LoadingIndicator />}
+          <Helmet>
+            <title>Upcoming Appointments | AppointMe</title>
+            <meta name="description" content="View the list of confirmed upcoming appointments with the booked user and schedule details." />
+            <meta name="keywords" content="upcoming appointments, scheduled appointments, confirmed appointments" />
+          </Helmet>
 
-            <h2 className="upapp-header">Upcoming Appointments</h2>
-            {/* Customize table component based on type and data */}
-            <Table type="upcoming appointment" data={upcomingAppointments}/>
+          {loading && <LoadingIndicator />}
+
+          <h2 className="upapp-header">Upcoming Appointments</h2>
+          {/* Customize table component based on type and data */}
+          <Table type="upcoming appointment" data={upcomingAppointments}/>
         </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createService } from "../../api/services";
 import { useAuth } from "../../utils/AuthContext";
+import { Helmet } from "react-helmet";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -226,6 +227,12 @@ const CreateService = () => {
 
   return (
     <div className="CreateServiceForm-container">
+      <Helmet>
+        <title>Create Service | AppointMe</title>
+        <meta name="description" content="Create services efficiently by adding service details, date and time slots, and categories." />
+        <meta name="keywords" content="create services, service categories, add date and time slots" />
+      </Helmet>
+
       <form onSubmit={handleSubmit}>
         <h2>Create a Service Now...</h2>
         <label className="BS-label" htmlFor="firstName">

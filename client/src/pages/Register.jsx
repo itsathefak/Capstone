@@ -7,6 +7,7 @@ import {
   FaWrench,
 } from "react-icons/fa";
 import { registerUser } from "../api/auth";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -74,6 +75,12 @@ const Register = () => {
 
   return (
     <div className="login-page-containerAK">
+      <Helmet>
+        <title>Register | AppointMe</title>
+        <meta name="description" content="Start your journey by signing up as a user or service provider to access our appointment booking application." />
+        <meta name="keywords" content="register, create account, new user" />
+      </Helmet>
+
       <div className="login-heading-containerAK">
         <h1 className="appointme-titleAK">AppointME</h1>
         <p className="appointme-descriptionAK">

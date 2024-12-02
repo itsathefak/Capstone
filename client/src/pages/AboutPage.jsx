@@ -6,6 +6,8 @@ import {
   faBell,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet";
+
 
 export default function AboutPage() {
   const teamMembers = [
@@ -17,6 +19,12 @@ export default function AboutPage() {
 
   return (
     <div className="about-min-h-screen about-bg-gradient">
+      <Helmet>
+        <title>About Us | AppointMe</title>
+        <meta name="description" content="Get to know more about our company's vision and our team members." />
+        <meta name="keywords" content="AppointMe, about us" />
+      </Helmet>
+
       <div className="about-container">
         <section className="about-text-center">
           <h1 className="about-title">About AppointMe</h1>

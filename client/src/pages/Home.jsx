@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 
 const Home = () => {
   const features = [
@@ -83,6 +85,12 @@ const Home = () => {
 
   return (
     <div className="Home-bg">
+      <Helmet>
+        <title>Home | AppointMe</title>
+        <meta name="description" content="AppointMe is an easy-to-use appointment booking website that connects people with professional service providers." />
+        <meta name="keywords" content="appointme, book appointment, book service" />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="Home-hero">
         <div className="Home-hero-content">

@@ -3,6 +3,8 @@ import { fetchServicesWithUserImage } from "../../api/users";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import debounce from "lodash.debounce"; 
+import { Helmet } from "react-helmet";
+
 
 const ServicesList = () => {
   const [services, setServices] = useState([]);
@@ -67,6 +69,11 @@ const ServicesList = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Services | AppointMe</title>
+        <meta name="description" content="View all the service create by our providers and book an appointment." />
+        <meta name="keywords" content="services, service list, book appointment" />
+      </Helmet>
       <div className="full-width-banner"></div>
 
       <div className="services-list">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 import { submitContactForm } from '../api/contact';
+import { Helmet } from "react-helmet";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,12 @@ const Contact = () => {
 
   return (
     <div className="contact-page">
+      <Helmet>
+        <title>Contact Us | AppointMe</title>
+        <meta name="description" content="Reach out to us with your questions and feedback to help us improve." />
+        <meta name="keywords" content="contact us, appointme contact" />
+      </Helmet>
+
       {/* Banner Section */}
       <div className="contact-banner">
         <img

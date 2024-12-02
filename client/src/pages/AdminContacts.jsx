@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchContacts } from "../api/contact";
 import Modal from "./ContactModal"; // Import the Modal component
+import { Helmet } from "react-helmet";
 
 const AdminContacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -55,6 +56,12 @@ const AdminContacts = () => {
 
   return (
     <div className="admin-contacts-container">
+      <Helmet>
+        <title>Contact Queries | AppointMe</title>
+        <meta name="description" content="View and respond to all the contact form queries that have been submitted by the users of the application." />
+        <meta name="keywords" content="contact submissions, contact questions" />
+      </Helmet>
+
       <h2>Contact Submissions</h2>
       {contacts.length === 0 ? (
         <p>No contact submissions available.</p>
