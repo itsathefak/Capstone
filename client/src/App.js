@@ -36,6 +36,17 @@ import AboutPage from "./pages/AboutPage";
 import PaymentPage from "./pages/PaymentPage";
 import MyServices from "./components/ServiceProvider/MyServices";
 
+const HomeLayout = () => {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </>
+  );
+};
+
 function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
 
@@ -43,13 +54,7 @@ function SplitAppLayout() {
 
   // Define routes where the Header and Sidebar should be hidden
   const noHeaderRoutes = ["/register", "/login", "/unauthorized"];
-  const noSidebarRoutes = [
-    "/",
-    "/about",
-    "/register",
-    "/login",
-    "/unauthorized",
-  ]; // Same routes where you don't want the Sidebar
+  const noSidebarRoutes = ["/about", "/register", "/login", "/unauthorized"]; // Same routes where you don't want the Sidebar
 
   return (
     <div className="layout">
@@ -69,9 +74,7 @@ function SplitAppLayout() {
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
-
             <Route path="/unauthorized" element={<Unauthorized />} />
             {/* Protected Routes */}
             <Route
@@ -84,7 +87,6 @@ function SplitAppLayout() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/profile"
               element={
@@ -117,7 +119,6 @@ function SplitAppLayout() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/services/:serviceId"
               element={
@@ -126,7 +127,6 @@ function SplitAppLayout() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/book-service/:serviceId"
               element={
@@ -151,7 +151,6 @@ function SplitAppLayout() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/service-list"
               element={
@@ -209,7 +208,11 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="App">
-          <SplitAppLayout />
+          <Routes>
+            <Route path="/" element={<HomeLayout />} />
+            <Route path="/*" element={<SplitAppLayout />} />
+          </Routes>
+
           <Footer />
         </div>
       </Router>

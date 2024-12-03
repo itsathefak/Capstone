@@ -400,7 +400,6 @@
 
 
 
-
 /* Sidebar Styling and Layout */
 
 .com-sidebar {
@@ -1550,56 +1549,26 @@ textarea[readonly] {
   margin-left: 20px;
 }
 
-/* Footer Responsiveness */
-/* Footer Responsiveness */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .footer-container {
-    padding: 20px 10px;
-  }
-
   .footer-content {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .footer-section {
-    width: 100%;
-    padding: 0 10px;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-
-  .footer-title {
-    font-size: var(--font-size-large);
-    margin-bottom: 10px;
-  }
-
-  .footer-section ul {
-    padding: 0;
-    margin: 0;
-  }
-
-  .footer-section ul li {
-    margin-bottom: 10px;
-  }
-
-  .social-icons {
-    justify-content: center;
-    gap: 15px;
+    padding: 0 20px;
+    text-align: left;
+    margin-bottom: 20px;
   }
 
   .footer-bottom {
-    margin-top: 20px;
-    font-size: var(--font-size-smaller);
-    text-align: center;
+    padding-top: 20px;
+    margin-left: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .footer-container {
-    padding: 10px 5px;
-  }
-
   .footer-title {
     font-size: var(--font-size-m-highlight);
   }
@@ -1608,21 +1577,10 @@ textarea[readonly] {
     font-size: var(--font-size-m-regular);
   }
 
-  .footer-section p {
-    font-size: var(--font-size-smaller);
-  }
-
   .social-icons a {
-    font-size: var(--font-size-m-regular);
-  }
-
-  .footer-bottom {
-    font-size: var(--font-size-smaller);
-    margin-top: 15px;
+    font-size: var(--font-size-m-larger);
   }
 }
-
-
 
 
 /* Login and Register Components CSS Starts */
@@ -3348,21 +3306,27 @@ textarea[readonly] {
   min-height: 100vh;
 }
 
+.AboutPage-wrapper {
+  padding: 40px 0px;
+}
+
 .about-mb-24 {
-  max-width: 1100px;
+  max-width: 85vw;
   margin: auto;
 }
 
 .about-text-center {
-  height: 50vh;
+  height: 100vh;
   background: linear-gradient(135deg, #3b82f6, #1e40af);
   color: #ffffff;
-  text-align: center;
-  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .about-title {
-  font-size: var(--font-size-app-title);
+  font-size: var(--font-size-hero-title);
   font-weight: 800;
   margin-bottom: 20px;
   background: linear-gradient(to right, #fff, #fff);
@@ -3371,7 +3335,7 @@ textarea[readonly] {
 }
 
 .about-description {
-  font-size: var(--font-size-page-header);
+  font-size: var(--font-size-larger);
   color: #fff;
   max-width: 800px;
   margin: 0 auto;
@@ -3402,6 +3366,7 @@ textarea[readonly] {
 .about-card {
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
+  border-radius: 15px;
   border: 1px solid rgba(0, 88, 255, 0.2);
   padding: 40px;
   cursor: pointer;
@@ -3479,6 +3444,11 @@ textarea[readonly] {
 /* Call-to-Action Section */
 .about-cta {
   background: linear-gradient(to right, #0058ff, #034cd6);
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   color: white;
   padding: 30px;
   text-align: center;
@@ -3499,20 +3469,20 @@ textarea[readonly] {
 }
 
 .about-cta-button {
-  background-color: white;
-  color: #0058ff;
-  font-size: var(--font-size-regular);
-  font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 50px;
+  background-color: #ffffff;
+  color: #3b82f6;
   border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: var(--font-size-regular);
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .about-cta-button:hover {
-  background-color: #e6f0ff;
-  box-shadow: 0 6px 15px rgba(0, 88, 255, 0.3);
+  background-color: #e0e7ff;
+  transform: translateY(-5px);
 }
 
 /* Responsive Styles */
