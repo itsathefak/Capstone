@@ -34,6 +34,24 @@ let userSchema = new Schema({
   skills: {
     type: [String],
   },
+  experience: {
+    type: String,
+  },
+  occupation: {
+    type: String,
+  },
+  linkedIn: {
+    type: String,
+  },
+  education: {
+    type: String,
+  },
+  industry: {
+    type: String,
+  },
+  languages: {
+    type: [String], // Array to support multiple languages
+  },    
   role: {
     type: String,
     enum: ["Service Provider", "User", "Admin"],

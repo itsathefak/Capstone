@@ -186,6 +186,7 @@ function SplitAppLayout() {
             />
             {/* Redirect to login for any unmatched routes */}
             <Route path="*" element={<Navigate to="/unauthorized" />} />
+            <Route path="/service/:serviceId" element={<ServiceDetails />} />
           </Routes>
         </div>
       </div>

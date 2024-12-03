@@ -2121,6 +2121,63 @@ textarea[readonly] {
   border-radius: 8px;
 }
 
+
+.profile-dropdown {
+  width: 100%; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  background-color: #f9f9f9; 
+  color: #333; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+}
+
+/* Focus State */
+.profile-dropdown:focus {
+  border-color: #007bff; 
+  outline: none; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+/* Hover State */
+.profile-dropdown:hover {
+  background-color: #f1f1f1; 
+}
+
+/* Disabled State */
+.profile-dropdown:disabled {
+  background-color: #e9ecef; 
+  cursor: not-allowed; 
+}
+
+
+.profile-dropdown option {
+  padding: 10px; 
+  color: #333; 
+  background: #fff; 
+}
+
+.profile-input, .profile-dropdown {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.profile-input:focus, .profile-dropdown:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+
 .service-details {
   display: flex;
   flex-direction: column;

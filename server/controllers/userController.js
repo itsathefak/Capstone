@@ -113,14 +113,14 @@ exports.getUserProfile = async (req, res) => {
 // Update user profile
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { firstName, lastName, phone, address, bio, skills } = req.body; // Destructure the incoming data
+    const { firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages } = req.body;
 
-    // Find the user by ID and update
     const updatedUser = await User.findByIdAndUpdate(
-      req.user.id, // Get the user ID from the `authMiddleware`
-      { firstName, lastName, phone, address, bio, skills }, // Update these fields
-      { new: true, runValidators: true } // Return the updated user and validate
+      req.user.id,
+      { firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages},
+      { new: true, runValidators: true }
     );
+    
 
     if (!updatedUser) {
       return res.status(404).json({ msg: "User not found" });

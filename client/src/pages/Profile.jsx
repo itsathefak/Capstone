@@ -13,7 +13,14 @@ const Profile = () => {
     address: '',
     bio: '',
     skills: '',
+    experience: '',
+    occupation: '',
+    linkedIn: '',
+    education: '',
+    industry: '',
+    languages: '',
   });
+
 
   const [isEditing, setIsEditing] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(0);
@@ -53,7 +60,18 @@ const Profile = () => {
       if (!userData.skills) errors.skills = "Please enter at least one skill";
     } else if (onboardingStep === 4) {
       if (!userData.bio || userData.bio.length < 5) errors.bio = "Bio must be at least 5 characters";
+    } else if (onboardingStep === 5) {
+      if (!userData.experience) errors.experience = "Experience is required";
+      if (!userData.occupation) errors.occupation = "Occupation is required";
+    } else if (onboardingStep === 6) {
+      if (!userData.linkedIn) errors.linkedIn = "LinkedIn profile is required";
+      if (!userData.education) errors.education = "Please select your highest education level";
+    } else if (onboardingStep === 7) {
+      if (!userData.industry) errors.industry = "Please select an industry";
+      if (!userData.languages) errors.languages = "Please specify at least one language";
     }
+
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -71,12 +89,12 @@ const Profile = () => {
     }
   };
 
-    // Handle edit mode
-    const handleEdit = () => {
-      setIsEditing(true);
-      setSuccessMessage('');
-      setErrorMessage('');
-    };
+  // Handle edit mode
+  const handleEdit = () => {
+    setIsEditing(true);
+    setSuccessMessage('');
+    setErrorMessage('');
+  };
 
   // After a successful API call to update user data
   const handleSave = async () => {
@@ -160,6 +178,105 @@ const Profile = () => {
             {validationErrors.bio && <span className="profile-error-text">{validationErrors.bio}</span>}
           </>
         );
+      case 5:
+        return (
+          <>
+            <label>Experience</label>
+            <select
+              name="experience"
+              value={userData.experience}
+              onChange={handleChange}
+              className="profile-dropdown"
+            >
+              <option value="">Select Experience</option>
+              <option value="0-1">0-1 years</option>
+              <option value="1-3">1-3 years</option>
+              <option value="3-5">3-5 years</option>
+              <option value="5+">5+ years</option>
+            </select>
+            {validationErrors.experience && <span className="profile-error-text">{validationErrors.experience}</span>}
+
+            <label>Occupation</label>
+            <input
+              type="text"
+              name="occupation"
+              value={userData.occupation}
+              onChange={handleChange}
+              placeholder="E.g., Software Engineer"
+            />
+            {validationErrors.occupation && <span className="profile-error-text">{validationErrors.occupation}</span>}
+          </>
+        );
+      case 6:
+        return (
+          <>
+
+            <label>LinkedIn Profile</label>
+            <input
+              type="url"
+              name="linkedIn"
+              value={userData.linkedIn}
+              onChange={handleChange}
+              placeholder="https://linkedin.com/in/your-profile"
+              required
+            />
+            {validationErrors.linkedIn && <span className="profile-error-text">{validationErrors.linkedIn}</span>}
+
+            <label>Highest Education Level</label>
+            <select
+              name="education"
+              value={userData.education}
+              onChange={handleChange}
+              className="profile-dropdown"
+              required
+            >
+              <option value="">Select Education</option>
+              <option value="High School">High School</option>
+              <option value="Associate's Degree">Associate's Degree</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="Doctorate">Doctorate</option>
+            </select>
+            {validationErrors.education && <span className="profile-error-text">{validationErrors.education}</span>}
+
+
+          </>
+        );
+      case 7:
+        return (
+          <>
+
+            <label>Industry</label>
+            <select
+              name="industry"
+              value={userData.industry}
+              onChange={handleChange}
+              className="profile-dropdown"
+              required
+            >
+              <option value="">Select Industry</option>
+              <option value="IT">IT</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Finance">Finance</option>
+              <option value="Education">Education</option>
+              <option value="Retail">Retail</option>
+              <option value="Other">Other</option>
+            </select>
+            {validationErrors.industry && <span className="profile-error-text">{validationErrors.industry}</span>}
+
+            <label>Languages Spoken</label>
+            <input
+              type="text"
+              name="languages"
+              value={userData.languages}
+              onChange={handleChange}
+              placeholder="E.g., English, French, Spanish"
+              required
+            />
+            {validationErrors.languages && <span className="profile-error-text">{validationErrors.languages}</span>}
+          </>
+        );
+
       default:
         return null;
     }
@@ -183,6 +300,7 @@ const Profile = () => {
         <div className="profile-info">
           <h2>{userData.firstName} {userData.lastName}</h2>
           <h3>Software Engineer</h3>
+          <h4>{userData.occupation}</h4>
           <p>{userData.email}</p>
         </div>
         {!isEditing && (
@@ -225,16 +343,127 @@ const Profile = () => {
         </div>
         <div className="personal-info">
           <div>
-            <label htmlFor="phone">Phone</label>
+            <label>Experience</label>
+            <select
+              name="experience"
+              value={userData.experience}
+              onChange={handleChange}
+              className="profile-dropdown"
+              disabled={!isEditing}
+            >
+              <option value="">Select Experience</option>
+              <option value="0-1">0-1 years</option>
+              <option value="1-3">1-3 years</option>
+              <option value="3-5">3-5 years</option>
+              <option value="5+">5+ years</option>
+            </select>
+
+          </div>
+          <div>
+            <label>Occupation</label>
             <input
-              id="phone"
               type="text"
-              name="phone"
-              value={userData.phone}
+              name="occupation"
+              value={userData.occupation}
               onChange={handleChange}
               readOnly={!isEditing}
             />
           </div>
+        </div>
+        <div className="personal-info">
+          <div>
+            <label>LinkedIn Profile</label>
+            <input
+              type="url"
+              name="linkedIn"
+              value={userData.linkedIn}
+              onChange={handleChange}
+              placeholder="https://linkedin.com/in/your-profile"
+              readOnly={!isEditing}
+            />
+          </div>
+
+          <div>
+            <label>Highest Education Level</label>
+            <select
+              name="education"
+              value={userData.education}
+              onChange={handleChange}
+              className="profile-dropdown"
+              disabled={!isEditing}
+            >
+              <option value="">Select Education</option>
+              <option value="High School">High School</option>
+              <option value="Associate's Degree">Associate's Degree</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="Doctorate">Doctorate</option>
+            </select>
+          </div>
+        </div>
+        <div className="personal-info">
+          <div>
+            <label>Industry</label>
+            <select
+              name="industry"
+              value={userData.industry}
+              onChange={handleChange}
+              className="profile-dropdown"
+              disabled={!isEditing}
+            >
+              <option value="">Select Industry</option>
+              <option value="IT">IT</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Finance">Finance</option>
+              <option value="Education">Education</option>
+              <option value="Retail">Retail</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Languages Spoken</label>
+            <input
+              type="text"
+              name="languages"
+              value={userData.languages}
+              onChange={handleChange}
+              placeholder="E.g., English, French, Spanish"
+              readOnly={!isEditing}
+            />
+          </div>
+        </div>
+        <div className="personal-info">
+          <div>
+            <label>Phone</label>
+            <input
+              id="phone"
+              type="tel"
+              name="phone"
+              maxLength={10}
+              pattern="[+]{1}[0-9]{11,14}" // Validates numbers with a + at the start and a length between 11 and 14
+              value={userData.phone}
+              onChange={handleChange}
+              onKeyDown={(e) => {
+                // Allow numbers, Backspace, Delete, Tab, Arrow keys, and '+'
+                if (
+                  !/[\d+]/.test(e.key) && // Allow digits and '+'
+                  e.key !== 'Backspace' &&
+                  e.key !== 'Delete' &&
+                  e.key !== 'ArrowLeft' &&
+                  e.key !== 'ArrowRight' &&
+                  e.key !== 'Tab'
+                ) {
+                  e.preventDefault();
+                }
+              }}
+              readOnly={!isEditing}
+            />
+            {validationErrors.phone && (
+              <span className="profile-error-text">{validationErrors.phone}</span>
+            )}
+          </div>
+
           <div>
             <label htmlFor="address">Address</label>
             <input
@@ -246,6 +475,7 @@ const Profile = () => {
               readOnly={!isEditing}
             />
           </div>
+
         </div>
         <div>
           <label htmlFor="bio">Bio</label>
@@ -289,7 +519,7 @@ const Profile = () => {
       >
         {renderOnboardingStep()}
         <div className="profile-modal-navigation">
-          {onboardingStep < 4 ? (
+          {onboardingStep < 7 ? (
             <button onClick={handleNext}>Next</button>
           ) : (
             <button onClick={handleSave}>Save Profile</button>
