@@ -2026,13 +2026,15 @@ textarea[readonly] {
 }
 
 /* Sort Dropdown Styles */
-.sort-dropdown-wrapper {
+.sort-dropdown-wrapper,
+.category-dropdown-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.sort-label {
+.sort-label,
+.category-label {
   font-size: var(--font-size-small);
   color: #333;
 }
@@ -2069,6 +2071,8 @@ textarea[readonly] {
   pointer-events: none;
 }
 
+
+
 /* Service Card Styles */
 .service-card {
   display: flex;
@@ -2092,43 +2096,44 @@ textarea[readonly] {
 
 
 .profile-dropdown {
-  width: 100%; 
-  padding: 10px; 
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  font-size: 16px; 
-  background-color: #f9f9f9; 
-  color: #333; 
-  cursor: pointer; 
-  transition: all 0.3s ease; 
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 /* Focus State */
 .profile-dropdown:focus {
-  border-color: #007bff; 
-  outline: none; 
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Hover State */
 .profile-dropdown:hover {
-  background-color: #f1f1f1; 
+  background-color: #f1f1f1;
 }
 
 /* Disabled State */
 .profile-dropdown:disabled {
-  background-color: #e9ecef; 
-  cursor: not-allowed; 
+  background-color: #e9ecef;
+  cursor: not-allowed;
 }
 
 
 .profile-dropdown option {
-  padding: 10px; 
-  color: #333; 
-  background: #fff; 
+  padding: 10px;
+  color: #333;
+  background: #fff;
 }
 
-.profile-input, .profile-dropdown {
+.profile-input,
+.profile-dropdown {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -2139,7 +2144,8 @@ textarea[readonly] {
   transition: all 0.3s ease;
 }
 
-.profile-input:focus, .profile-dropdown:focus {
+.profile-input:focus,
+.profile-dropdown:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
@@ -2161,7 +2167,8 @@ textarea[readonly] {
 
 .service-provider-name,
 .service-description,
-.service-price {
+.service-price,
+.service-category {
   font-size: var(--font-size-body);
   color: #555;
 }
@@ -2258,8 +2265,6 @@ textarea[readonly] {
     font-size: var(--font-size-t-highlight);
   }
 }
-
-
 
 /* Contact Page */
 

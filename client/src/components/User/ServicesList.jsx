@@ -5,28 +5,39 @@ import { Link } from "react-router-dom";
 import debounce from "lodash.debounce"; 
 import { Helmet } from "react-helmet";
 
-
 const ServicesList = () => {
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("price");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Extract query parameter from URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const query = params.get("query") || "";
     setSearchQuery(query);
   }, [location.search]);
 
-  // Fetch all services initially or based on the search query
   useEffect(() => {
     const loadServices = async () => {
       try {
         const data = await fetchServicesWithUserImage();
         setServices(data);
+
+        // Extract unique categories from services and filter out uncategorized
+        const uniqueCategories = [
+          "all",
+          ...new Set(
+            data
+              .map((service) => service.category)
+              .filter((category) => category && category.toLowerCase() !== "uncategorized")
+          ),
+        ];
+        setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching services:", error);
         setError("Failed to load services. Please try again later.");
@@ -36,12 +47,15 @@ const ServicesList = () => {
     loadServices();
   }, []);
 
-  // Filter services based on search query
-  const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredServices = services.filter((service) => {
+    const matchesSearchQuery = service.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "all" || service.category === selectedCategory;
+    return matchesSearchQuery && matchesCategory;
+  });
 
-  // Sort services
   const sortServices = (services) => {
     return [...services].sort((a, b) => {
       switch (sortOption) {
@@ -57,14 +71,16 @@ const ServicesList = () => {
     });
   };
 
-  // Handle input change with debounce to minimize URL updates
   const handleSearchChange = debounce((value) => {
     navigate(`?query=${encodeURIComponent(value)}`);
   }, 300);
 
-  // Handle sort change
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
   };
 
   return (
@@ -80,7 +96,6 @@ const ServicesList = () => {
         <div className="services-header">
           <h2 className="services-heading">Services</h2>
 
-          {/* Search Bar */}
           <div className="search-wrapper">
             <input
               type="text"
@@ -89,7 +104,7 @@ const ServicesList = () => {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                handleSearchChange(e.target.value); // Update URL and search
+                handleSearchChange(e.target.value);
               }}
             />
           </div>
@@ -110,6 +125,25 @@ const ServicesList = () => {
               <option value="date">Date</option>
             </select>
           </div>
+
+          {/* Category Dropdown */}
+          <div className="category-dropdown-wrapper">
+            <label htmlFor="category-options" className="category-label">
+              Category:
+            </label>
+            <select
+              id="category-options"
+              className="sort-dropdown"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Render Services */}
@@ -124,12 +158,14 @@ const ServicesList = () => {
               />
               <div className="service-details">
                 <h3 className="service-name">{service.name}</h3>
-                <p className="service-provider-name">
-                  {service.provider
+                <p className="service-provider-name"><b>Name : </b>
+                   {service.provider
                     ? `${service.provider.firstName} ${service.provider.lastName}`
                     : "Provider Info Unavailable"}
+                    
                 </p>
-                <p className="service-description">{service.description}</p>
+                <p className="service-description"><b>Description : </b>{service.description}</p>
+                <p className="service-category"><b>Category :</b> {service.category}</p>
                 <p className="service-price">From CA ${service.price}</p>
                 <div className="more-details-wrapper">
                   <Link
