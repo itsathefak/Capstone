@@ -9,9 +9,11 @@ import {
   faCalendarAlt,
   faList,
   faBars,
-  faUserCog,  // Icon for Admin settings
-  faEnvelope,  // Icon for Admin Contact
+  faUserCog,  
+  faEnvelope,
+  faWrench,
 } from "@fortawesome/free-solid-svg-icons";
+import { FaWrench } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -42,6 +44,7 @@ const Sidebar = () => {
         <FontAwesomeIcon icon={faBars} />
       </button>
       <ul className="com-sidebar-menu">
+        {/* Service Provider */}
         {user && user.role === "Service Provider" && (
           <>
             <li>
@@ -77,8 +80,20 @@ const Sidebar = () => {
                 {!isCollapsed && <span>Upcoming Appointments</span>}
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/my-service" activeclassname="active" aria-label="My Services">
+                <FontAwesomeIcon
+                  icon={faWrench}
+                  className="com-sidebar-icon"
+                />
+                {!isCollapsed && <span>My Services</span>}
+              </NavLink>
+            </li>
           </>
         )}
+
+        {/* User */}
+
         {user && user.role === "User" && (
           <>
             <li>

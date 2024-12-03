@@ -34,6 +34,7 @@ import ServiceDetails from "./components/User/ServiceDetails";
 import BookServiceForm from "./components/User/BookServiceForm";
 import AboutPage from "./pages/AboutPage";
 import PaymentPage from "./pages/PaymentPage";
+import MyServices from "./components/ServiceProvider/MyServices";
 
 function SplitAppLayout() {
   const location = useLocation(); // Now it's within Router context
@@ -97,6 +98,14 @@ function SplitAppLayout() {
               element={
                 <ProtectedRoute requiredRole="Service Provider">
                   <CreateService />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-service"
+              element={
+                <ProtectedRoute requiredRole="Service Provider">
+                  <MyServices />
                 </ProtectedRoute>
               }
             />
