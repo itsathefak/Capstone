@@ -2100,7 +2100,7 @@ textarea[readonly] {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: var(--font-size-regular);
   background-color: #f9f9f9;
   color: #333;
   cursor: pointer;
@@ -2138,7 +2138,7 @@ textarea[readonly] {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: var(--font-size-regular);
   background-color: #f9f9f9;
   color: #333;
   transition: all 0.3s ease;
@@ -3198,6 +3198,10 @@ textarea[readonly] {
   border: none;
   border-top: 1px solid #ddd;
   margin: 15px 0;
+}
+
+.user-order-summary a {
+  text-decoration: none;
 }
 
 .user-total {

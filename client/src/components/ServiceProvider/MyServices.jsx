@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { fetchServicesByProvider } from "../../api/services";
-import debounce from "lodash.debounce"; // Add lodash.debounce
+import debounce from "lodash.debounce";
+import { Helmet } from "react-helmet";
 
 const MyServices = () => {
   const [services, setServices] = useState([]);
@@ -93,6 +94,12 @@ const MyServices = () => {
 
   return (
     <div className="my-services">
+      <Helmet>
+        <title>My Services | AppointMe</title>
+        <meta name="description" content="View and manage the list of created services along with the service details." />
+        <meta name="keywords" content="created services, my services" />
+      </Helmet>
+
       <div className="services-list">
         <div className="services-header">
           <h2 className="services-heading">My Services</h2>
@@ -106,7 +113,7 @@ const MyServices = () => {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                handleSearchChange(e.target.value); // Update search query
+                handleSearchChange(e.target.value);
               }}
             />
           </div>

@@ -22,7 +22,6 @@ import BookingForm from "./components/User/BookServiceForm";
 import Header from "./components/Common/Header";
 import Sidebar from "./components/Common/SideBar";
 import Profile from "./pages/Profile";
-import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { AuthProvider } from "./utils/AuthContext";
 import ServicesList from "./components/User/ServicesList";
