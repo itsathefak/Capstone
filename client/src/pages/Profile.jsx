@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const [userData, setUserData] = useState({
+    userImage: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -98,6 +99,7 @@ const Profile = () => {
 
   // After a successful API call to update user data
   const handleSave = async () => {
+    
     if (validateStep()) {
       setIsEditing(false);
       setIsOnboarding(false);
@@ -113,7 +115,58 @@ const Profile = () => {
         setErrorMessage('Failed to update profile');
       }
     }
+    window.location.reload();
   };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      alert("Please select a file");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result; // Base64-encoded string
+      uploadToServer(base64String); // Send Base64 to the server
+    };
+
+    reader.readAsDataURL(file); // Read the file as Base64
+  };
+
+const uploadToServer = async (base64Image) => {
+  try {
+    const response = await axios.put(
+      "http://localhost:5000/user/uploadProfilePicture",
+      { userImage: base64Image },
+      { withCredentials: true }
+    );
+    await fetchUserData(); // Re-fetch user data
+    alert("Profile picture updated successfully!");
+  } catch (error) {
+    console.error("Error uploading image:", error.response?.data);
+    alert("Failed to upload image.");
+  }
+};
+
+
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/user/userProfile", {
+        withCredentials: true,
+      });
+      setUserData(response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error.response?.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
 
   // Modal content for each step
   const renderOnboardingStep = () => {
@@ -293,10 +346,24 @@ const Profile = () => {
       {/* Profile Header Section */}
       <div className="profile-header">
         <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
-          alt={userData.firstName}
+          src={userData.userImage || "https://via.placeholder.com/150"}
+          alt="Profile Avatar"
           className="profile-avatar"
         />
+        {isEditing && (
+          <div className="profile-upload-section">
+          <label htmlFor="profileImage" className="profile-upload-button">
+            Upload Image
+          </label>
+          <input
+            id="profileImage"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }} // Hide the file input
+          />
+        </div>
+        )}
         <div className="profile-info">
           <h2>{userData.firstName} {userData.lastName}</h2>
           <h3>Software Engineer</h3>

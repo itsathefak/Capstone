@@ -7,6 +7,7 @@ const {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  uploadProfilePicture,
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -50,9 +51,10 @@ router.post(
 router.post("/logout", protect, logoutUser);
 
 router.get("/userProfile", protect, getUserProfile);
-
-// Update user profile (PUT or PATCH request)
 router.put('/updateProfile', protect, updateUserProfile);
+
+router.put("/uploadProfilePicture", protect, uploadProfilePicture);
+
 
 
 // Protected route example

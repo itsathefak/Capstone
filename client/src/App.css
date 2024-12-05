@@ -3102,6 +3102,35 @@ textarea[readonly] {
   margin-top: 10px;
 }
 
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.profile-upload-section {
+  margin-top: 10px;
+}
+
+.profile-upload-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.profile-upload-button:hover {
+  background-color: #0056b3;
+}
+
+
 /* Fade-in animation */
 @keyframes fadeIn {
   from {

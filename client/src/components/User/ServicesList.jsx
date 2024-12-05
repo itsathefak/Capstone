@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import debounce from "lodash.debounce"; 
 import { Helmet } from "react-helmet";
+import axios from "axios";
 
 const ServicesList = () => {
   const [services, setServices] = useState([]);
@@ -16,6 +17,27 @@ const ServicesList = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [userData, setUserData] = useState({
+    userImage: '',
+  });
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/user/userProfile", {
+        withCredentials: true,
+      });
+      setUserData(response.data); // Update userData state
+      console.log(response.data, "Headers");
+    } catch (error) {
+      console.error("Error fetching user data:", error.response?.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData(); // This will run as soon as the component is mounted
+  }, []); 
+
+  // Extract query parameter from URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const query = params.get("query") || "";
@@ -152,7 +174,7 @@ const ServicesList = () => {
           sortServices(filteredServices).map((service) => (
             <div key={service._id} className="service-card">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+                src={userData.userImage}
                 alt="Service Provider"
                 className="profile-avatar"
               />

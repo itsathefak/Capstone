@@ -78,6 +78,7 @@ exports.loginUser = async (req, res) => {
         bio: user.bio || "",
         skills: user.skills || [],
         role: user.role,
+        userImage: user.image || "",
       },
     });
   } catch (err) {
@@ -113,11 +114,11 @@ exports.getUserProfile = async (req, res) => {
 // Update user profile
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages } = req.body;
+    const {userImage, firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages},
+      {userImage, firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages},
       { new: true, runValidators: true }
     );
     
@@ -130,5 +131,26 @@ exports.updateUserProfile = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Server Error" });
+  }
+};
+
+exports.uploadProfilePicture = async (req, res) => {
+  try {
+    const { userImage } = req.body; // Extract Base64 string
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { userImage }, // Update the userImage field
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res.json({ msg: "Profile updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating profile:", error.message);
+    res.status(500).json({ msg: "Something went wrong" });
   }
 };

@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../api/auth";
 import { useAuth } from "../../utils/AuthContext";
 import { fetchServicesByProvider } from "../../api/services";
-import profile from "../../assets/profilepic.jpg";
+// import profile from "../../assets/profilepic.jpg";
+import axios from "axios";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -16,6 +17,26 @@ const Header = () => {
 
   // Access user data and logout function from AuthContext
   const { user, logout: clientLogout } = useAuth();
+
+  const [userData, setUserData] = useState({
+    userImage: '',
+  });
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/user/userProfile", {
+        withCredentials: true,
+      });
+      setUserData(response.data); // Update userData state
+      console.log(response.data, "Headers");
+    } catch (error) {
+      console.error("Error fetching user data:", error.response?.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData(); // This will run as soon as the component is mounted
+  }, []); 
 
   // Fetch services created by the logged-in provider
   useEffect(() => {
@@ -120,6 +141,7 @@ const Header = () => {
     };
   }, [dropdownRef]);
 
+
   return (
     <header className="app-header">
       <div className="header-logo">
@@ -136,7 +158,7 @@ const Header = () => {
         {user ? (
           <>
             <img
-              src={profile}
+              src={userData.userImage}
               alt="User Avatar"
               className="user-avatar"
             />
