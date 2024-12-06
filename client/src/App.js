@@ -8,8 +8,6 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import CreateService from "./components/ServiceProvider/CreateServiceForm";
 import AppointmentRequests from "./components/ServiceProvider/AppointmentRequests";
 import UpcomingAppointments from "./components/ServiceProvider/UpcomingAppointments";
@@ -30,9 +28,8 @@ import Home from "./pages/Home";
 import Unauthorized from "./components/Common/Unauthorized";
 import AdminContacts from "./pages/AdminContacts";
 import ServiceDetails from "./components/User/ServiceDetails";
-import BookServiceForm from "./components/User/BookServiceForm";
 import AboutPage from "./pages/AboutPage";
-import PaymentPage from "./pages/PaymentPage";
+import PaymentWrapper from "./utils/PaymentWrapper"; // Updated to import from utils
 import MyServices from "./components/ServiceProvider/MyServices";
 
 const HomeLayout = () => {
@@ -47,20 +44,17 @@ const HomeLayout = () => {
 };
 
 function SplitAppLayout() {
-  const location = useLocation(); // Now it's within Router context
-
-  const stripePromise = loadStripe("your-publishable-key-here");
+  const location = useLocation();
 
   // Define routes where the Header and Sidebar should be hidden
   const noHeaderRoutes = ["/register", "/login", "/unauthorized"];
-  const noSidebarRoutes = ["/about", "/register", "/login", "/unauthorized"]; // Same routes where you don't want the Sidebar
+  const noSidebarRoutes = ["/about", "/register", "/login", "/unauthorized"];
 
   return (
     <div className="layout">
-      {/* Conditionally render the header only if the current route is not in the noHeaderRoutes */}
+      {/* Conditionally render the header */}
       {!noHeaderRoutes.includes(location.pathname) && <Header />}
 
-      {/* Conditionally render the sidebar only if the current route is not in the noSidebarRoutes */}
       <div className="main-container">
         {!noSidebarRoutes.includes(location.pathname) && <Sidebar />}
 
@@ -75,17 +69,8 @@ function SplitAppLayout() {
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
+
             {/* Protected Routes */}
-            <Route
-              path="/Payment"
-              element={
-                <ProtectedRoute requiredRole="User">
-                  <Elements stripe={stripePromise}>
-                    <PaymentPage />
-                  </Elements>
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/profile"
               element={
@@ -135,6 +120,14 @@ function SplitAppLayout() {
               }
             />
             <Route
+              path="/payment"
+              element={
+                <ProtectedRoute requiredRole="User">
+                  <PaymentWrapper />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/appointment-requests"
               element={
                 <ProtectedRoute requiredRole="Service Provider">
@@ -153,28 +146,12 @@ function SplitAppLayout() {
             <Route
               path="/service-list"
               element={
-                // <ProtectedRoute>
-                <ServicesList />
-                // </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/service-list/:serviceId"
-              element={
                 <ProtectedRoute>
-                  <ServiceDetails />
+                  <ServicesList />
                 </ProtectedRoute>
               }
             />
             <Route path="/contact-us" element={<Contact />} />
-            <Route
-              path="/book-service/:serviceId"
-              element={
-                <ProtectedRoute>
-                  <BookServiceForm />
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/appointment-history"
               element={
@@ -193,11 +170,9 @@ function SplitAppLayout() {
             />
             {/* Redirect to login for any unmatched routes */}
             <Route path="*" element={<Navigate to="/unauthorized" />} />
-            <Route path="/service/:serviceId" element={<ServiceDetails />} />
           </Routes>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }
@@ -211,7 +186,6 @@ function App() {
             <Route path="/" element={<HomeLayout />} />
             <Route path="/*" element={<SplitAppLayout />} />
           </Routes>
-
           <Footer />
         </div>
       </Router>

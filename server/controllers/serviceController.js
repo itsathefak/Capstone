@@ -134,14 +134,34 @@ const updateService = async (req, res) => {
   const updatedData = req.body;
 
   try {
+    // Validate and sanitize `availability` if it exists
+    if (updatedData.availability) {
+      updatedData.availability.forEach((availability) => {
+        if (availability.slots) {
+          availability.slots.forEach((slot) => {
+            // Ensure `status` is valid or set to default
+            if (
+              !slot.status ||
+              !["Available", "Booked", "Unavailable"].includes(slot.status)
+            ) {
+              slot.status = "Available"; // Default status
+            }
+          });
+        }
+      });
+    }
+
+    // Update the service
     const updatedService = await Service.findByIdAndUpdate(
       serviceId,
       updatedData,
       { new: true, runValidators: true }
     ).populate("provider", "firstName lastName");
+
     if (!updatedService) {
       return res.status(404).json({ message: "Service not found" });
     }
+
     res.status(200).json(updatedService);
   } catch (error) {
     console.error("Error updating service:", error);

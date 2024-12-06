@@ -14,6 +14,7 @@ const EditService = ({ onUpdate }) => {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [timeSlots, setTimeSlots] = useState([]);
+  const [category, setCategory] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
@@ -27,6 +28,7 @@ const EditService = ({ onUpdate }) => {
         setFirstName(serviceData.providerFirstName);
         setLastName(serviceData.providerLastName);
         setServiceName(serviceData.name);
+        setCategory(serviceData.category);
         setDescription(serviceData.description);
         setPrice(serviceData.price);
 
@@ -78,7 +80,7 @@ const EditService = ({ onUpdate }) => {
 
         const match = spokenTime.match(timeRegex);
         if (match) {
-          const [_, hours, minutes, period] = match;
+          const [hours, minutes, period] = match;
           let adjustedHours = parseInt(hours, 10);
           if (period?.toUpperCase() === "PM" && adjustedHours < 12) {
             adjustedHours += 12;
@@ -171,6 +173,7 @@ const EditService = ({ onUpdate }) => {
     if (!lastName) validationErrors.lastName = "Last name is required.";
     if (!serviceName)
       validationErrors.serviceName = "Service name is required.";
+    if (!category) validationErrors.category = "Please select a category.";
     if (!description) validationErrors.description = "Description is required.";
     if (price === "") validationErrors.price = "Price is required.";
     if (price < 0) validationErrors.price = "Price cannot be negative.";
@@ -185,6 +188,7 @@ const EditService = ({ onUpdate }) => {
       firstName,
       lastName,
       name: serviceName,
+      category,
       description,
       availability: timeSlots,
       price: parseFloat(price),
@@ -219,17 +223,24 @@ const EditService = ({ onUpdate }) => {
     <div className="EditServiceForm-container">
       <Helmet>
         <title>Edit Service | AppointMe</title>
-        <meta name="description" content="Manage services details like category, description along with date and time efficiently." />
-        <meta name="keywords" content="edit services, service categories, edit date and time slots" />
+        <meta
+          name="description"
+          content="Manage services details like category, description along with date and time efficiently."
+        />
+        <meta
+          name="keywords"
+          content="edit services, service categories, edit date and time slots"
+        />
       </Helmet>
 
       <form onSubmit={handleSubmit}>
         <h2>Edit Service Details</h2>
 
         {/* First Name Field */}
-        <label className="BS-label" htmlFor="firstName">First Name</label>
+        <label className="BS-label" htmlFor="firstName">
+          First Name
+        </label>
         <div className="EditServiceForm-formGroup">
-          
           <input
             type="text"
             id="firstName"
@@ -256,9 +267,10 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Last Name Field */}
-        <label className="BS-label" htmlFor="lastName">Last Name</label>
+        <label className="BS-label" htmlFor="lastName">
+          Last Name
+        </label>
         <div className="EditServiceForm-formGroup">
-          
           <input
             type="text"
             id="lastName"
@@ -285,9 +297,10 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Service Name Field */}
-        <label className="BS-label" htmlFor="serviceName">Service Name</label>
+        <label className="BS-label" htmlFor="serviceName">
+          Service Name
+        </label>
         <div className="EditServiceForm-formGroup">
-          
           <input
             type="text"
             id="serviceName"
@@ -313,10 +326,52 @@ const EditService = ({ onUpdate }) => {
           )}
         </div>
 
+        <label className="BS-label" htmlFor="category">
+          Category
+        </label>
+        <div className="CreateServiceForm-formGroup">
+          <select
+            id="category"
+            className={`CreateServiceForm-textarea ${
+              errors.category ? "is-invalid" : ""
+            }`}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Select Category</option>
+            <option value="health">Health</option>
+            <option value="education">Education</option>
+            <option value="technology">Technology</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="other">Other</option>
+          </select>
+          <button
+            type="button"
+            className="CreateServiceForm-voiceButton voiceButton-Category"
+            onClick={() =>
+              handleVoiceInput(setCategory, "category", [
+                "Health",
+                "Education",
+                "Technology",
+                "Entertainment",
+                "Other",
+              ])
+            }
+          >
+            🎤
+          </button>
+          {errors.category && (
+            <div className="CreateServiceForm-errorMessage">
+              {errors.category}
+            </div>
+          )}
+        </div>
+
         {/* Description Field */}
-        <label className="BS-label" htmlFor="description">Description</label>
+        <label className="BS-label" htmlFor="description">
+          Description
+        </label>
         <div className="EditServiceForm-formGroup">
-          
           <textarea
             id="description"
             placeholder="Description"
@@ -342,9 +397,10 @@ const EditService = ({ onUpdate }) => {
         </div>
 
         {/* Date Field */}
-        <label className="BS-label" htmlFor="date">Date</label>
+        <label className="BS-label" htmlFor="date">
+          Date
+        </label>
         <div className="EditServiceForm-formGroup">
-          
           <input
             type="date"
             id="date"
@@ -370,43 +426,43 @@ const EditService = ({ onUpdate }) => {
 
         {/* Time Slots */}
         <div className="EditServiceForm-timeSlotContainer">
-        <div className="EditServiceForm-timeInput">
-        <label htmlFor="startTime">Start Time</label>
-          <div className="EditServiceForm-formGroup">
-            <input
-              type="time"
-              id="startTime"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              className="EditServiceForm-input"
-            />
-            <button
-              type="button"
-              className="EditServiceForm-voiceButton"
-              onClick={() => handleVoiceInput(setStartTime, "time")}
-            >
-              🎤
-            </button>
-          </div>
+          <div className="EditServiceForm-timeInput">
+            <label htmlFor="startTime">Start Time</label>
+            <div className="EditServiceForm-formGroup">
+              <input
+                type="time"
+                id="startTime"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                className="EditServiceForm-input"
+              />
+              <button
+                type="button"
+                className="EditServiceForm-voiceButton"
+                onClick={() => handleVoiceInput(setStartTime, "time")}
+              >
+                🎤
+              </button>
+            </div>
           </div>
           <div className="EditServiceForm-timeInput">
-          <label htmlFor="endTime">End Time</label>
-          <div className="EditServiceForm-formGroup">
-            <input
-              type="time"
-              id="endTime"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              className="EditServiceForm-input"
-            />
-            <button
-              type="button"
-              className="EditServiceForm-voiceButton"
-              onClick={() => handleVoiceInput(setEndTime, "time")}
-            >
-              🎤
-            </button>
-          </div>
+            <label htmlFor="endTime">End Time</label>
+            <div className="EditServiceForm-formGroup">
+              <input
+                type="time"
+                id="endTime"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                className="EditServiceForm-input"
+              />
+              <button
+                type="button"
+                className="EditServiceForm-voiceButton"
+                onClick={() => handleVoiceInput(setEndTime, "time")}
+              >
+                🎤
+              </button>
+            </div>
           </div>
           <button
             type="button"
@@ -417,10 +473,31 @@ const EditService = ({ onUpdate }) => {
           </button>
         </div>
 
+        {timeSlots.map((slot) => (
+          <div key={slot.date}>
+            <h4>Date: {slot.date}</h4>
+            <ul className="EditServiceForm-timeSlotList">
+              {slot.slots.map((timeSlot, index) => (
+                <li className="EditServiceForm-timeSlotItem" key={index}>
+                  {timeSlot.startTime} - {timeSlot.endTime} (
+                  {timeSlot.status || "Available"})
+                  <button
+                    className="EditServiceForm-removeTimeSlotButton"
+                    onClick={() => handleRemoveTimeSlot(slot.date, index)}
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
         {/* Price Field */}
-        <label className="BS-label" htmlFor="price">Price</label>
+        <label className="BS-label" htmlFor="price">
+          Price
+        </label>
         <div className="EditServiceForm-formGroup">
-          
           <input
             type="number"
             id="price"

@@ -8,7 +8,10 @@ const {
   getAppointmentHistory,
 } = require("../controllers/appointmentController");
 const { protect } = require("../middleware/authMiddleware");
-const { bookService } = require("../controllers/bookingController");
+const {
+  bookService,
+  createPaymentIntent,
+} = require("../controllers/bookingController");
 
 // GET all appointment requests (only for logged-in service providers)
 router.get("/requests", protect, getAppointmentRequests);
@@ -27,5 +30,8 @@ router.get("/history", protect, getAppointmentHistory);
 
 // Route to book a service
 router.post("/book", protect, bookService);
+
+// Route to get clientSecret
+router.post("/payments/create-intent", createPaymentIntent);
 
 module.exports = router;

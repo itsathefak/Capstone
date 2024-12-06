@@ -42,6 +42,10 @@ let appointmentSchema = new Schema({
   comments: {
     type: String,
   },
+  paymentIntentId: {
+    type: String, // Store the Stripe payment intent ID
+    required: true,
+  },
 });
 
 let Appointment = mongoose.model("Appointment", appointmentSchema);
