@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchServicesWithUserImage } from "../../api/users";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import debounce from "lodash.debounce"; 
+import debounce from "lodash.debounce";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 
@@ -18,14 +18,17 @@ const ServicesList = () => {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
-    userImage: '',
+    userImage: "",
   });
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/user/userProfile", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "http://localhost:5000/user/userProfile",
+        {
+          withCredentials: true,
+        }
+      );
       setUserData(response.data); // Update userData state
       console.log(response.data, "Headers");
     } catch (error) {
@@ -35,7 +38,7 @@ const ServicesList = () => {
 
   useEffect(() => {
     fetchUserData(); // This will run as soon as the component is mounted
-  }, []); 
+  }, []);
 
   // Extract query parameter from URL
   useEffect(() => {
@@ -56,7 +59,10 @@ const ServicesList = () => {
           ...new Set(
             data
               .map((service) => service.category)
-              .filter((category) => category && category.toLowerCase() !== "uncategorized")
+              .filter(
+                (category) =>
+                  category && category.toLowerCase() !== "uncategorized"
+              )
           ),
         ];
         setCategories(uniqueCategories);
@@ -109,8 +115,14 @@ const ServicesList = () => {
     <div>
       <Helmet>
         <title>Services | AppointMe</title>
-        <meta name="description" content="View all the service create by our providers and book an appointment." />
-        <meta name="keywords" content="services, service list, book appointment" />
+        <meta
+          name="description"
+          content="View all the service create by our providers and book an appointment."
+        />
+        <meta
+          name="keywords"
+          content="services, service list, book appointment"
+        />
       </Helmet>
       <div className="full-width-banner"></div>
 
@@ -174,20 +186,25 @@ const ServicesList = () => {
           sortServices(filteredServices).map((service) => (
             <div key={service._id} className="service-card">
               <img
-                src={userData.userImage}
+                src={service.provider.userImage}
                 alt="Service Provider"
                 className="profile-avatar"
               />
               <div className="service-details">
                 <h3 className="service-name">{service.name}</h3>
-                <p className="service-provider-name"><b>Name : </b>
-                   {service.provider
+                <p className="service-provider-name">
+                  <b>Name : </b>
+                  {service.provider
                     ? `${service.provider.firstName} ${service.provider.lastName}`
                     : "Provider Info Unavailable"}
-                    
                 </p>
-                <p className="service-description"><b>Description : </b>{service.description}</p>
-                <p className="service-category"><b>Category :</b> {service.category}</p>
+                <p className="service-description">
+                  <b>Description : </b>
+                  {service.description}
+                </p>
+                <p className="service-category">
+                  <b>Category :</b> {service.category}
+                </p>
                 <p className="service-price">From CA ${service.price}</p>
                 <div className="more-details-wrapper">
                   <Link
