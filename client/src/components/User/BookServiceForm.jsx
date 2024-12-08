@@ -145,15 +145,19 @@ const BookServiceForm = () => {
         />
       </Helmet>
 
-      <h1 className="BS-title">Book Service: {service?.name}</h1>
-
       <div className="BS-provider-details">
         <h2 className="BS-provider-title">Provider Details</h2>
         <table className="BS-provider-table">
           <tbody>
             <tr>
               <td>
-                <strong>Name:</strong>
+                <strong>Service Name:</strong>
+              </td>
+              <td>{service?.name}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Provider Name:</strong>
               </td>
               <td>
                 {service?.providerFirstName} {service?.providerLastName}
