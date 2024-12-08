@@ -89,9 +89,9 @@ exports.acceptAppointment = async (req, res) => {
       { status: "Confirmed" },
       { new: true }
     )
-    .populate("customerId", "firstName lastName email")
-    .populate("serviceId", "name")
-    .populate("providerId", "firstName lastName");
+      .populate("customerId", "firstName lastName email")
+      .populate("serviceId", "name")
+      .populate("providerId", "firstName lastName");
 
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
@@ -102,7 +102,9 @@ exports.acceptAppointment = async (req, res) => {
     const provider = appointment.providerId;
 
     if (!customer || !service || !provider) {
-      return res.status(404).json({ message: "Customer, Service or Provider details not found" });
+      return res
+        .status(404)
+        .json({ message: "Customer, Service or Provider details not found" });
     }
 
     // send confirmed email to the provided email address
@@ -116,7 +118,7 @@ exports.acceptAppointment = async (req, res) => {
       price: appointment.price,
       serviceName: service.name,
       providerName: `${provider.firstName} ${provider.lastName}`,
-      status: "Confirmed"
+      status: "Confirmed",
     });
 
     res.status(200).json({ message: "Appointment accepted", appointment });
@@ -138,9 +140,10 @@ exports.rejectAppointment = async (req, res) => {
       appointmentId,
       { status: "Rejected" },
       { new: true }
-    ).populate("customerId", "firstName lastName email")
-    .populate("serviceId", "name")
-    .populate("providerId", "firstName lastName");
+    )
+      .populate("customerId", "firstName lastName email")
+      .populate("serviceId", "name")
+      .populate("providerId", "firstName lastName");
 
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
@@ -151,7 +154,9 @@ exports.rejectAppointment = async (req, res) => {
     const provider = appointment.providerId;
 
     if (!customer || !service || !provider) {
-      return res.status(404).json({ message: "Customer, Service or Provider details not found" });
+      return res
+        .status(404)
+        .json({ message: "Customer, Service or Provider details not found" });
     }
 
     // send confirmed email to the provided email address
@@ -165,7 +170,7 @@ exports.rejectAppointment = async (req, res) => {
       price: appointment.price,
       serviceName: service.name,
       providerName: `${provider.firstName} ${provider.lastName}`,
-      status: "Rejected"
+      status: "Rejected",
     });
 
     res.status(200).json({ message: "Appointment rejected", appointment });

@@ -1,10 +1,11 @@
 import api from "./api";
 
 // Create a payment intent
-export const createPaymentIntent = async (amount) => {
+export const createPaymentIntent = async ({ amount, paymentType }) => {
   try {
     const response = await api.post("/appointments/payments/create-intent", {
       amount,
+      paymentType, // Pass paymentType as part of the payload
     });
     return response.data; // Assume it returns { clientSecret }
   } catch (error) {

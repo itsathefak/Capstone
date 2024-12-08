@@ -4,38 +4,57 @@ const { validationResult } = require("express-validator");
 
 // Create a new service
 const createService = async (req, res) => {
-  console.log("Received request:", req.body);
+  console.log("Received request payload:", req.body);
 
   // Validate input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res
-      .status(400)
+      .status(422)
       .json({ message: "Validation error", errors: errors.array() });
   }
 
   try {
-    const { serviceName, category, description, price, timeSlots } = req.body;
+    const {
+      serviceName,
+      category,
+      description,
+      price,
+      timeSlots,
+      paymentIntentId,
+    } = req.body;
 
-    // Ensure provider ID is available
-    const providerId = req.user._id;
-
+    // Validate provider
+    const providerId = req.user?._id;
     if (!providerId) {
       return res.status(400).json({ message: "Provider ID is required" });
     }
 
-    // Fetch the provider's details
-    const providerDetails = await User.findById(providerId);
+    const providerDetails = await User.findById(providerId).lean();
     if (!providerDetails) {
       return res.status(404).json({ message: "Provider not found" });
     }
 
+    // Validate timeSlots
+    if (!Array.isArray(timeSlots) || timeSlots.length === 0) {
+      return res.status(422).json({ message: "Invalid or missing time slots" });
+    }
+
+    for (const slot of timeSlots) {
+      if (!slot.date || !slot.start || !slot.end) {
+        return res.status(422).json({
+          message: "Each time slot must have a date, start, and end time",
+        });
+      }
+    }
+
+    // Construct the new service
     const newService = new Service({
       name: serviceName,
       description,
       category,
       price: Number(price),
-      provider: providerId,
+      provider: String(providerId),
       providerFirstName: providerDetails.firstName,
       providerLastName: providerDetails.lastName,
       availability: timeSlots.map((slot) => ({
@@ -48,11 +67,14 @@ const createService = async (req, res) => {
           },
         ],
       })),
+      paymentIntentId: paymentIntentId ? String(paymentIntentId) : null,
     });
 
     await newService.save();
 
-    // Create a simplified service object for the response
+    console.log("Sanitized payload being saved:", newService);
+
+    // Construct response
     const serviceResponse = {
       id: newService._id,
       name: newService.name,
@@ -64,6 +86,7 @@ const createService = async (req, res) => {
         firstName: newService.providerFirstName,
         lastName: newService.providerLastName,
       },
+      paymentIntentId: newService.paymentIntentId,
       availability: newService.availability.map((availability) => ({
         date: availability.date,
         slots: availability.slots.map((slot) => ({
@@ -73,6 +96,8 @@ const createService = async (req, res) => {
         })),
       })),
     };
+
+    console.log("Response payload being sent:", serviceResponse);
 
     res.status(201).json({
       message: "Service created successfully",

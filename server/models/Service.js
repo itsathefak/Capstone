@@ -31,6 +31,10 @@ let serviceSchema = new Schema({
     type: String,
     required: true,
   },
+  paymentIntentId: {
+    type: String,
+    required: true,
+  },
   availability: [
     {
       date: {

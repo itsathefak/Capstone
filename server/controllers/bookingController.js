@@ -109,22 +109,30 @@ exports.bookService = async (req, res) => {
 };
 
 exports.createPaymentIntent = async (req, res) => {
-  const { amount } = req.body; // Amount is in dollars from the client
+  const { amount, paymentType } = req.body; // `paymentType` identifies "booking" or "creation"
 
   try {
+    // Validate input
     if (!amount || amount <= 0) {
       return res.status(400).json({ message: "Invalid amount provided." });
     }
 
-    // Stripe requires amount in cents, so multiply by 100
+    if (!paymentType || !["booking", "creation"].includes(paymentType)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid payment type provided." });
+    }
+
+    // Stripe requires amount in cents
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert dollars to cents
+      amount: Math.round(amount * 100),
       currency: "usd",
       payment_method_types: ["card"],
     });
 
     return res.status(201).json({
       clientSecret: paymentIntent.client_secret,
+      paymentType, // Include payment type for clarity
     });
   } catch (error) {
     console.error("Error creating payment intent:", error);

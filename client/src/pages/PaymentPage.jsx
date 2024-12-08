@@ -1,25 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   PaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { bookService } from "../api/appointments";
+import { createService } from "../api/services";
 
 const PaymentPage = () => {
   const stripe = useStripe();
   const elements = useElements();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { clientSecret, paymentDetails, userDetails, serviceDetails } =
-    location.state || {};
+  const {
+    clientSecret,
+    paymentDetails,
+    userDetails,
+    serviceDetails,
+    paymentType, // "booking" or "creation"
+    paymentIntentId: initialPaymentIntentId,
+  } = location.state || {};
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [finalPaymentIntentId, setFinalPaymentIntentId] = useState(
+    initialPaymentIntentId || null
+  );
+
+  // Extract Payment Intent ID from Client Secret
+  useEffect(() => {
+    if (!finalPaymentIntentId && clientSecret) {
+      const extractedId = clientSecret.split("_secret_")[0];
+      console.log("Extracted paymentIntentId:", extractedId);
+      setFinalPaymentIntentId(extractedId);
+    }
+  }, [clientSecret, finalPaymentIntentId]);
 
   if (!clientSecret) {
-    return <p>Missing payment intent. Please return to the booking page.</p>;
+    return (
+      <p>
+        Missing payment intent client secret. Please return to the appropriate
+        page.
+      </p>
+    );
   }
 
   const handleSubmit = async (e) => {
@@ -49,33 +74,24 @@ const PaymentPage = () => {
       }
 
       if (paymentIntent?.status === "succeeded") {
-        const bookingData = {
-          ...userDetails,
-          ...serviceDetails,
-          paymentIntentId: paymentIntent.id,
-        };
+        console.log("Payment succeeded:", paymentIntent);
 
-        console.log("Sending booking data to backend:", bookingData);
+        const intentId =
+          finalPaymentIntentId || paymentIntent.id || "UnknownPaymentIntentId";
 
-        try {
-          const response = await bookService(bookingData);
-          console.log("Booking API response:", response);
+        if (!intentId) {
+          console.error("No valid paymentIntentId available.");
+          setMessage("Payment succeeded, but could not retrieve intent ID.");
+          return;
+        }
 
-          if (response?.appointment) {
-            setMessage("Payment succeeded, and booking was successful!");
-          } else {
-            setMessage(
-              "Payment succeeded, but booking could not be completed."
-            );
-          }
-        } catch (err) {
-          console.error(
-            "Booking API error:",
-            err.response?.data || err.message
-          );
-          setMessage(
-            "Payment succeeded, but booking could not be completed. Please contact support."
-          );
+        if (paymentType === "booking") {
+          await handleBooking(intentId);
+        } else if (paymentType === "creation") {
+          await handleCreation(intentId);
+        } else {
+          setMessage("Payment succeeded, but no valid action specified.");
+          console.error("Invalid payment type:", paymentType);
         }
       } else {
         console.warn("Payment was not successful:", paymentIntent?.status);
@@ -88,6 +104,74 @@ const PaymentPage = () => {
       setMessage("Payment confirmation failed. Please try again.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleBooking = async (paymentIntentId) => {
+    const bookingData = {
+      ...userDetails,
+      ...serviceDetails,
+      paymentIntentId,
+    };
+
+    try {
+      console.log("Sending booking data:", bookingData);
+      const response = await bookService(bookingData);
+      if (response?.appointment) {
+        setMessage("Payment succeeded, and booking was successful!");
+        console.log("Booking response:", response);
+        navigate("/appointment-history");
+      } else {
+        setMessage(
+          "Payment succeeded, but booking could not be completed. Please contact support."
+        );
+        console.error("Booking response invalid:", response);
+      }
+    } catch (err) {
+      console.error("Booking API error:", err);
+      setMessage(
+        "Payment succeeded, but booking could not be completed. Please contact support."
+      );
+    }
+  };
+
+  const handleCreation = async (paymentIntentId) => {
+    const providerId = userDetails?.providerId || "UnknownProvider";
+
+    // Prepare creation data
+    const creationData = {
+      ...serviceDetails,
+      provider: String(userDetails?.providerId || ""),
+      providerFirstName: userDetails?.firstName,
+      providerLastName: userDetails?.lastName,
+      paymentIntentId,
+    };
+
+    try {
+      console.log("Sending creation data:", creationData);
+
+      // Pass `paymentIntentId` and `providerId` explicitly
+      const response = await createService(
+        creationData,
+        paymentIntentId,
+        providerId
+      );
+
+      if (response?.service) {
+        setMessage("Payment succeeded, and service was created!");
+        console.log("Service creation response:", response);
+        navigate("/service-list");
+      } else {
+        setMessage(
+          "Payment succeeded, but service creation failed. Please contact support."
+        );
+        console.error("Service creation response invalid:", response);
+      }
+    } catch (err) {
+      console.error("Service creation API error:", err);
+      setMessage(
+        "Payment succeeded, but service creation failed. Please contact support."
+      );
     }
   };
 

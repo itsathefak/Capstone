@@ -1,17 +1,28 @@
 import api from "./api";
 
 // Function to create a service
-export const createService = async (serviceData, providerId) => {
+export const createService = async (
+  serviceData,
+  paymentIntentId,
+  providerId
+) => {
   try {
-    const serviceDataWithProvider = {
+    // Include paymentIntentId and ensure fields are strings
+    const serviceDataWithPayment = {
       ...serviceData,
-      providerId,
+      paymentIntentId: String(paymentIntentId),
+      providerId: String(providerId),
     };
 
-    const response = await api.post(
-      "/services/create",
-      serviceDataWithProvider
+    console.log(
+      "Payload being sent to /services/create:",
+      serviceDataWithPayment
     );
+
+    // Make the API call to create the service
+    const response = await api.post("/services/create", serviceDataWithPayment);
+
+    console.log("Response from /services/create:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error creating service:", error);

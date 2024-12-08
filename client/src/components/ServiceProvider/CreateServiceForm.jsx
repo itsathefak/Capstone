@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { createService } from "../../api/services";
+import { useNavigate } from "react-router-dom";
+import { createPaymentIntent } from "../../api/payment";
 import { useAuth } from "../../utils/AuthContext";
 import { Helmet } from "react-helmet";
 
@@ -36,7 +37,8 @@ const InputField = ({
 );
 
 const CreateService = () => {
-  const { user } = useAuth(); // Get user info from useAuth hook
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState(user?.firstName || "");
   const [lastName, setLastName] = useState(user?.lastName || "");
   const [serviceName, setServiceName] = useState("");
@@ -44,13 +46,15 @@ const CreateService = () => {
   const [date, setDate] = useState("");
   const [timeSlots, setTimeSlots] = useState([]);
   const [category, setCategory] = useState("");
-
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [price, setPrice] = useState("");
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const platformFee = 40;
+  const taxRate = 0.13;
 
   // Speech recognition for input fields
   const handleVoiceInput = (setFieldValue, type, options = []) => {
@@ -67,7 +71,6 @@ const CreateService = () => {
 
       if (type === "date") {
         const normalizedText = spokenText.replace(/(\d+)(st|nd|rd|th)/, "$1");
-
         const spokenDate = new Date(normalizedText);
 
         if (!isNaN(spokenDate)) {
@@ -99,14 +102,10 @@ const CreateService = () => {
           window.speechSynthesis.speak(utterance);
         }
       } else if (type === "category") {
-        
         const normalizedSpokenText = spokenText.trim().toLowerCase();
         const matchedOption = options.find(
-          (category) => {
-            return category.toLowerCase() === normalizedSpokenText
-          }
+          (category) => category.toLowerCase() === normalizedSpokenText
         );
-
         if (matchedOption) {
           setFieldValue(matchedOption.toLowerCase());
         } else {
@@ -125,7 +124,6 @@ const CreateService = () => {
     };
   };
 
-  // Validation for time slots
   const validateTimeSlot = (date, start, end) => {
     if (!date || !start || !end) return "Date and times must be provided.";
     const startDateTime = new Date(`${date}T${start}`);
@@ -146,44 +144,35 @@ const CreateService = () => {
     return null;
   };
 
-  // Handle adding time slots
   const handleAddTimeSlot = () => {
     const error = validateTimeSlot(date, startTime, endTime);
     if (error) {
       setErrors((prev) => ({ ...prev, timeSlot: error }));
       return;
     }
-
     const newSlot = { date, start: startTime, end: endTime };
     setTimeSlots((prev) => [...prev, newSlot]);
     setErrors((prev) => ({ ...prev, timeSlot: null }));
   };
 
   const handleRemoveTimeSlot = (index) => {
-    const newTimeSlots = timeSlots.filter((_, i) => i !== index);
-    setTimeSlots(newTimeSlots);
+    setTimeSlots((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Validation for required fields
+    // Validate form fields
     const validationErrors = {};
-    if (!firstName) validationErrors.firstName = "First name is required.";
-    if (!lastName) validationErrors.lastName = "Last name is required.";
-    if (!category) validationErrors.category = "Please select a category.";
-
     if (!serviceName)
       validationErrors.serviceName = "Service name is required.";
     if (!description) validationErrors.description = "Description is required.";
-    if (!date) validationErrors.date = "Date is required.";
-    if (timeSlots.length === 0)
-      validationErrors.timeSlot = "Please add at least one time slot.";
-    const priceValue = parseFloat(price);
-    if (isNaN(priceValue)) validationErrors.price = "Price is required.";
-    if (priceValue < 0) validationErrors.price = "Price cannot be negative.";
+    if (!category) validationErrors.category = "Please select a category.";
+    if (!timeSlots.length)
+      validationErrors.timeSlot = "Add at least one time slot.";
+    if (!price || isNaN(price) || price <= 0)
+      validationErrors.price = "Price must be a positive number.";
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -191,35 +180,57 @@ const CreateService = () => {
       return;
     }
 
-    const serviceData = {
-      firstName,
-      lastName,
-      category,
-      serviceName,
-      description,
-      date,
-      timeSlots,
-      price: priceValue,
-    };
+    const taxAmount = platformFee * taxRate;
+    const totalAmount = platformFee + taxAmount;
 
     try {
-      await createService(serviceData);
-      setSuccessMessage("Service created successfully!");
+      // Step 1: Create Payment Intent
+      const { clientSecret } = await createPaymentIntent({
+        amount: totalAmount,
+        paymentType: "creation",
+      });
 
-      // Clear form after successful submission
-      setFirstName(user?.firstName || "");
-      setLastName(user?.lastName || "");
-      setServiceName("");
-      setDescription("");
-      setDate("");
-      setTimeSlots([]);
-      setStartTime("");
-      setEndTime("");
-      setPrice("");
-      setErrors({});
+      if (!clientSecret) {
+        throw new Error("Failed to create payment intent. No client secret.");
+      }
+
+      // Step 2: Extract paymentIntentId
+      const paymentIntentId = clientSecret.split("_secret_")[0];
+      if (!paymentIntentId) {
+        throw new Error("Failed to extract paymentIntentId from clientSecret.");
+      }
+
+      console.log("Extracted paymentIntentId:", paymentIntentId);
+
+      // Step 3: Navigate to Payment Page
+      navigate("/payment", {
+        state: {
+          clientSecret,
+          paymentIntentId,
+          paymentDetails: {
+            subtotal: platformFee,
+            tax: taxAmount,
+            platformFee,
+            total: totalAmount,
+          },
+          serviceDetails: {
+            serviceName,
+            description,
+            category,
+            timeSlots,
+            price,
+          },
+          userDetails: {
+            firstName,
+            lastName,
+            providerId: user?.id || "UnknownProvider",
+          },
+          paymentType: "creation",
+        },
+      });
     } catch (error) {
-      console.error("Error creating service:", error);
-      setErrors({ submit: "Failed to create service. Please try again." });
+      console.error("Error during service creation:", error.message);
+      setErrors({ submit: "Failed to initiate payment. Please try again." });
     } finally {
       setLoading(false);
     }
@@ -229,8 +240,14 @@ const CreateService = () => {
     <div className="CreateServiceForm-container">
       <Helmet>
         <title>Create Service | AppointMe</title>
-        <meta name="description" content="Create services efficiently by adding service details, date and time slots, and categories." />
-        <meta name="keywords" content="create services, service categories, add date and time slots" />
+        <meta
+          name="description"
+          content="Create services efficiently by adding service details, date and time slots, and categories."
+        />
+        <meta
+          name="keywords"
+          content="create services, service categories, add date and time slots"
+        />
       </Helmet>
 
       <form onSubmit={handleSubmit}>
@@ -249,7 +266,6 @@ const CreateService = () => {
         <label className="BS-label" htmlFor="lastName">
           Last Name
         </label>
-
         <InputField
           type="text"
           placeholder="Last Name"
@@ -348,8 +364,6 @@ const CreateService = () => {
             value={date}
             min={new Date().toISOString().split("T")[0]}
             onChange={(e) => setDate(e.target.value)}
-            onVoiceInput={() => handleVoiceInput(setDate, "date")}
-            error={errors.date}
           />
           <button
             type="button"
@@ -358,6 +372,9 @@ const CreateService = () => {
           >
             🎤
           </button>
+          {errors.date && (
+            <div className="CreateServiceForm-errorMessage">{errors.date}</div>
+          )}
         </div>
         <div className="CreateServiceForm-timeSlotContainer">
           <div className="CreateServiceForm-timeInput">
@@ -433,7 +450,6 @@ const CreateService = () => {
         <label className="BS-label" htmlFor="price">
           Price
         </label>
-
         <InputField
           type="number"
           placeholder="Price"
@@ -447,7 +463,7 @@ const CreateService = () => {
           type="submit"
           disabled={loading}
         >
-          {loading ? "Creating..." : "Create Service"}
+          {loading ? "Creating..." : "Proceed to Payment"}
         </button>
         {successMessage && (
           <div className="CreateServiceForm-successMessage">

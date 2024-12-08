@@ -19,15 +19,35 @@ const BookServiceForm = () => {
   const [selectedTime, setSelectedTime] = useState("");
   const [timeSlots, setTimeSlots] = useState([]);
   const [clientSecret, setClientSecret] = useState("");
+  const [paymentIntentId, setPaymentIntentId] = useState("");
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
-  const platformFee = 40; // Fixed platform fee
+  const platformFee = 40;
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchService = async () => {
       try {
         const data = await fetchServiceById(serviceId);
+
+        // Group availability by unique dates
+        const groupedAvailability = data.availability.reduce((acc, curr) => {
+          const dateKey = new Date(curr.date).toISOString().split("T")[0];
+          if (!acc[dateKey]) {
+            acc[dateKey] = [];
+          }
+          acc[dateKey] = [...acc[dateKey], ...curr.slots];
+          return acc;
+        }, {});
+
+        const groupedAvailabilityArray = Object.entries(
+          groupedAvailability
+        ).map(([date, slots]) => ({
+          date,
+          slots,
+        }));
+
+        data.groupedAvailability = groupedAvailabilityArray; // Attach grouped availability to the service
         setService(data);
 
         const calculatedTax = (data.price + platformFee) * 0.13;
@@ -37,8 +57,13 @@ const BookServiceForm = () => {
         setTax(calculatedTax);
         setTotal(calculatedTotal);
 
-        const paymentIntent = await createPaymentIntent(calculatedTotal);
+        const paymentIntent = await createPaymentIntent({
+          amount: calculatedTotal,
+          paymentType: "booking",
+        });
+
         setClientSecret(paymentIntent.clientSecret);
+        setPaymentIntentId(paymentIntent.clientSecret.split("_secret_")[0]);
       } catch (error) {
         console.error(
           "Error fetching service or creating payment intent:",
@@ -49,7 +74,7 @@ const BookServiceForm = () => {
     fetchService();
   }, [serviceId, platformFee]);
 
-  const handleVoiceInput = (setFieldValue, type, options = []) => {
+  const handleVoiceInput = (setFieldValue, type) => {
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser.");
       return;
@@ -60,31 +85,7 @@ const BookServiceForm = () => {
 
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript.trim();
-      if (type === "date") {
-        const normalizedText = spokenText.replace(/(\d+)(st|nd|rd|th)/, "$1");
-        const date = new Date(normalizedText);
-        if (isNaN(date.getTime())) return null;
-
-        const formattedDate = date.toISOString().split("T")[0];
-        const matchedDate = options.find((opt) => opt === formattedDate);
-
-        if (matchedDate) {
-          setFieldValue(matchedDate);
-          const availability = service.availability.find(
-            (item) =>
-              new Date(item.date).toISOString().split("T")[0] === formattedDate
-          );
-          setTimeSlots(availability ? availability.slots : []);
-          setSelectedTime("");
-        } else {
-          const utterance = new SpeechSynthesisUtterance(
-            "The spoken date does not match any available options. Please try again."
-          );
-          window.speechSynthesis.speak(utterance);
-        }
-      } else {
-        setFieldValue(spokenText);
-      }
+      setFieldValue(spokenText);
     };
 
     recognition.onerror = (event) => {
@@ -95,10 +96,8 @@ const BookServiceForm = () => {
   const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
-    const availability = service?.availability?.find(
-      (item) =>
-        new Date(item.date).toISOString().split("T")[0] ===
-        new Date(date).toISOString().split("T")[0]
+    const availability = service?.groupedAvailability?.find(
+      (item) => item.date === date
     );
     setTimeSlots(availability ? availability.slots : []);
     setSelectedTime("");
@@ -107,7 +106,7 @@ const BookServiceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!clientSecret) {
+    if (!clientSecret || !paymentIntentId) {
       alert("Payment initialization failed. Please try again.");
       return;
     }
@@ -115,6 +114,7 @@ const BookServiceForm = () => {
     navigate("/payment", {
       state: {
         clientSecret,
+        paymentIntentId,
         paymentDetails: { subtotal, tax, platformFee, total },
         userDetails: { firstName, lastName, email, note },
         serviceDetails: {
@@ -124,6 +124,7 @@ const BookServiceForm = () => {
           selectedDate,
           selectedTime,
         },
+        paymentType: "booking",
       },
     });
   };
@@ -222,24 +223,22 @@ const BookServiceForm = () => {
         <label className="BS-label" htmlFor="email">
           Email:
         </label>
-        <div className="BS-form-group">
-          <div className="BS-input-group">
-            <input
-              className="BS-input"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <button
-              type="button"
-              className="BS-voiceButton"
-              onClick={() => handleVoiceInput(setEmail, "email")}
-            >
-              🎤
-            </button>
-          </div>
+        <div className="BS-input-group">
+          <input
+            className="BS-input"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="BS-voiceButton"
+            onClick={() => handleVoiceInput(setEmail)}
+          >
+            🎤
+          </button>
         </div>
 
         <label className="BS-label" htmlFor="note">
@@ -274,32 +273,12 @@ const BookServiceForm = () => {
               required
             >
               <option value="">Select a date</option>
-              {service.availability.map((availability) => (
-                <option
-                  key={availability._id}
-                  value={
-                    new Date(availability.date).toISOString().split("T")[0]
-                  }
-                >
-                  {new Date(availability.date).toISOString().split("T")[0]}
+              {service?.groupedAvailability?.map((availability) => (
+                <option key={availability.date} value={availability.date}>
+                  {availability.date}
                 </option>
               ))}
             </select>
-            <button
-              type="button"
-              className="BS-voiceButton"
-              onClick={() =>
-                handleVoiceInput(
-                  setSelectedDate,
-                  "date",
-                  service?.availability?.map(
-                    (availability) => availability.date
-                  )
-                )
-              }
-            >
-              🎤
-            </button>
           </div>
 
           {selectedDate && timeSlots.length > 0 && (
@@ -327,21 +306,6 @@ const BookServiceForm = () => {
                     </option>
                   ))}
                 </select>
-                <button
-                  type="button"
-                  className="BS-voiceButton"
-                  onClick={() =>
-                    handleVoiceInput(
-                      setSelectedTime,
-                      "time",
-                      timeSlots.map(
-                        (slot) => `${slot.startTime}-${slot.endTime}`
-                      )
-                    )
-                  }
-                >
-                  🎤
-                </button>
               </div>
             </>
           )}

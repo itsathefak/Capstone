@@ -122,7 +122,7 @@ function SplitAppLayout() {
             <Route
               path="/payment"
               element={
-                <ProtectedRoute requiredRole="User">
+                <ProtectedRoute>
                   <PaymentWrapper />
                 </ProtectedRoute>
               }
