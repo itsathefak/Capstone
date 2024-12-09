@@ -26,8 +26,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,6 +50,22 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+    "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "dotenv-webpack": "^8.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.9.2",
+    "react-refresh": "^0.16.0",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
   }
 }
