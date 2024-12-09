@@ -234,8 +234,9 @@ const uploadToServer = async (base64Image) => {
       case 5:
         return (
           <>
-            <label>Experience</label>
+            <label htmlFor="mExperience">Experience</label>
             <select
+              id="mExperience"
               name="experience"
               value={userData.experience}
               onChange={handleChange}
@@ -249,9 +250,10 @@ const uploadToServer = async (base64Image) => {
             </select>
             {validationErrors.experience && <span className="profile-error-text">{validationErrors.experience}</span>}
 
-            <label>Occupation</label>
+            <label htmlFor="mOccupation">Occupation</label>
             <input
               type="text"
+              id="mOccupation"
               name="occupation"
               value={userData.occupation}
               onChange={handleChange}
@@ -264,9 +266,10 @@ const uploadToServer = async (base64Image) => {
         return (
           <>
 
-            <label>LinkedIn Profile</label>
+            <label htmlFor="mLinkedIn">LinkedIn Profile</label>
             <input
               type="url"
+              id="mLinkedIn"
               name="linkedIn"
               value={userData.linkedIn}
               onChange={handleChange}
@@ -275,8 +278,9 @@ const uploadToServer = async (base64Image) => {
             />
             {validationErrors.linkedIn && <span className="profile-error-text">{validationErrors.linkedIn}</span>}
 
-            <label>Highest Education Level</label>
+            <label htmlFor="mEducation">Highest Education Level</label>
             <select
+              id="mEducation"
               name="education"
               value={userData.education}
               onChange={handleChange}
@@ -299,8 +303,9 @@ const uploadToServer = async (base64Image) => {
         return (
           <>
 
-            <label>Industry</label>
+            <label htmlFor="mIndustry">Industry</label>
             <select
+              id="mIndustry"
               name="industry"
               value={userData.industry}
               onChange={handleChange}
@@ -317,9 +322,10 @@ const uploadToServer = async (base64Image) => {
             </select>
             {validationErrors.industry && <span className="profile-error-text">{validationErrors.industry}</span>}
 
-            <label>Languages Spoken</label>
+            <label htmlFor="mLanguages">Languages Spoken</label>
             <input
               type="text"
+              id="mLanguages"
               name="languages"
               value={userData.languages}
               onChange={handleChange}
@@ -410,8 +416,9 @@ const uploadToServer = async (base64Image) => {
         </div>
         <div className="personal-info">
           <div>
-            <label>Experience</label>
+            <label htmlFor="experience">Experience</label>
             <select
+              id="experience"
               name="experience"
               value={userData.experience}
               onChange={handleChange}
@@ -427,9 +434,10 @@ const uploadToServer = async (base64Image) => {
 
           </div>
           <div>
-            <label>Occupation</label>
+            <label htmlFor="occupation">Occupation</label>
             <input
               type="text"
+              id="occupation"
               name="occupation"
               value={userData.occupation}
               onChange={handleChange}
@@ -439,9 +447,10 @@ const uploadToServer = async (base64Image) => {
         </div>
         <div className="personal-info">
           <div>
-            <label>LinkedIn Profile</label>
+            <label htmlFor="linkedIn">LinkedIn Profile</label>
             <input
               type="url"
+              id="linkedIn"
               name="linkedIn"
               value={userData.linkedIn}
               onChange={handleChange}
@@ -451,8 +460,9 @@ const uploadToServer = async (base64Image) => {
           </div>
 
           <div>
-            <label>Highest Education Level</label>
+            <label htmlFor="education">Highest Education Level</label>
             <select
+              id="education"
               name="education"
               value={userData.education}
               onChange={handleChange}
@@ -470,8 +480,9 @@ const uploadToServer = async (base64Image) => {
         </div>
         <div className="personal-info">
           <div>
-            <label>Industry</label>
+            <label htmlFor="industry">Industry</label>
             <select
+              id="industry"
               name="industry"
               value={userData.industry}
               onChange={handleChange}
@@ -489,9 +500,10 @@ const uploadToServer = async (base64Image) => {
           </div>
 
           <div>
-            <label>Languages Spoken</label>
+            <label htmlFor="languages">Languages Spoken</label>
             <input
               type="text"
+              id="languages"
               name="languages"
               value={userData.languages}
               onChange={handleChange}
@@ -502,7 +514,7 @@ const uploadToServer = async (base64Image) => {
         </div>
         <div className="personal-info">
           <div>
-            <label>Phone</label>
+            <label htmlFor="phone">Phone</label>
             <input
               id="phone"
               type="tel"

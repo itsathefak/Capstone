@@ -127,7 +127,7 @@ const getServicesByProvider = async (req, res) => {
     );
 
     // Log the services for debugging
-    console.log("Fetched services:", services);
+    // console.log("Fetched services:", services);
 
     return res.status(200).json(services);
   } catch (error) {

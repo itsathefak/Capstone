@@ -52,8 +52,7 @@ exports.getUpcomingAppointments = async (req, res) => {
 
     const upcomingAppointments = await Appointment.find({
       providerId: providerId,
-      status: "Confirmed",
-      date: { $gt: currentTime },
+      status: "Confirmed"
     })
       .populate("customerId", "firstName lastName email")
       .populate("serviceId", "name")
@@ -196,8 +195,7 @@ exports.getAppointmentHistory = async (req, res) => {
 
     const appointmentHistory = await Appointment.find({
       customerId: customerId,
-      status: "Completed",
-      date: { $lt: currentTime },
+      status: "Completed"
     })
       .populate("serviceId", "name")
       .populate("providerId", "firstName lastName email")

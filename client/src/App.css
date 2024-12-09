@@ -2586,7 +2586,7 @@ textarea[readonly] {
 /* Submit Button */
 
 .submit-button {
-  background-color: #1e90ff;
+  background-color: #0058FF;
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
@@ -3420,7 +3420,7 @@ textarea[readonly] {
   display: block;
   width: 100%;
   padding: 12px;
-  background-color: #007bff;
+  background-color: #0058FF;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -3659,7 +3659,7 @@ textarea[readonly] {
 /* Call-to-Action Section */
 .about-cta {
   background: linear-gradient(to right, #0058ff, #034cd6);
-  height: 50vh;
+  /* height: 50vh; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3685,7 +3685,7 @@ textarea[readonly] {
 
 .about-cta-button {
   background-color: #ffffff;
-  color: #3b82f6;
+  color: #0058ff;
   border: none;
   border-radius: 30px;
   padding: 10px 20px;
@@ -3739,5 +3739,11 @@ textarea[readonly] {
   .about-cta-button {
     padding: 8px 16px;
     font-size: var(--font-size-t-body);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-lg-grid {
+    grid-template-columns: 1fr;
   }
 }
