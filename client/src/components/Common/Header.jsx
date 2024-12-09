@@ -178,33 +178,6 @@ const Header = () => {
                     </button>
                   </li>
 
-                  {/* Conditionally show "My Services" if the user is a Service Provider */}
-                  {user.role === "Service Provider" && (
-                    <li>
-                      <strong>My Services</strong>
-                      <ul>
-                        {loading ? (
-                          <li>Loading services...</li>
-                        ) : error ? (
-                          <li>{error}</li>
-                        ) : services.length > 0 ? (
-                          services.map((service) => (
-                            <li key={service._id}>
-                              <button
-                                onClick={() => handleServiceClick(service._id)}
-                                className="link-button"
-                              >
-                                {service.name}
-                              </button>
-                            </li>
-                          ))
-                        ) : (
-                          <li>No services found</li>
-                        )}
-                      </ul>
-                    </li>
-                  )}
-
                   <li>
                     <hr />
                   </li>
