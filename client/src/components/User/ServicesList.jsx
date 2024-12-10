@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchServicesWithUserImage } from "../../api/users";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import debounce from "lodash.debounce";
 import { Helmet } from "react-helmet";
 import axios from "axios";
+import debounce from "lodash.debounce";
 
 const ServicesList = () => {
   const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState(""); // Controlled input value
+  const [searchQuery, setSearchQuery] = useState(""); // Actual query for filtering
   const [sortOption, setSortOption] = useState("price");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -30,7 +31,6 @@ const ServicesList = () => {
         }
       );
       setUserData(response.data); // Update userData state
-      console.log(response.data, "Headers");
     } catch (error) {
       console.error("Error fetching user data:", error.response?.data);
     }
@@ -45,6 +45,7 @@ const ServicesList = () => {
     const params = new URLSearchParams(location.search);
     const query = params.get("query") || "";
     setSearchQuery(query);
+    setSearchInput(query); // Sync input with query
   }, [location.search]);
 
   useEffect(() => {
@@ -75,6 +76,29 @@ const ServicesList = () => {
     loadServices();
   }, []);
 
+  // Debounced function to handle search input changes
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      navigate(`?query=${encodeURIComponent(query)}`); // Use navigate to update the query string in the URL
+      setSearchQuery(query); // Set the search query state
+    }, 1000), // Delay of 1000ms after the user stops typing
+    []
+  );
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchInput(value); // Update the input value immediately
+    debouncedSearch(value); // Trigger the debounced search function
+  };
+
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
   const filteredServices = services.filter((service) => {
     const matchesSearchQuery = service.name
       .toLowerCase()
@@ -99,25 +123,13 @@ const ServicesList = () => {
     });
   };
 
-  const handleSearchChange = debounce((value) => {
-    navigate(`?query=${encodeURIComponent(value)}`);
-  }, 300);
-
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-  };
-
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
-
   return (
     <div>
       <Helmet>
         <title>Services | AppointMe</title>
         <meta
           name="description"
-          content="View all the service create by our providers and book an appointment."
+          content="View all the services created by our providers and book an appointment."
         />
         <meta
           name="keywords"
@@ -135,11 +147,8 @@ const ServicesList = () => {
               type="text"
               className="search-input"
               placeholder="Search services..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                handleSearchChange(e.target.value);
-              }}
+              value={searchInput} // Controlled input value
+              onChange={handleSearchChange} // Trigger search with debounce
             />
           </div>
 
@@ -186,11 +195,11 @@ const ServicesList = () => {
           sortServices(filteredServices).map((service) => (
             <div key={service._id} className="service-card">
               <img
-                 src={
-              service.provider.userImage
-                ? service.provider.userImage
-                : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
+                src={
+                  service.provider.userImage
+                    ? service.provider.userImage
+                    : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                }
                 alt="Service Provider"
                 className="profile-avatar"
               />

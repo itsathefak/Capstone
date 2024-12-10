@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { fetchServicesWithUserImage } from "../../api/users";
@@ -46,8 +46,27 @@ const MyServices = () => {
     fetchServices();
   }, [user]);
 
-  const handleEditService = (serviceId) => {
-    navigate(`/edit-service/${serviceId}`);
+  // Debounced function to handle search input changes
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      navigate(`?query=${encodeURIComponent(query)}`); // Use navigate to update the query string in the URL
+      setSearchQuery(query); // Set the search query state
+    }, 1000), // Delay of 1000ms after the user stops typing
+    []
+  );
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value); // Update the input value immediately
+    debouncedSearch(value); // Trigger the debounced search function
+  };
+
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
   };
 
   const filteredServices = services.filter((service) => {
@@ -72,18 +91,6 @@ const MyServices = () => {
     });
   };
 
-  const handleSearchChange = debounce((value) => {
-    setSearchQuery(value);
-  }, 300);
-
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-  };
-
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-  };
-
   return (
     <div className="my-services">
       <Helmet>
@@ -102,10 +109,7 @@ const MyServices = () => {
               className="search-input"
               placeholder="Search services..."
               value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                handleSearchChange(e.target.value);
-              }}
+              onChange={handleSearchChange} // Use the updated handleSearchChange
             />
           </div>
 
