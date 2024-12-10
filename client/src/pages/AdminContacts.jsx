@@ -55,14 +55,19 @@ const AdminContacts = () => {
   if (error) return <div className="admin-contacts-error">{error}</div>;
 
   return (
-    <div className="admin-contacts-container">
-      <Helmet>
-        <title>Contact Queries | AppointMe</title>
-        <meta name="description" content="View and respond to all the contact form queries that have been submitted by the users of the application." />
-        <meta name="keywords" content="contact submissions, contact questions" />
-      </Helmet>
+    <div className="content-wrapper">
 
-      <h2>Contact Submissions</h2>
+    <div className="admin-contacts-container">
+    <Helmet>
+      <title>Contact Queries | AppointMe</title>
+      <meta
+        name="description"
+        content="View and respond to all the contact form queries that have been submitted by the users of the application."
+      />
+      <meta name="keywords" content="contact submissions, contact questions" />
+    </Helmet>
+  
+    <h2>Contact Submissions</h2>
       {contacts.length === 0 ? (
         <p>No contact submissions available.</p>
       ) : (
@@ -82,7 +87,10 @@ const AdminContacts = () => {
                 </thead>
                 <tbody>
                   {contacts.map((contact) => (
-                    <tr key={contact._id} onClick={() => handleRowClick(contact)}>
+                    <tr
+                      key={contact._id}
+                      onClick={() => handleRowClick(contact)}
+                    >
                       <td>{contact.firstName} {contact.lastName}</td>
                       <td>{contact.email}</td>
                       <td>{contact.phone}</td>
@@ -94,12 +102,16 @@ const AdminContacts = () => {
               </table>
             </div>
           )}
-
+  
           {/* Display as cards for small screens */}
           {isMobile && (
             <div className="contact-card-container">
               {contacts.map((contact) => (
-                <div key={contact._id} className="contact-card" onClick={() => handleRowClick(contact)}>
+                <div
+                  key={contact._id}
+                  className="contact-card"
+                  onClick={() => handleRowClick(contact)}
+                >
                   <h3>{contact.firstName} {contact.lastName}</h3>
                   <p><span>Email:</span> {contact.email}</p>
                   <p><span>Phone:</span> {contact.phone}</p>
@@ -111,12 +123,11 @@ const AdminContacts = () => {
           )}
         </>
       )}
-
-      {/* Display the modal with contact details */}
-      {selectedContact && (
-        <Modal contact={selectedContact} onClose={closeModal} />
-      )}
+    
+    {selectedContact && <Modal contact={selectedContact} onClose={closeModal} />}
     </div>
+  </div>
+  
   );
 };
 

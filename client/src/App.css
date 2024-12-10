@@ -2759,16 +2759,24 @@ textarea[readonly] {
 
 /* Admin-contact css */
 .admin-contacts-container {
-  max-width: 1200px;
+  max-width: 100%;
+  width: 100%;
   margin: 40px auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  /* Prevents horizontal overflow */
+}
+
+.content-wrapper {
+  padding: 0 20px;
 }
 
 .admin-contacts-container h2 {
-  font-size: var(--font-size-company-header);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  /* Scales with screen size */
   margin-bottom: 20px;
   text-align: center;
   color: #333;
@@ -2783,9 +2791,10 @@ textarea[readonly] {
 
 .contacts-table th,
 .contacts-table td {
-  padding: 12px 20px;
+  padding: 12px 15px;
   text-align: left;
-  font-size: var(--font-size-highlight);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  /* Responsive font size */
   border-bottom: 1px solid #ddd;
 }
 
@@ -2806,13 +2815,15 @@ textarea[readonly] {
 
 .contacts-table td {
   color: #555;
+  word-break: break-word;
+  /* Prevents text overflow */
 }
 
-/* Style for the loading and error state */
+/* Loading and error states */
 .admin-contacts-loading,
 .admin-contacts-error {
   text-align: center;
-  font-size: var(--font-size-larger);
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
   padding: 30px;
   animation: fadeIn 1.5s ease-out;
 }
@@ -2831,16 +2842,6 @@ textarea[readonly] {
   margin: auto;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 /* Animation for fading in elements */
 @keyframes fadeIn {
   from {
@@ -2853,19 +2854,26 @@ textarea[readonly] {
 }
 
 /* Media Queries for responsiveness */
-/* Media Queries for Tablet screens (max-width: 1024px) */
+
+/* Tablet screens (max-width: 1024px) */
 @media (max-width: 1024px) {
-  .admin-contacts-container {
-    padding: 20px;
-  }
 
   .contacts-table th,
   .contacts-table td {
-    padding: 8px 15px;
+    padding: 8px 10px;
   }
 
   .contacts-table {
-    font-size: var(--font-size-highlight);
+    font-size: clamp(0.85rem, 1vw, 1rem);
+  }
+}
+
+/* Mobile screens (max-width: 768px) */
+@media (max-width: 768px) {
+
+  .contacts-table {
+    display: none;
+    /* Hides the table on smaller screens */
   }
 
   .contact-card-container {
@@ -2887,86 +2895,38 @@ textarea[readonly] {
   }
 
   .contact-card h3 {
-    font-size: var(--font-size-larger);
-    margin-bottom: 15px;
-    color: #007bff;
-  }
-
-  .contact-card p {
-    margin: 10px 0;
-    font-size: var(--font-size-regular);
-    color: #555;
-  }
-
-  .contact-card p span {
-    font-weight: bold;
-  }
-}
-
-/* Media Queries for Mobile screens (max-width: 768px) */
-@media (max-width: 768px) {
-  .admin-contacts-container {
-    padding: 15px;
-  }
-
-  .contacts-table {
-    display: none;
-  }
-
-  .contact-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-
-  .contact-card {
-    width: 100%;
-    max-width: 320px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    animation: fadeIn 1s ease-out;
-  }
-
-  .contact-card h3 {
-    font-size: var(--font-size-t-larger);
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     margin-bottom: 15px;
     color: #007bff;
   }
 
   .contact-card p {
     margin: 8px 0;
-    font-size: var(--font-size-t-regular);
+    font-size: clamp(0.9rem, 2vw, 1rem);
     color: #555;
-  }
-
-  .contact-card p span {
-    font-weight: bold;
   }
 }
 
-/* Media Queries for Small Mobile screens (max-width: 480px) */
+/* Small Mobile screens (max-width: 480px) */
 @media (max-width: 480px) {
   .contact-card {
     padding: 10px;
   }
 
   .contact-card h3 {
-    font-size: var(--font-size-m-page-header);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
   }
 
   .contact-card p {
-    font-size: var(--font-size-m-body);
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
   }
 
   .button {
-    font-size: var(--font-size-m-regular);
-    padding: 8px 16px;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    padding: 8px 12px;
   }
 }
+
 
 /* Button Styles */
 .button {
@@ -3009,6 +2969,7 @@ textarea[readonly] {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -3017,9 +2978,12 @@ textarea[readonly] {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  width: 80%;
+  width: 90%;
   max-width: 600px;
   animation: slideIn 0.3s ease-in-out;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 .modal-close-button {
@@ -3028,7 +2992,7 @@ textarea[readonly] {
   right: 10px;
   background: none;
   border: none;
-  font-size: var(--font-size-larger);
+  font-size: 1.5rem;
   color: #007bff;
   cursor: pointer;
 }
@@ -3038,29 +3002,44 @@ textarea[readonly] {
 }
 
 .modal-detail p {
-  font-size: var(--font-size-highlight);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   line-height: 1.5;
+  margin-bottom: 10px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+/* Media Queries for smaller screens */
+/* Tablet screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 15px;
   }
 
-  to {
-    opacity: 1;
+  .modal-detail p {
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+  }
+
+  .modal-close-button {
+    font-size: 1.3rem;
   }
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
+/* Small Mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 10px;
+    width: 100%;
   }
 
-  to {
-    transform: translateY(0);
+  .modal-detail p {
+    font-size: clamp(0.8rem, 1vw, 0.9rem);
+  }
+
+  .modal-close-button {
+    font-size: 1.2rem;
   }
 }
+
 
 
 
