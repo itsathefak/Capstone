@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
-import { fetchServicesByProvider } from "../../api/services";
+import { fetchServicesWithUserImage } from "../../api/users";
 import debounce from "lodash.debounce";
 import { Helmet } from "react-helmet";
 
@@ -16,17 +16,15 @@ const MyServices = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Fetch services on component mount
   useEffect(() => {
     const fetchServices = async () => {
       if (user && user.id && user.role === "Service Provider") {
         setLoading(true);
         setError(null);
         try {
-          const fetchedServices = await fetchServicesByProvider(user.id);
+          const fetchedServices = await fetchServicesWithUserImage(user.id);
           setServices(fetchedServices);
 
-          // Extract unique categories from services
           const uniqueCategories = [
             "all",
             ...new Set(
@@ -48,12 +46,10 @@ const MyServices = () => {
     fetchServices();
   }, [user]);
 
-  // Handle edit service
   const handleEditService = (serviceId) => {
     navigate(`/edit-service/${serviceId}`);
   };
 
-  // Filter services based on search query and selected category
   const filteredServices = services.filter((service) => {
     const matchesSearchQuery = service.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory =
@@ -61,7 +57,6 @@ const MyServices = () => {
     return matchesSearchQuery && matchesCategory;
   });
 
-  // Sort services based on the selected option
   const sortServices = (services) => {
     return [...services].sort((a, b) => {
       switch (sortOption) {
@@ -77,17 +72,14 @@ const MyServices = () => {
     });
   };
 
-  // Handle input change with debounce for search
   const handleSearchChange = debounce((value) => {
     setSearchQuery(value);
   }, 300);
 
-  // Handle sort option change
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
 
-  // Handle category change
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
@@ -104,7 +96,6 @@ const MyServices = () => {
         <div className="services-header">
           <h2 className="services-heading">My Services</h2>
 
-          {/* Search Bar */}
           <div className="search-wrapper">
             <input
               type="text"
@@ -118,7 +109,6 @@ const MyServices = () => {
             />
           </div>
 
-          {/* Sort Dropdown */}
           <div className="sort-dropdown-wrapper">
             <label htmlFor="sort-options" className="sort-label">
               Sort by:
@@ -135,7 +125,6 @@ const MyServices = () => {
             </select>
           </div>
 
-          {/* Category Dropdown */}
           <div className="category-dropdown-wrapper">
             <label htmlFor="category-options" className="category-label">
               Category:
@@ -156,7 +145,6 @@ const MyServices = () => {
         </div>
       </div>
 
-      {/* Service Listing */}
       {loading ? (
         <p>Loading services...</p>
       ) : error ? (
@@ -166,7 +154,10 @@ const MyServices = () => {
           {sortServices(filteredServices).map((service) => (
             <div key={service._id} className="service-card">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+                src={
+                  service.provider?.userImage ||
+                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+                }
                 alt="Service Provider"
                 className="profile-avatar"
               />
