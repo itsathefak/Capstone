@@ -141,7 +141,7 @@ const getServiceById = async (req, res) => {
   try {
     const service = await Service.findById(req.params.id).populate(
       "provider",
-      "firstName lastName"
+      "firstName lastName userImage"
     );
     if (!service) {
       return res.status(404).json({ message: "Service not found" });

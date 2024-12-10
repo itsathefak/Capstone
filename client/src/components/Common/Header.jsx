@@ -36,7 +36,7 @@ const Header = () => {
 
   useEffect(() => {
     fetchUserData(); // This will run as soon as the component is mounted
-  }, []); 
+  }, []);
 
   // Fetch services created by the logged-in provider
   useEffect(() => {
@@ -100,7 +100,7 @@ const Header = () => {
     root.style.setProperty('--font-size-m-home-features', `${1.9 * fontScale}rem`);
     root.style.setProperty('--font-size-m-home-stat', `${2.1 * fontScale}rem`);
     root.style.setProperty('--font-size-m-hero-title', `${2.3 * fontScale}rem`);
-    
+
     localStorage.setItem('fontScale', fontScale);
 
   }, [fontScale]);
@@ -158,7 +158,11 @@ const Header = () => {
         {user ? (
           <>
             <img
-              src={userData.userImage}
+              src={
+                userData.userImage
+                  ? userData.userImage
+                  : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
               alt="User Avatar"
               className="user-avatar"
             />

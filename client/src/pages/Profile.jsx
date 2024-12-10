@@ -99,7 +99,7 @@ const Profile = () => {
 
   // After a successful API call to update user data
   const handleSave = async () => {
-    
+
     if (validateStep()) {
       setIsEditing(false);
       setIsOnboarding(false);
@@ -125,6 +125,14 @@ const Profile = () => {
       return;
     }
 
+    // Check file size (limit to 5MB)
+    const maxSizeInMB = 5;
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      alert(`File size exceeds the 5MB limit. Please upload a smaller file.`);
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -135,20 +143,21 @@ const Profile = () => {
     reader.readAsDataURL(file); // Read the file as Base64
   };
 
-const uploadToServer = async (base64Image) => {
-  try {
-    const response = await axios.put(
-      "http://localhost:5000/user/uploadProfilePicture",
-      { userImage: base64Image },
-      { withCredentials: true }
-    );
-    await fetchUserData(); // Re-fetch user data
-    alert("Profile picture updated successfully!");
-  } catch (error) {
-    console.error("Error uploading image:", error.response?.data);
-    alert("Failed to upload image.");
-  }
-};
+
+  const uploadToServer = async (base64Image) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/user/uploadProfilePicture",
+        { userImage: base64Image },
+        { withCredentials: true }
+      );
+      await fetchUserData(); // Re-fetch user data
+      alert("Profile picture updated successfully!");
+    } catch (error) {
+      console.error("Error uploading image:", error.response?.data);
+      alert("Failed to upload image.");
+    }
+  };
 
 
 
@@ -352,23 +361,27 @@ const uploadToServer = async (base64Image) => {
       {/* Profile Header Section */}
       <div className="profile-header">
         <img
-          src={userData.userImage || "https://via.placeholder.com/150"}
+          src={
+            userData.userImage
+              ? userData.userImage
+              : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
           alt="Profile Avatar"
           className="profile-avatar"
         />
         {isEditing && (
           <div className="profile-upload-section">
-          <label htmlFor="profileImage" className="profile-upload-button">
-            Upload Image
-          </label>
-          <input
-            id="profileImage"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            style={{ display: "none" }} // Hide the file input
-          />
-        </div>
+            <label htmlFor="profileImage" className="profile-upload-button">
+              Upload Image
+            </label>
+            <input
+              id="profileImage"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              style={{ display: "none" }} // Hide the file input
+            />
+          </div>
         )}
         <div className="profile-info">
           <h2>{userData.firstName} {userData.lastName}</h2>

@@ -646,7 +646,62 @@ textarea[readonly] {
   color: #0056b3;
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .personal-info div {
+    flex: 1 1 100%;
+    min-width: auto;
+  }
+
+  .edit-button,
+  .save-button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .profile-onboarding-modal {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-info h2 {
+    font-size: 1.2rem;
+  }
+
+  .profile-info h3 {
+    font-size: 1rem;
+  }
+
+  .personal-info {
+    gap: 5px;
+  }
+
+  .personal-info label {
+    font-size: 0.9rem;
+  }
+
+  .edit-button,
+  .save-button {
+    font-size: 0.8rem;
+  }
+} 
 
 
 
@@ -3450,6 +3505,72 @@ textarea[readonly] {
   border-color: #0058ff;
   outline: none;
 }
+
+@media (max-width: 768px) {
+  .user-service-details {
+    padding: 15px;
+  }
+
+  .user-service-content,
+  .user-order-summary {
+    padding: 15px;
+  }
+
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .user-service-title {
+    font-size: var(--font-size-t-highlight);
+  }
+
+  .user-provider-name {
+    font-size: var(--font-size-t-body);
+  }
+
+  .user-summary-details p {
+    font-size: var(--font-size-t-body);
+  }
+
+  .user-book-button {
+    width: 100%;
+    font-size: var(--font-size-t-body);
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-service-details {
+    padding: 10px;
+  }
+
+  .user-service-content,
+  .user-order-summary {
+    padding: 10px;
+  }
+
+  .profile-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .user-service-title {
+    font-size: var(--font-size-m-highlight);
+  }
+
+  .user-provider-name {
+    font-size: var(--font-size-m-body);
+  }
+
+  .user-summary-details p {
+    font-size: var(--font-size-m-body);
+  }
+
+  .user-book-button {
+    font-size: var(--font-size-m-body);
+  }
+} 
 
 
 
