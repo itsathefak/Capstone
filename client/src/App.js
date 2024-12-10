@@ -169,7 +169,10 @@ function SplitAppLayout() {
               }
             />
             {/* Redirect to login for any unmatched routes */}
-            <Route path="*" element={<Navigate to="/unauthorized" />} />
+            <Route
+              path="*"
+              element={<Navigate to="/unauthorized" state={{ is404: true }} />}
+            />
           </Routes>
         </div>
       </div>

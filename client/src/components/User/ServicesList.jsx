@@ -124,7 +124,7 @@ const ServicesList = () => {
   };
 
   return (
-    <div>
+    <div className="sl-container">
       <Helmet>
         <title>Services | AppointMe</title>
         <meta
