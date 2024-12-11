@@ -9,18 +9,15 @@ import {
   faCalendarAlt,
   faList,
   faBars,
-  faUserCog,  
+  faUserCog,
   faEnvelope,
   faWrench,
 } from "@fortawesome/free-solid-svg-icons";
-import { FaWrench } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { user, logout: clientLogout } = useAuth();
+  const { user } = useAuth();
 
-  // Expanded sidebar in screen sizes above 768px (desktop views)
-  // Collapsed sidebar in screen sizes below 768px (tablet and mobile views)
   useEffect(() => {
     const handleResize = () => {
       setIsCollapsed(window.innerWidth <= 768);
@@ -93,7 +90,6 @@ const Sidebar = () => {
         )}
 
         {/* User */}
-
         {user && user.role === "User" && (
           <>
             <li>
@@ -113,6 +109,8 @@ const Sidebar = () => {
             </li>
           </>
         )}
+
+        {/* Admin */}
         {user && user.role === "Admin" && (
           <>
             <li>
@@ -129,6 +127,14 @@ const Sidebar = () => {
             </li>
           </>
         )}
+
+        {/* Contact Us (visible to all users) */}
+        <li>
+          <NavLink to="/contact-us" activeclassname="active" aria-label="Contact Us">
+            <FontAwesomeIcon icon={faEnvelope} className="com-sidebar-icon" />
+            {!isCollapsed && <span>Contact Us</span>}
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

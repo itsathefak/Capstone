@@ -25,7 +25,7 @@ const ServicesList = () => {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/user/userProfile",
+        "https://appointme-8k4d.onrender.com/user/userProfile",
         {
           withCredentials: true,
         }
