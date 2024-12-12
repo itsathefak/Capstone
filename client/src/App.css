@@ -3482,8 +3482,8 @@ textarea[readonly] {
 }
 
 .user-provider-rating {
-  font-size: var(--font-size-m-page-header);
-  color: #ffb400;
+  font-size: var(--font-size-larger);
+  color: #000000;
 }
 
 .user-service-description {

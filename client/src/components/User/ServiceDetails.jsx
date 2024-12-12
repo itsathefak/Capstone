@@ -82,7 +82,7 @@ const ServiceDetails = () => {
             <p className="user-provider-name">
               {service.provider.firstName} {service.provider.lastName}
             </p>
-            <p className="user-provider-rating">⭐⭐⭐⭐☆</p>
+            <p className="user-provider-rating">★★★★☆</p>
           </div>
         </div>
 
