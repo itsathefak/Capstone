@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { DefinePlugin } = require("webpack");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -83,7 +84,14 @@ module.exports = {
         { from: "public/sitemap.xml", to: "sitemap.xml" }, // Copy sitemap.xml to dist
       ],
     }),
-    new Dotenv(),
+    // Use dotenv for local development
+    isDevelopment && new Dotenv(),
+    // Define environment variables for production
+    new DefinePlugin({
+      "process.env.REACT_APP_API_URL": JSON.stringify(
+        process.env.REACT_APP_API_URL
+      ),
+    }),
     !isDevelopment &&
       new MiniCssExtractPlugin({
         filename: "bundle.[contenthash].css",
