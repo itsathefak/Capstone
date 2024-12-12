@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -19,7 +20,7 @@ module.exports = {
   },
   devtool: isDevelopment ? "inline-source-map" : "source-map",
   devServer: {
-    static: path.join(__dirname, "dist"),
+    static: [path.join(__dirname, "dist"), path.join(__dirname, "public")],
     historyApiFallback: true,
     open: true,
     hot: true,
@@ -68,6 +69,12 @@ module.exports = {
         removeRedundantAttributes: true,
         useShortDoctype: true,
       },
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "public/robots.txt", to: "robots.txt" }, // Copy robots.txt to dist
+        { from: "public/sitemap.xml", to: "sitemap.xml" }, // Copy sitemap.xml to dist
+      ],
     }),
     new Dotenv(),
     !isDevelopment &&
