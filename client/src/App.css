@@ -655,6 +655,10 @@ textarea[readonly] {
     text-align: center;
   }
 
+  .layout {
+    width: fit-content;
+  }
+
   .profile-avatar {
     width: 100px;
     height: 100px;
@@ -680,6 +684,10 @@ textarea[readonly] {
   .profile-avatar {
     width: 80px;
     height: 80px;
+  }
+
+  .layout {
+    width: fit-content;
   }
 
   .profile-info h2 {
@@ -3612,7 +3620,6 @@ textarea[readonly] {
 
   .profile-avatar {
     width: 50px;
-    height: 50px;
   }
 
   .user-service-title {

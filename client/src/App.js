@@ -176,6 +176,7 @@ function SplitAppLayout() {
           </Routes>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
@@ -189,7 +190,6 @@ function App() {
             <Route path="/" element={<HomeLayout />} />
             <Route path="/*" element={<SplitAppLayout />} />
           </Routes>
-          <Footer />
         </div>
       </Router>
     </AuthProvider>
