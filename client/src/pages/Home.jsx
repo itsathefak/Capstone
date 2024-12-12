@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Footer from "../components/Common/Footer";
+import backgroundVideo from "../assets/background.mp4";
+
 
 const Home = () => {
   const features = [
@@ -87,18 +89,15 @@ const Home = () => {
     <div className="Home-bg">
       <Helmet>
         <title>Home | AppointMe</title>
-        <meta
-          name="description"
-          content="AppointMe is an easy-to-use appointment booking website that connects people with professional service providers."
-        />
-        <meta
-          name="keywords"
-          content="appointme, book appointment, book service"
-        />
+        <meta name="description" content="AppointMe is an easy-to-use appointment booking website that connects people with professional service providers." />
+        <meta name="keywords" content="appointme, book appointment, book service" />
       </Helmet>
 
-      {/* Hero Section */}
       <section className="Home-hero">
+        <video className="Home-hero-video" autoPlay loop muted>
+          <source src={backgroundVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <div className="Home-hero-content">
           <h1 className="Home-title">AppointMe</h1>
           <p className="Home-subtitle">
@@ -197,13 +196,13 @@ const Home = () => {
             appointment booking.
           </p>
           <div className="Home-cta-buttons">
-            <Link to="/service-list">
-              <button className="Home-button-primary">Get Started Now</button>
+          <Link to="/service-list">
+            <button className="Home-button-primary">Get Started Now</button>
             </Link>
             <Link to="/contact-us">
-              <button className="Home-cta-button Home-cta-outline-button">
-                Schedule a Demo
-              </button>
+            <button className="Home-cta-button Home-cta-outline-button">
+              Schedule a Demo
+            </button>
             </Link>
           </div>
         </div>
