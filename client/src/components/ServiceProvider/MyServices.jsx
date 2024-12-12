@@ -30,7 +30,10 @@ const MyServices = () => {
             ...new Set(
               fetchedServices
                 .map((service) => service.category)
-                .filter((category) => category && category.toLowerCase() !== "uncategorized")
+                .filter(
+                  (category) =>
+                    category && category.toLowerCase() !== "uncategorized"
+                )
             ),
           ];
           setCategories(uniqueCategories);
@@ -70,7 +73,9 @@ const MyServices = () => {
   };
 
   const filteredServices = services.filter((service) => {
-    const matchesSearchQuery = service.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearchQuery = service.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     const matchesCategory =
       selectedCategory === "all" || service.category === selectedCategory;
     return matchesSearchQuery && matchesCategory;
@@ -91,11 +96,19 @@ const MyServices = () => {
     });
   };
 
+  // Handle edit service
+  const handleEditService = (serviceId) => {
+    navigate(`/edit-service/${serviceId}`);
+  };
+
   return (
     <div className="my-services">
       <Helmet>
         <title>My Services | AppointMe</title>
-        <meta name="description" content="View and manage the list of created services along with the service details." />
+        <meta
+          name="description"
+          content="View and manage the list of created services along with the service details."
+        />
         <meta name="keywords" content="created services, my services" />
       </Helmet>
 
@@ -167,7 +180,10 @@ const MyServices = () => {
               />
               <div className="service-details">
                 <h3 className="service-name">{service.name}</h3>
-                <p className="service-description"><b>Description : </b>{service.description}</p>
+                <p className="service-description">
+                  <b>Description : </b>
+                  {service.description}
+                </p>
                 <p className="service-price">From CA ${service.price}</p>
                 <div className="more-details-wrapper">
                   <button
