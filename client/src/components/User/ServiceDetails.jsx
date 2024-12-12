@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from '../../api/api';
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
@@ -14,7 +15,7 @@ const ServiceDetails = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/userService/services-with-user-image", {
+      const response = await api.get("/userService/services-with-user-image", {
         withCredentials: true,
       });
       setUserData(response.data); // Update userData state
@@ -32,8 +33,8 @@ const ServiceDetails = () => {
     const fetchServiceDetails = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `http://localhost:5000/services/${serviceId}`,
+        const response = await api.get(
+          `/services/${serviceId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

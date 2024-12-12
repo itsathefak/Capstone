@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import api from '../../api/api';
 import { logoutUser } from "../../api/auth";
 import { useAuth } from "../../utils/AuthContext";
 import { fetchServicesByProvider } from "../../api/services";
@@ -24,7 +25,7 @@ const Header = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/user/userProfile", {
+      const response = await api.get("/user/userProfile", {
         withCredentials: true,
       });
       setUserData(response.data); // Update userData state

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../api/api';
 import Modal from 'react-modal';
 import { useAuth } from "../../../client/src/utils/AuthContext";
 import { Helmet } from "react-helmet";
@@ -35,7 +36,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/user/userProfile', {
+        const response = await api.get('/user/userProfile', {
           withCredentials: true,
         });
         setUserData(response.data);
@@ -104,7 +105,7 @@ const Profile = () => {
       setIsEditing(false);
       setIsOnboarding(false);
       try {
-        const response = await axios.put('http://localhost:5000/user/updateProfile', userData, {
+        const response = await api.put('/user/updateProfile', userData, {
           withCredentials: true,
         });
         setUserData(response.data);
@@ -146,8 +147,8 @@ const Profile = () => {
 
   const uploadToServer = async (base64Image) => {
     try {
-      const response = await axios.put(
-        "http://localhost:5000/user/uploadProfilePicture",
+      const response = await api.put(
+        "/user/uploadProfilePicture",
         { userImage: base64Image },
         { withCredentials: true }
       );
@@ -163,7 +164,7 @@ const Profile = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/user/userProfile", {
+      const response = await api.get("/user/userProfile", {
         withCredentials: true,
       });
       setUserData(response.data);
