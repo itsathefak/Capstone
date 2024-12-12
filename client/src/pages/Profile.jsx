@@ -190,12 +190,26 @@ const Profile = () => {
           <>
             <label htmlFor='mPhone'>Phone</label>
             <input
-              id="mPhone"
-              type="text"
+              id="mphone"
+              type="tel"
               name="phone"
+              maxLength={10}
+              pattern="[+]{1}[0-9]{11,14}" // Validates numbers with a + at the start and a length between 11 and 14
               value={userData.phone}
               onChange={handleChange}
-              required
+              onKeyDown={(e) => {
+                // Allow numbers, Backspace, Delete, Tab, Arrow keys, and '+'
+                if (
+                  !/[\d+]/.test(e.key) && // Allow digits and '+'
+                  e.key !== 'Backspace' &&
+                  e.key !== 'Delete' &&
+                  e.key !== 'ArrowLeft' &&
+                  e.key !== 'ArrowRight' &&
+                  e.key !== 'Tab'
+                ) {
+                  e.preventDefault();
+                }
+              }}
             />
             {validationErrors.phone && <span className="profile-error-text">{validationErrors.phone}</span>}
             <label htmlFor="mAddress">Address</label>
@@ -228,13 +242,13 @@ const Profile = () => {
       case 4:
         return (
           <>
-            <label htmlFor="mBio">Bio (minimum 5 characters)</label>
+            <label htmlFor="mBio">Bio (minimum 150 characters)</label>
             <textarea
               id="mBio"
               name="bio"
               value={userData.bio}
               onChange={handleChange}
-              minLength="5"
+              minLength="150"
               placeholder="Tell us about yourself..."
               required
             />
@@ -386,7 +400,6 @@ const Profile = () => {
         )}
         <div className="profile-info">
           <h2>{userData.firstName} {userData.lastName}</h2>
-          <h3>Software Engineer</h3>
           <h4>{userData.occupation}</h4>
           <p>{userData.email}</p>
         </div>
