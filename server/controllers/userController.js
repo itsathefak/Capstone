@@ -62,7 +62,7 @@ exports.loginUser = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Cross-origin cookies allowed in production
     });
 
     // Send user data (without password) and token in response
@@ -114,14 +114,41 @@ exports.getUserProfile = async (req, res) => {
 // Update user profile
 exports.updateUserProfile = async (req, res) => {
   try {
-    const {userImage, firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages } = req.body;
+    const {
+      userImage,
+      firstName,
+      lastName,
+      phone,
+      address,
+      bio,
+      skills,
+      experience,
+      occupation,
+      linkedIn,
+      education,
+      industry,
+      languages,
+    } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      {userImage, firstName, lastName, phone, address, bio, skills, experience, occupation, linkedIn, education, industry, languages},
+      {
+        userImage,
+        firstName,
+        lastName,
+        phone,
+        address,
+        bio,
+        skills,
+        experience,
+        occupation,
+        linkedIn,
+        education,
+        industry,
+        languages,
+      },
       { new: true, runValidators: true }
     );
-    
 
     if (!updatedUser) {
       return res.status(404).json({ msg: "User not found" });

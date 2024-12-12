@@ -120,7 +120,7 @@ const PaymentPage = () => {
       if (response?.appointment) {
         setMessage("Payment succeeded, and booking was successful!");
         console.log("Booking response:", response);
-        navigate("/appointment-history");
+        navigate("/service-list");
       } else {
         setMessage(
           "Payment succeeded, but booking could not be completed. Please contact support."

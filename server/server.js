@@ -10,7 +10,6 @@ const generateSitemap = require("./utils/sitemapGenerator");
 const cors = require("cors");
 require("dotenv").config();
 
-
 const app = express();
 
 // Connect to MongoDB
@@ -19,16 +18,26 @@ connectDB();
 // Scheduler for updating completed appointments
 require("./schedulers/completedAppointment");
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://appointme-rust.vercel.app",
+];
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
 
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json()); // Parse JSON requests
-app.use(express.json({ limit: "10mb" })); 
-app.use(express.urlencoded({ limit: "10mb", extended: true })); 
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 
 // Basic root route to check server status
