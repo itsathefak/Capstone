@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "webpack serve --mode development",
-    "build": "dotenv -e .env webpack --mode production",
+    "build": "webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
