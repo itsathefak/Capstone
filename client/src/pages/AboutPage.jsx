@@ -7,6 +7,8 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+
 
 export default function AboutPage() {
   const teamMembers = [
@@ -123,7 +125,9 @@ export default function AboutPage() {
             Join AppointMe today and step into the future of seamless,
             stress-free appointment scheduling.
           </p>
+          <Link to="/service-list">
           <button className="about-cta-button">Get Started Now</button>
+          </Link>
         </section>
       </div>
     </div>

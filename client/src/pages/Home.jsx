@@ -191,10 +191,14 @@ const Home = () => {
             appointment booking.
           </p>
           <div className="Home-cta-buttons">
+          <Link to="/service-list">
             <button className="Home-button-primary">Get Started Now</button>
+            </Link>
+            <Link to="/contact-us">
             <button className="Home-cta-button Home-cta-outline-button">
               Schedule a Demo
             </button>
+            </Link>
           </div>
         </div>
       </section>

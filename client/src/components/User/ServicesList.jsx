@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { fetchServicesWithUserImage } from "../../api/users";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { fetchServicesWithUserImage, fetchUserProfile } from "../../api/users";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import axios from "axios";
 import debounce from "lodash.debounce";
 
 const ServicesList = () => {
@@ -24,20 +22,15 @@ const ServicesList = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(
-        "https://appointme-8k4d.onrender.com/user/userProfile",
-        {
-          withCredentials: true,
-        }
-      );
-      setUserData(response.data); // Update userData state
+      const data = await fetchUserProfile();
+      setUserData(data); // Update userData state
     } catch (error) {
-      console.error("Error fetching user data:", error.response?.data);
+      console.error("Error fetching user data:", error);
     }
   };
 
   useEffect(() => {
-    fetchUserData(); // This will run as soon as the component is mounted
+    fetchUserData(); // Fetch user data on mount
   }, []);
 
   // Extract query parameter from URL

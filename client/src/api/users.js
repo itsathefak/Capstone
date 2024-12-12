@@ -10,3 +10,16 @@ export const fetchServicesWithUserImage = async () => {
     throw error;
   }
 };
+
+// Function to fetch user profile data
+export const fetchUserProfile = async () => {
+  try {
+    const response = await api.get("/user/userProfile", {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user profile:", error.response?.data);
+    throw error;
+  }
+};
