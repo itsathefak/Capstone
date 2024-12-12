@@ -18,9 +18,10 @@ exports.bookService = async (req, res) => {
   try {
     const customerId = req.user._id;
 
+    console.log("Payload received:", req.body);
+
     // Validate payment intent with Stripe
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-
     if (!paymentIntent || paymentIntent.status !== "succeeded") {
       return res.status(400).json({ message: "Payment verification failed." });
     }
@@ -49,6 +50,10 @@ exports.bookService = async (req, res) => {
         .json({ message: "No availability for the selected date." });
     }
 
+    if (!selectedTime || !selectedTime.includes("-")) {
+      return res.status(400).json({ message: "Invalid selected time format." });
+    }
+
     const [startTime, endTime] = selectedTime.split("-");
     const slot = availability.slots.find(
       (slot) =>
@@ -58,6 +63,31 @@ exports.bookService = async (req, res) => {
     );
 
     if (!slot) {
+      console.log("Available slots:", availability.slots); // Debugging log
+      console.log("Selected timeslot:", { startTime, endTime }); // Debugging log
+      return res
+        .status(400)
+        .json({ message: "Selected time slot is not available." });
+    }
+
+    // Atomic update for slot status
+    const updatedService = await Service.findOneAndUpdate(
+      {
+        _id: serviceId,
+        "availability.date": selectedDate,
+        "availability.slots._id": slot._id,
+        "availability.slots.status": "Available",
+      },
+      {
+        $set: { "availability.$[date].slots.$[slot].status": "Booked" },
+      },
+      {
+        arrayFilters: [{ "date.date": selectedDate }, { "slot._id": slot._id }],
+        new: true,
+      }
+    );
+
+    if (!updatedService) {
       return res
         .status(400)
         .json({ message: "Selected time slot is not available." });
@@ -78,10 +108,6 @@ exports.bookService = async (req, res) => {
     });
 
     await appointment.save();
-
-    // Update the slot status to "Booked"
-    slot.status = "Booked";
-    await service.save();
 
     // Send confirmation email
     await emailService.sendConfirmationEmail({

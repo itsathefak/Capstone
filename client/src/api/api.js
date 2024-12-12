@@ -1,8 +1,13 @@
 import axios from "axios";
 
-// Create an Axios instance with the URL of the backend API
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000" // Local backend for development
+    : process.env.REACT_APP_API_URL; // Deployed backend URL for production
+
+// Create an Axios instance
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL,
   withCredentials: true,
 });
 

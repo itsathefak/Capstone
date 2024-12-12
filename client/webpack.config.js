@@ -51,6 +51,13 @@ module.exports = {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf)$/i,
         type: "asset/resource",
       },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "media/[name][hash][ext]",
+        },
+      },
     ],
   },
   optimization: {
